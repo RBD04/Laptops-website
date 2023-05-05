@@ -106,7 +106,7 @@
                       Laptops website
                     </h1>
                     <p>
-                      Aenean scelerisque felis ut orci condimentum laoreet. Integer nisi nisl, convallis et augue sit amet, lobortis semper quam.
+                      asd asjdhg asdjhg asdjhg ghaasd sadhgsa asidgasiudg 
                     </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
