@@ -92,17 +92,32 @@
                         Register
                     </h2>
                 </div>
-                <form action="">
+                <form method="post" action="">
                     <div class="row">
                         <div class="col">
-                            <input type="text" placeholder="*First Name" />
+                            <input name="firstName" type="text" placeholder="*First Name" />
                         </div>
                         <div class="col">
-                            <input type="text" placeholder="*Last Name" />
+                            <input name="lastName" type="text" placeholder="*Last Name" />
                         </div>
                     </div>
                     <div>
-                        <input type="email" placeholder="*Email" />
+                        <input name="email" type="email" placeholder="*Email" />
+                    </div>
+                    <div>
+                        <input name="phoneNumber" type="text" placeholder="*Phone Number" />
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input name="birthday" type="date" min="1920-02-02" />
+                        </div>
+                        <div class="col">
+                            <select style="width: 100%;" name="gender" type="radio" placeholder="Gender">
+                                <option selected>Select your gender (optional)</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>    
+                        </select>
+                        </div>
                     </div>
                     <div>
                         <input type="password" placeholder="*Password" />
@@ -111,7 +126,7 @@
                         <input type="password" placeholder="*Confirm Password" />
                     </div>
                     <div class="d-flex justify-content-center mb-4">
-                        <button>
+                        <button type="submit">
                             Sign up
                         </button>
                     </div>
