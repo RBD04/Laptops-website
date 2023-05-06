@@ -1,3 +1,11 @@
+<?php
+require_once 'connection.php'; 
+$query = "SELECT * FROM category";
+$result = mysqli_query($con,$query);
+$r = mysqli_num_rows($result);
+mysqli_close($con);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -92,8 +100,8 @@
       <!-- end header section -->
     </div>
     <div class="container m-5">
-      <h1>Add product</h1>
-      <form>
+      <h1>Product Page</h1>
+      <form method="post" >
         <div class="form-group">
           <label for="productName">Product name</label>
           <input type="text" class="form-control" id="productName" name="productName" />
@@ -105,8 +113,13 @@
         <div class="form-group">
             <label for="Category">Category</label>
             <select class="form-control" id="category" name="category">
-              <option>1</option>
-              <?php ?>
+              <?php
+              for($i=0;$i<$r;$i++){
+                $row= mysqli_fetch_assoc($result);
+                echo'<option value='.$row['categoryId'].'>'.$row['categoryName'].'</option>';
+              }
+               ?>
+              
             </select>
           </div>
           <div class="form-group">
