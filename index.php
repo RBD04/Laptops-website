@@ -53,7 +53,7 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand">
+          <a class="navbar-brand" href="index.php">
             <span>
             Laptops website
             </span>
