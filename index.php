@@ -65,7 +65,7 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item active text-end">
                 <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
@@ -73,6 +73,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.php">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
               </li>
             </ul>
             <div class="user_option-box">
@@ -92,7 +95,7 @@
     </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section ">
+    <section class="slider_section bg-primary">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -104,18 +107,18 @@
                       A single place for all your needs
                     </h1>
                     <p>
-                    discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
+                    Discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
+                      <a href="#news" class="btn btn-light text-dark">
+                        More
                       </a>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.png" alt="">
+                    <img src="images/slider-img1.jpg" alt="">
                   </div>
                 </div>
               </div>
@@ -130,18 +133,18 @@
                       Gaming laptops
                     </h1>
                     <p>
-                      Aenean scelerisque felis ut orci condimentum laoreet. Integer nisi nisl, convallis et augue sit amet, lobortis semper quam.
+                    We provide a premium collection of gaming machines, to make every gamer feel at home
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
+                      <a href="shop.php" class="btn btn-light text-dark">
+                        More
                       </a>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.png" alt="">
+                    <img src="images/slider-img2.jpg" alt="">
                   </div>
                 </div>
               </div>
@@ -159,8 +162,8 @@
                       Aenean scelerisque felis ut orci condimentum laoreet. Integer nisi nisl, convallis et augue sit amet, lobortis semper quam.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
+                      <a href="shop.php" class="btn btn-light text-dark">
+                        More
                       </a>
                     </div>
                   </div>
@@ -175,9 +178,9 @@
           </div>
         </div>
         <ol class="carousel-indicators">
-          <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-          <li data-target="#customCarousel1" data-slide-to="1"></li>
-          <li data-target="#customCarousel1" data-slide-to="2"></li>
+          <li data-target="#customCarousel1" data-slide-to="0" class="active bg-light"></li>
+          <li data-target="#customCarousel1" data-slide-to="1" class="bg-light"></li>
+          <li data-target="#customCarousel1" data-slide-to="2" class="bg-light"></li>
         </ol>
       </div>
 
@@ -190,7 +193,7 @@
   <section class="shop_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
-        <h2>
+        <h2 id="news">
           Latest laptops
         </h2>
       </div>
@@ -212,7 +215,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   Featured
                 </span>
@@ -393,7 +396,7 @@
         </div>
         <div class="col-md-6 col-lg-7">
           <div class="detail-box">
-            <div class="heading_container">
+            <div class="heading_container" id="about">
               <h2>
                 About Us
               </h2>
@@ -405,7 +408,7 @@
               the middle of text. All
             </p>
             <a href="">
-              Read More
+              Get in Touch with us
             </a>
           </div>
         </div>
