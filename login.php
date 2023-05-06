@@ -1,6 +1,7 @@
 <?php
 require_once 'connection.php';
 session_start();
+// session_destroy(); //(logout)
 if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
     header('Location: admin.php');
