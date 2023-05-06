@@ -95,7 +95,7 @@
     </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section bg-primary">
+    <section class="slider_section bg-primary shadow">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -156,13 +156,13 @@
                 <div class="col-md-6">
                   <div class="detail-box">
                     <h1>
-                      Used laptops
+                      Gadgets and Accessories
                     </h1>
                     <p>
-                      Aenean scelerisque felis ut orci condimentum laoreet. Integer nisi nisl, convallis et augue sit amet, lobortis semper quam.
+                      Hight quality powerbanks, headsets, smartwatches and much more 
                     </p>
                     <div class="btn-box">
-                      <a href="shop.php" class="btn btn-light text-dark">
+                      <a href="shop.php" class="btn btn-outline-light text-dark">
                         More
                       </a>
                     </div>
@@ -170,7 +170,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.png" alt="">
+                    <img src="images/slider-img.jpg" alt="">
                   </div>
                 </div>
               </div>
