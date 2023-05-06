@@ -95,17 +95,17 @@
                 <form method="post" action="">
                     <div class="row">
                         <div class="col">
-                            <input name="firstName" type="text" placeholder="*First Name" />
+                            <input name="firstName" type="text" placeholder="*First Name" required/>
                         </div>
                         <div class="col">
-                            <input name="lastName" type="text" placeholder="*Last Name" />
+                            <input name="lastName" type="text" placeholder="*Last Name" required/>
                         </div>
                     </div>
                     <div>
-                        <input name="email" type="email" placeholder="*Email" />
+                        <input name="email" type="email" placeholder="*Email" required/>
                     </div>
                     <div>
-                        <input name="phoneNumber" type="text" placeholder="*Phone Number" />
+                        <input name="phoneNumber" type="text" placeholder="*Phone Number" required/>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -120,10 +120,10 @@
                         </div>
                     </div>
                     <div>
-                        <input type="password" placeholder="*Password" />
+                        <input type="password" placeholder="*Password" required/>
                     </div>
                     <div>
-                        <input type="password" placeholder="*Confirm Password" />
+                        <input type="password" placeholder="*Confirm Password" required/>
                     </div>
                     <div class="d-flex justify-content-center mb-4">
                         <button type="submit">
