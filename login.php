@@ -1,3 +1,30 @@
+<?php
+require_once 'connection.php';
+session_start();
+if (isset($_SESSION)) {
+  if (isset($_SESSION['admin']))
+    header('Location: admin.php');
+  else if(isset($_SESSION['user']))
+    header('Location: index.php');
+}
+
+if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
+  $query = 'SELECT UserId FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
+  echo $query;
+  $result = mysqli_query($con, $query);
+  $num_rows = mysqli_num_rows($result);
+  if ($num_rows === 0) {
+      $error_message = 'Authentication failed';
+  } else if ($num_rows > 1) {
+      $error_message = 'Please contact your administrator';
+  } else if ($num_rows === 1) {
+      $user = mysqli_fetch_assoc($result);
+      $_SESSION['user'] = $user['UserId'];
+      mysqli_close($con);
+      header('Location: index.php');
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +68,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
             <span>
-            Laptops website
+              Laptops website
             </span>
           </a>
 
@@ -83,29 +110,29 @@
 
   <section class="contact_section layout_padding pb-5">
     <div class="container">
-          <div class="form_container">
-            <div class="heading_container">
-              <h2>
-                Login
-              </h2>
-            </div>
-            <form action="">
-              <div>
-                <input type="email" placeholder="Email" />
-              </div>
-              <div>
-                <input type="password" placeholder="Password" />
-              </div>
-              <div class="d-flex justify-content-center mb-4">
-                <button>
-                  Sign in
-                </button>
-              </div>
-              <div class="d-flex justify-content-center">
-              <a href="register.php" style="text-decoration: underline; color:black;">Create Account</a>
-            </div>
-            </form>
-          </div>      
+      <div class="form_container">
+        <div class="heading_container">
+          <h2>
+            Login
+          </h2>
+        </div>
+        <form method="post">
+          <div>
+            <input name="email" type="email" placeholder="Email" />
+          </div>
+          <div>
+            <input name="password" type="password" placeholder="Password" />
+          </div>
+          <div class="d-flex justify-content-center mb-4">
+            <button>
+              Sign in
+            </button>
+          </div>
+          <div class="d-flex justify-content-center">
+            <a href="register.php" style="text-decoration: underline; color:black;">Create Account</a>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
