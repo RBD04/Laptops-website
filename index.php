@@ -53,7 +53,7 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand">
+          <a class="navbar-brand" href="index.php">
             <span>
             Laptops website
             </span>
@@ -101,10 +101,10 @@
                 <div class="col-md-6">
                   <div class="detail-box">
                     <h1>
-                      Laptops website
+                      A single place for all your needs
                     </h1>
                     <p>
-                      asd asjdhg asdjhg asdjhg ghaasd sadhgsa asidgasiudg 
+                    discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
                     </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
