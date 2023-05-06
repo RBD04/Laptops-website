@@ -2,7 +2,7 @@
 require_once 'connection.php';
 session_start();
 // session_destroy(); //(logout)
-if (isset($_SESSION) && isset($_SESSION['user']))
+if (isset($_SESSION) && isset($_SESSION['admin']))
     header('Location: admin.php');
 
 $error_message = '';
@@ -17,7 +17,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
         $error_message = 'Please contact your administrator';
     } else if ($num_rows === 1) {
         $admin = mysqli_fetch_assoc($result);
-        $_SESSION['user'] = $admin['adminId'];
+        $_SESSION['admin'] = $admin['adminId'];
         mysqli_close($con);
         header('Location: admin.php');
     }

@@ -1,7 +1,7 @@
 <?php
 require_once 'connection.php';
 session_start();
-if (!isset($_SESSION) || !isset($_SESSION['user']))
+if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
 
 $query = "SELECT * FROM category";
