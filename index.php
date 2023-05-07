@@ -1,9 +1,9 @@
-<?php 
+<?php
 require_once 'connection.php';
 session_start();
 // session_destroy(); //logout
 // echo 'you are'. $_SESSION['name'];
-?>  
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,8 +21,8 @@ session_start();
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
   <title>Laptops website</title>
- <!--Bootstrap 5.2 style link-->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!--Bootstrap 5.2 style link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!--owl slider stylesheet -->
@@ -62,10 +62,17 @@ session_start();
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
             <span>
-            Laptops website
+              Laptops website
             </span>
           </a>
-
+          <small>
+            <?php
+            if (isset($_SESSION['name']))
+              if (isset($_SESSION['admin']))
+                echo 'Welcome admin ' . $_SESSION['name'];
+                else echo 'Welcome '
+            ?>
+          </small>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
@@ -114,7 +121,7 @@ session_start();
                       A single place for all your needs
                     </h1>
                     <p>
-                    Discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
+                      Discover our variety of products, ranged from laptops , smartphones , different parts and accessories and much more...
                     </p>
                     <div class="btn-box">
                       <a href="#news" class="btn btn-light text-dark">
@@ -140,7 +147,7 @@ session_start();
                       Gaming laptops
                     </h1>
                     <p>
-                    We provide a premium collection of gaming machines, to make every gamer feel at home
+                      We provide a premium collection of gaming machines, to make every gamer feel at home
                     </p>
                     <div class="btn-box">
                       <a href="shop.php" class="btn btn-light text-dark">
@@ -166,7 +173,7 @@ session_start();
                       Gadgets and Accessories
                     </h1>
                     <p>
-                      Hight quality powerbanks, headsets, smartwatches and much more 
+                      Hight quality powerbanks, headsets, smartwatches and much more
                     </p>
                     <div class="btn-box">
                       <a href="shop.php" class="btn btn-outline-light text-dark">
