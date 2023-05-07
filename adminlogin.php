@@ -127,7 +127,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                     echo $error_message
                     ?>
                     <div class="d-flex justify-content-center mb-4">
-                        <button>
+                        <button class="btn btn-primary">
                             Sign in
                         </button>
                     </div>
