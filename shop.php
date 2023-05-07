@@ -1,6 +1,11 @@
 <?php
 require_once 'connection.php';
 session_start();
+
+if (array_key_exists('logout', $_POST)) {
+  session_destroy();
+  header("Refresh:0");
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +77,14 @@ session_start();
                 <a class="nav-link" href="contact.php">Contact Us</a>
               </li>
             </ul>
+            <?php
+            if (isset($_SESSION['name']))
+              echo '
+            <form method="post">
+            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+            '
+            ?>
             <div class="user_option-box">
               <a href="login.php">
                 <i class="fa fa-user" aria-hidden="true"></i>
