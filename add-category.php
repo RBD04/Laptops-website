@@ -1,13 +1,38 @@
 <?php
 require_once 'connection.php';
 session_start();
+
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
 
-$query = "SELECT * FROM category";
-$result = mysqli_query($con, $query);
-$r = mysqli_num_rows($result);
-mysqli_close($con);
+$message = '';
+
+$querySelect = 'SELECT * FROM category';
+$categories = mysqli_query($con, $querySelect);
+$num_rows = mysqli_num_rows($categories);
+
+if (isset($_POST) && isset($_POST['category'])) {
+  if (isset($_POST['categoryId'])&&$_POST['categoryId']>0) {
+    $queryUpdate= 'UPDATE category SET categoryName="'.$_POST['category'].'" WHERE categoryId='.$_POST['categoryId'];
+    if (mysqli_query($con, $queryUpdate) === false) die("Error updating category");
+    else {
+      $message = 'Category ' . $_POST['category'] . ' updated successfully';
+    }
+  } else {
+    $query = 'INSERT INTO category(categoryName) values("' . $_POST['category'] . '")';
+    if (mysqli_query($con, $query) === false) die("Error adding category");
+    else {
+      $message = 'Category ' . $_POST['category'] . ' added successfully';
+    }
+  }
+}
+
+if (isset($_GET) && isset($_GET['categoryId'])) {
+  $queryGet = 'SELECT * from category WHERE categoryId=' . $_GET["categoryId"];
+  $result = mysqli_query($con, $queryGet);
+  $category = mysqli_fetch_assoc($result);
+  mysqli_close($con);
+}
 
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
@@ -112,55 +137,53 @@ if (array_key_exists('logout', $_POST)) {
       <div class="col-4">
         Dear rachad categories here
         <ul>
-        <li><a class="btn btn-primary" href="add-category.php">Category</a></li>
+          <li><a class="btn btn-primary" href="add-category">Add category</a></li>
           <li><a class="btn btn-primary" href="#products">Update products</a></li>
           <li><a class="btn btn-primary" href="">Add products</a></li>
         </ul>
       </div>
       <div id="form-container" class="col">
-        <form id="add-product" method="post" action="">
+        <form class="mb-3" id="add-product" method="post">
           <div class="form-group">
-            <h1 class="mb-3">Product section</h1>
-            <label for="productName">Product name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="productName" />
+            <h1 class="mb-3">Add category</h1>
+            <label for="category">Category name</label>
+            <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php if (isset($category)) echo $category["categoryName"];
+                                                                                                  else  "" ?>' />
+            <input name="categoryId" type="hidden" value='<?php if (isset($category)) echo $category["categoryId"];
+                                                          else  "" ?>' />
           </div>
-          <div class="form-group">
-            <label for="serialNumber">Serial Number</label>
-            <input type="text" class="form-control mb-3" id="serialNumber" name="serialNumber" />
-          </div>
-          <div class="form-group">
-            <label for="Category">Category</label>
-            <select class="form-control mb-3" id="category" name="category">
-              <?php
-              for ($i = 0; $i < $r; $i++) {
-                $row = mysqli_fetch_assoc($result);
-                echo '<option value=' . $row['categoryId'] . '>' . $row['categoryName'] . '</option>';
-              }
-              ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="description">Descritpion</label>
-            <textarea type="text" class="form-control mb-3" id="description" name="description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" class="form-control mb-3" id="price" name="price" />
-          </div>
-          <div class="form-group">
-            <label for="thumbnail" class="form-label">Thumbnail</label>
-            <input type="file" class="form-control mb-3" id="thumbnail" name="thumbnail" />
-          </div>
-          <div class="form-group">
-            <label for="images" class="form-label">Images</label>
-            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-primary">Reset</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a href="add-category.php" class="btn btn-primary">Reset</a>
         </form>
-
+        <?php echo $message ?>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            for ($i = 0; $i < $num_rows; $i++) {
+              $row = mysqli_fetch_assoc($categories);
+              echo "<tr>
+            <th scope='row'>" . $i + 1, "</th>" .
+                "<td>" . $row['categoryName'] . "</td>" .
+                "<td><a href='./add-category.php?categoryId=" . $row['categoryId'] . "'>edit</a></td>
+          </tr>";
+            }
+            ?>
+          </tbody>
+        </table>
       </div>
     </div>
+    <?php
+
+    ?>
+
+
   </div>
 
   <!-- jQery -->

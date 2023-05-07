@@ -68,14 +68,12 @@ if (array_key_exists('logout', $_POST)) {
               Laptops website
             </span>
           </a>
-          <small>
             <?php
             if (isset($_SESSION['name']))
               if (isset($_SESSION['admin']))
                 echo 'Welcome admin ' . $_SESSION['name'];
               else echo 'Welcome ' . $_SESSION['name'];
             ?>
-          </small>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>

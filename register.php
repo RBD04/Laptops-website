@@ -8,7 +8,6 @@ if (
     $query = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
         "' . $_POST["email"] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '","' . $_POST['birthday'] . '",
         "' . $_POST['gender'] . '") ';
-    echo($query);
     if (mysqli_query($con, $query) === false) die("Error signing up");
     else {
         mysqli_close($con);

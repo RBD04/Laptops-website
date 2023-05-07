@@ -124,7 +124,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                         <input type="password" placeholder="Password" name="password" />
                     </div>
                     <?php
-                    echo $error_message
+                    echo $error_message;
                     ?>
                     <div class="d-flex justify-content-center mb-4">
                         <button class="btn btn-primary">
