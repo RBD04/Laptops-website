@@ -55,7 +55,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
             <span>
-            Laptops website
+            FlOppy Shop
             </span>
           </a>
 
@@ -69,13 +69,13 @@
                 <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="shop.php"> Shop </a>
+                <a class="nav-link text-primary" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.php">Contact Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link text-primary" href="#about">About</a>
               </li>
             </ul>
             <div class="user_option-box">
@@ -95,98 +95,97 @@
     </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section bg-primary shadow">
-      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container-fluid ">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="detail-box">
-                    <h1>
-                      A single place for all your needs
-                    </h1>
-                    <p>
-                    Discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
-                    </p>
-                    <div class="btn-box">
-                      <a href="#news" class="btn btn-light text-dark">
-                        More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/slider-img1.jpg" alt="">
+    <section class="slider_section shadow" style="background-color: white;">
+    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container-fluid ">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1 class="text-primary display-4">
+                    A single place for all your needs
+                  </h1>
+                  <p class="lead display-6 text-secondary">
+                  Discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
+                  </p class="">
+                  <div class="btn-box">
+                    <a href="#news" class="btn btn-outline-primary">
+                      More
+                    </a>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container-fluid ">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="detail-box">
-                    <h1>
-                      Gaming laptops
-                    </h1>
-                    <p>
-                    We provide a premium collection of gaming machines, to make every gamer feel at home
-                    </p>
-                    <div class="btn-box">
-                      <a href="shop.php" class="btn btn-light text-dark">
-                        More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/slider-img2.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container-fluid ">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="detail-box">
-                    <h1>
-                      Gadgets and Accessories
-                    </h1>
-                    <p>
-                      Hight quality powerbanks, headsets, smartwatches and much more 
-                    </p>
-                    <div class="btn-box">
-                      <a href="shop.php" class="btn btn-outline-light text-dark">
-                        More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/slider-img.jpg" alt="">
-                  </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="images/laptop.gif" alt="">
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <ol class="carousel-indicators">
-          <li data-target="#customCarousel1" data-slide-to="0" class="active bg-light"></li>
-          <li data-target="#customCarousel1" data-slide-to="1" class="bg-light"></li>
-          <li data-target="#customCarousel1" data-slide-to="2" class="bg-light"></li>
-        </ol>
+        <div class="carousel-item ">
+          <div class="container-fluid ">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1 class="display-4 text-primary">
+                    Entertainment for everyone
+                  </h1>
+                  <p class="lead text-secondary">
+                  We provide a premium collection of gaming machines, to make every gamer feel at home
+                  </p>
+                  <div class="btn-box">
+                    <a href="shop.php" class="btn btn-outline-primary">
+                      More
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="images/game-controller.gif" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item ">
+          <div class="container-fluid ">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1 class="display-4 text-primary">
+                    Gadgets and Accessories
+                  </h1>
+                  <p class="lead text-secondary">
+                    Hight quality powerbanks, headsets, smartwatches and much more 
+                  </p>
+                  <div class="btn-box">
+                    <a href="shop.php" class="btn btn-outline-primary">
+                      More
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="images/music.gif" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-    </section>
+      <ol class="carousel-indicators">
+        <li data-target="#customCarousel1" data-slide-to="0" class="active bg-primary"></li>
+        <li data-target="#customCarousel1" data-slide-to="1" class="bg-primary"></li>
+        <li data-target="#customCarousel1" data-slide-to="2" class="bg-primary"></li>
+      </ol>
+    </div>
+  </section>
+</div>
     <!-- end slider section -->
-  </div>
 
   <!-- shop section -->
 
@@ -194,7 +193,7 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2 id="news">
-          Latest laptops
+          Latest Products
         </h2>
       </div>
       <div class="row">
@@ -240,7 +239,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -265,7 +264,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -290,7 +289,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -315,7 +314,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -340,7 +339,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -365,7 +364,7 @@
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class="new bg-primary">
                 <span>
                   New
                 </span>
@@ -374,41 +373,37 @@
           </div>
         </div>
       </div>
-      <div class="btn-box">
-        <a href="">
+      <div class="btn ms-auto me-auto">
+        <a href="shop.php" class="btn btn-outline-primary">
           View All
         </a>
       </div>
     </div>
   </section>
-
   <!-- end shop section -->
 
   <!-- about section -->
 
-  <section class="about_section layout_padding" id="about">
-    <div class="container  ">
+  <section class="about_section layout_padding bg-primary shadow" id="about">
+    <div class="container">
       <div class="row">
         <div class="col-md-6 col-lg-5 ">
           <div class="img-box">
-            <img src="images/about-img.png" alt="">
+            <img src="images/group.png" alt="">
           </div>
         </div>
         <div class="col-md-6 col-lg-7">
           <div class="detail-box">
-            <div class="heading_container" id="about">
-              <h2>
+            <div class="heading_container">
+              <h2 class="display-4">
                 About Us
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+              With a focus on reliability, security and quality, we guarantee a premium experience.
             </p>
-            <a href="">
-              Get in Touch with us
+            <a href="#contact" class="btn bg-light text-dark border border-light">
+              Stay in touch
             </a>
           </div>
         </div>
@@ -424,100 +419,76 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Features Of Our Watches
+          What do we Provide?
         </h2>
-        <p>
-          Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <p class="lead">
+          our policies:
         </p>
       </div>
       <div class="row">
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/f1.png" alt="">
+              <img src="images/fast-delivery.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
-                Fitness Tracking
+                Fast Delivery
               </h5>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                 Enjoy our fast and reliable delivery
               </p>
-              <a href="">
-                <span>
-                  Read More
-                </span>
-                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </a>
             </div>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/f2.png" alt="">
+              <img src="images/secure-shield.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
-                Alerts & Notifications
+                Security
               </h5>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                A secure platform to keep your wallet safe and secure
               </p>
-              <a href="">
-                <span>
-                  Read More
-                </span>
-                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </a>
             </div>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/f3.png" alt="">
+              <img src="images/premium.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
-                Messages
+                Premium Products
               </h5>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                Everyone should leave with a smile 
               </p>
-              <a href="">
-                <span>
-                  Read More
-                </span>
-                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </a>
             </div>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/f4.png" alt="">
+              <img src="images/money.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
-                Bluetooth
+                Rewards
               </h5>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                Earn points while buying, and get special gifts! 
               </p>
-              <a href="">
-                <span>
-                  Read More
-                </span>
-                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </a>
             </div>
           </div>
         </div>
       </div>
-      <div class="btn-box">
-        <a href="">
+      <div class="btn bg-primary m-5">
+        <a href="" class="text-light">
           View More
         </a>
       </div>
@@ -528,13 +499,13 @@
 
   <!-- contact section -->
 
-  <section class="contact_section">
+  <section class="contact_section" id="contact">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
             <div class="heading_container">
-              <h2>
+              <h2 class="text-primary">
                 Contact Us
               </h2>
             </div>
@@ -551,8 +522,8 @@
               <div>
                 <input type="text" class="message-box" placeholder="Message" />
               </div>
-              <div class="d-flex ">
-                <button>
+              <div>
+                <button class="btn bg-primary border border-primary">
                   SEND
                 </button>
               </div>
@@ -561,7 +532,7 @@
         </div>
         <div class="col-md-6">
           <div class="img-box">
-            <img src="images/contact-img.jpg" alt="">
+            <img src="images/mail.png" alt="">
           </div>
         </div>
       </div>
@@ -575,24 +546,24 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Testimonial
+          Wondering who inspires us?
         </h2>
       </div>
       <div class="carousel-wrap ">
         <div class="owl-carousel client_owl-carousel">
           <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="images/c1.jpg" alt="">
+            <div class="box bg-primary shadow">
+              <div class="img-box bg-light border-light">
+                <img src="images/intel.png" alt="">
               </div>
               <div class="detail-box">
                 <div class="client_info">
                   <div class="client_name">
                     <h5>
-                      Mark Thomas
+                      Intel
                     </h5>
                     <h6>
-                      Customer
+                      Hardware Company
                     </h6>
                   </div>
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
@@ -610,18 +581,18 @@
             </div>
           </div>
           <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="images/c2.jpg" alt="">
+            <div class="box bg-primary shadow">
+              <div class="img-box bg-light border-light">
+                <img src="images/windows.png" alt="">
               </div>
               <div class="detail-box">
                 <div class="client_info">
                   <div class="client_name">
                     <h5>
-                      Alina Hans
+                      Microsoft Windows
                     </h5>
                     <h6>
-                      Customer
+                      Software Company
                     </h6>
                   </div>
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
