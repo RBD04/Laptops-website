@@ -8,6 +8,11 @@ $query = "SELECT * FROM category";
 $result = mysqli_query($con, $query);
 $r = mysqli_num_rows($result);
 mysqli_close($con);
+
+if (array_key_exists('logout', $_POST)) {
+  session_destroy();
+  header("Refresh:0");
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +55,12 @@ mysqli_close($con);
           <a class="navbar-brand" href="index.php">
             <span> Laptops website </span>
           </a>
-          
+          <?php
+          if (isset($_SESSION['name']))
+            if (isset($_SESSION['admin']))
+              echo 'Welcome admin ' . $_SESSION['name'];
+            else echo 'Welcome '
+          ?>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
@@ -68,6 +78,14 @@ mysqli_close($con);
                 </a>
               </li>
             </ul>
+            <?php
+            if (isset($_SESSION['name']))
+              echo '
+            <form method="post">
+            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+            '
+            ?>
             <div class="user_option-box">
               <a href="login.php">
                 <i class="fa fa-user" aria-hidden="true"></i>

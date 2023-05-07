@@ -1,7 +1,6 @@
 <?php
 require_once 'connection.php';
 session_start();
-// session_destroy(); //(logout)
 if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
     header('Location: admin.php');
@@ -10,7 +9,7 @@ if (isset($_SESSION)) {
 }
 
 if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
-  $query = 'SELECT UserId FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
+  $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
   echo $query;
   $result = mysqli_query($con, $query);
   $num_rows = mysqli_num_rows($result);
@@ -21,6 +20,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
   } else if ($num_rows === 1) {
       $user = mysqli_fetch_assoc($result);
       $_SESSION['user'] = $user['UserId'];
+      $_SESSION['name'] = $user['firstName'].' '.$user['lastName'];
       mysqli_close($con);
       header('Location: index.php');
   }

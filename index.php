@@ -1,3 +1,14 @@
+<?php
+require_once 'connection.php';
+session_start();
+// session_destroy(); //logout
+// echo 'you are'. $_SESSION['name'];
+if (array_key_exists('logout', $_POST)) {
+  session_destroy();
+  header("Refresh:0");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +25,8 @@
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
   <title>Laptops website</title>
- <!--Bootstrap 5.2 style link-->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!--Bootstrap 5.2 style link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!--owl slider stylesheet -->
@@ -55,10 +66,17 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
             <span>
-            FlOppy Shop
+              Laptops website
             </span>
           </a>
-
+          <small>
+            <?php
+            if (isset($_SESSION['name']))
+              if (isset($_SESSION['admin']))
+                echo 'Welcome admin ' . $_SESSION['name'];
+              else echo 'Welcome ' . $_SESSION['name'];
+            ?>
+          </small>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
@@ -74,10 +92,17 @@
               <li class="nav-item">
                 <a class="nav-link" href="contact.php">Contact Us</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link text-primary" href="#about">About</a>
-              </li>
             </ul>
+
+            <?php
+            if (isset($_SESSION['name']))
+              echo '
+            <form method="post">
+            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+            '
+            ?>
+
             <div class="user_option-box">
               <a href="login.php">
                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -113,6 +138,7 @@
                     <a href="#news" class="btn btn-outline-primary">
                       More
                     </a>
+
                   </div>
                 </div>
               </div>

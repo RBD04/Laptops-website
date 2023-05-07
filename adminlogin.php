@@ -8,7 +8,7 @@ if (isset($_SESSION) && isset($_SESSION['admin']))
 $error_message = '';
 
 if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
-    $query = 'SELECT adminId FROM admin Where username="' . $_POST["username"] . '" and password="' . $_POST["password"] . '"';
+    $query = 'SELECT * FROM admin Where username="' . $_POST["username"] . '" and password="' . $_POST["password"] . '"';
     $result = mysqli_query($con, $query);
     $num_rows = mysqli_num_rows($result);
     if ($num_rows === 0) {
@@ -18,6 +18,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
     } else if ($num_rows === 1) {
         $admin = mysqli_fetch_assoc($result);
         $_SESSION['admin'] = $admin['adminId'];
+        $_SESSION['name']=$admin['username'];
         mysqli_close($con);
         header('Location: admin.php');
     }
