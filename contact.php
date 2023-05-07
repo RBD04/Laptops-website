@@ -86,6 +86,10 @@ if (array_key_exists('logout', $_POST)) {
             ?>
             <div class="user_option-box">
               <a href="login.php">
+              <?php
+                if (isset($_SESSION['admin']))
+                  echo 'admin page '
+                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <a href="">

@@ -105,6 +105,10 @@ if (array_key_exists('logout', $_POST)) {
 
             <div class="user_option-box">
               <a href="login.php">
+                <?php
+                if (isset($_SESSION['admin']))
+                  echo 'admin page '
+                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <a href="">
@@ -121,97 +125,97 @@ if (array_key_exists('logout', $_POST)) {
     <!-- end header section -->
     <!-- slider section -->
     <section class="slider_section shadow" style="background-color: white;">
-    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="container-fluid ">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="detail-box">
-                  <h1 class="text-primary display-4">
-                    A single place for all your needs
-                  </h1>
-                  <p class="lead display-6 text-secondary">
-                  Discover our variety of products, ranged   from laptops , smartphones , different parts and accessories and much more...
-                  </p class="">
-                  <div class="btn-box">
-                    <a href="#news" class="btn btn-outline-primary">
-                      More
-                    </a>
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container-fluid ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1 class="text-primary display-4">
+                      A single place for all your needs
+                    </h1>
+                    <p class="lead display-6 text-secondary">
+                      Discover our variety of products, ranged from laptops , smartphones , different parts and accessories and much more...
+                    </p class="">
+                    <div class="btn-box">
+                      <a href="#news" class="btn btn-outline-primary">
+                        More
+                      </a>
 
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="images/laptop.gif" alt="">
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="img-box">
-                  <img src="images/laptop.gif" alt="">
+            </div>
+          </div>
+          <div class="carousel-item ">
+            <div class="container-fluid ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1 class="display-4 text-primary">
+                      Entertainment for everyone
+                    </h1>
+                    <p class="lead text-secondary">
+                      We provide a premium collection of gaming machines, to make every gamer feel at home
+                    </p>
+                    <div class="btn-box">
+                      <a href="shop.php" class="btn btn-outline-primary">
+                        More
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="images/game-controller.gif" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item ">
+            <div class="container-fluid ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1 class="display-4 text-primary">
+                      Gadgets and Accessories
+                    </h1>
+                    <p class="lead text-secondary">
+                      Hight quality powerbanks, headsets, smartwatches and much more
+                    </p>
+                    <div class="btn-box">
+                      <a href="shop.php" class="btn btn-outline-primary">
+                        More
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="images/music.gif" alt="">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="carousel-item ">
-          <div class="container-fluid ">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="detail-box">
-                  <h1 class="display-4 text-primary">
-                    Entertainment for everyone
-                  </h1>
-                  <p class="lead text-secondary">
-                  We provide a premium collection of gaming machines, to make every gamer feel at home
-                  </p>
-                  <div class="btn-box">
-                    <a href="shop.php" class="btn btn-outline-primary">
-                      More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="img-box">
-                  <img src="images/game-controller.gif" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item ">
-          <div class="container-fluid ">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="detail-box">
-                  <h1 class="display-4 text-primary">
-                    Gadgets and Accessories
-                  </h1>
-                  <p class="lead text-secondary">
-                    Hight quality powerbanks, headsets, smartwatches and much more 
-                  </p>
-                  <div class="btn-box">
-                    <a href="shop.php" class="btn btn-outline-primary">
-                      More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="img-box">
-                  <img src="images/music.gif" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ol class="carousel-indicators">
+          <li data-target="#customCarousel1" data-slide-to="0" class="active bg-primary"></li>
+          <li data-target="#customCarousel1" data-slide-to="1" class="bg-primary"></li>
+          <li data-target="#customCarousel1" data-slide-to="2" class="bg-primary"></li>
+        </ol>
       </div>
-      <ol class="carousel-indicators">
-        <li data-target="#customCarousel1" data-slide-to="0" class="active bg-primary"></li>
-        <li data-target="#customCarousel1" data-slide-to="1" class="bg-primary"></li>
-        <li data-target="#customCarousel1" data-slide-to="2" class="bg-primary"></li>
-      </ol>
-    </div>
-  </section>
-</div>
-    <!-- end slider section -->
+    </section>
+  </div>
+  <!-- end slider section -->
 
   <!-- shop section -->
 
@@ -462,7 +466,7 @@ if (array_key_exists('logout', $_POST)) {
                 Fast Delivery
               </h5>
               <p>
-                 Enjoy our fast and reliable delivery
+                Enjoy our fast and reliable delivery
               </p>
             </div>
           </div>
@@ -492,7 +496,7 @@ if (array_key_exists('logout', $_POST)) {
                 Premium Products
               </h5>
               <p>
-                Everyone should leave with a smile 
+                Everyone should leave with a smile
               </p>
             </div>
           </div>
@@ -507,7 +511,7 @@ if (array_key_exists('logout', $_POST)) {
                 Rewards
               </h5>
               <p>
-                Earn points while buying, and get special gifts! 
+                Earn points while buying, and get special gifts!
               </p>
             </div>
           </div>
@@ -595,8 +599,8 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
                 </div>
                 <p>
-                Intel Corporation (commonly known as Intel) is an American multinational corporation and technology company headquartered in Santa Clara, California. It is one of the world's largest semiconductor chip manufacturer by revenue,[3][4] and is one of the developers of the x86 series of instruction sets found in most personal computers (PCs).
-                <br>
+                  Intel Corporation (commonly known as Intel) is an American multinational corporation and technology company headquartered in Santa Clara, California. It is one of the world's largest semiconductor chip manufacturer by revenue,[3][4] and is one of the developers of the x86 series of instruction sets found in most personal computers (PCs).
+                  <br>
                 </p>
               </div>
             </div>
@@ -619,7 +623,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
                 </div>
                 <p>
-                Microsoft Windows is a group of several proprietary graphical operating system families developed and marketed by Microsoft. Each family caters to a certain sector of the computing industry. For example, Windows NT for consumers, Windows Server for servers, and Windows IoT for embedded systems. Defunct Windows families include Windows 9x, Windows Mobile, and Windows Phone.
+                  Microsoft Windows is a group of several proprietary graphical operating system families developed and marketed by Microsoft. Each family caters to a certain sector of the computing industry. For example, Windows NT for consumers, Windows Server for servers, and Windows IoT for embedded systems. Defunct Windows families include Windows 9x, Windows Mobile, and Windows Phone.
                 </p>
               </div>
             </div>
@@ -709,4 +713,5 @@ if (array_key_exists('logout', $_POST)) {
   <!-- custom js -->
   <script src="js/custom.js"></script>
 </body>
+
 </html>
