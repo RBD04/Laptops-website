@@ -1,5 +1,6 @@
 <?php
 require_once 'connection.php';
+session_start();
 if (
     isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
     && isset($_POST['phoneNumber']) && isset($_POST['password'])
@@ -10,6 +11,7 @@ if (
     echo($query);
     if (mysqli_query($con, $query) === false) die("Error signing up");
     else {
+        mysqli_close($con);
         echo '<script type="text/javascript">
                         alert("You have successfully registred, login now!");
                         window.location="./login.php";

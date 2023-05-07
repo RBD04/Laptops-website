@@ -1,3 +1,10 @@
+<?php 
+require_once 'connection.php';
+session_start();
+// session_destroy(); //logout
+// echo 'you are'. $_SESSION['name'];
+?>  
+
 <!DOCTYPE html>
 <html lang="en">
 
