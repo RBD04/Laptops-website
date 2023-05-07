@@ -41,7 +41,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Laptops website</title>
+  <title>FlOppy Shop</title>
 
 
   <!-- bootstrap core css -->
@@ -83,7 +83,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
                 <a class="nav-link" href="index.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="shop.php"> Shop </a>
+                <a class="nav-link text-primary" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
@@ -140,10 +140,10 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
   <!-- end contact section -->
 
   <!-- footer section -->
-  <footer class="footer_section">
+  <footer class="footer_section bg-primary">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_detail">
             <h4>
               About
@@ -167,7 +167,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_contact">
             <h4>
               Reach at..
@@ -194,31 +194,11 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Subscribe
-            </h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap"></div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
+          <a href="https://html.design/">FlOppy Shop</a>
         </p>
       </div>
     </div>
