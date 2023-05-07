@@ -553,7 +553,7 @@
         <div class="owl-carousel client_owl-carousel">
           <div class="item">
             <div class="box bg-primary shadow">
-              <div class="img-box bg-light border-light">
+              <div class="img-box bg-light border-dark">
                 <img src="images/intel.png" alt="">
               </div>
               <div class="detail-box">
@@ -562,27 +562,22 @@
                     <h5>
                       Intel
                     </h5>
-                    <h6>
+                    <h6 class="text-dark">
                       Hardware Company
                     </h6>
                   </div>
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore
-                  et
-                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum
-                  dolore eu fugia
+                Intel Corporation (commonly known as Intel) is an American multinational corporation and technology company headquartered in Santa Clara, California. It is one of the world's largest semiconductor chip manufacturer by revenue,[3][4] and is one of the developers of the x86 series of instruction sets found in most personal computers (PCs).
+                <br>
                 </p>
               </div>
             </div>
           </div>
           <div class="item">
             <div class="box bg-primary shadow">
-              <div class="img-box bg-light border-light">
+              <div class="img-box bg-light border-dark">
                 <img src="images/windows.png" alt="">
               </div>
               <div class="detail-box">
@@ -591,20 +586,14 @@
                     <h5>
                       Microsoft Windows
                     </h5>
-                    <h6>
+                    <h6 class="text-dark">
                       Software Company
                     </h6>
                   </div>
                   <i class="fa fa-quote-left" aria-hidden="true"></i>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore
-                  et
-                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum
-                  dolore eu fugia
+                Microsoft Windows is a group of several proprietary graphical operating system families developed and marketed by Microsoft. Each family caters to a certain sector of the computing industry. For example, Windows NT for consumers, Windows Server for servers, and Windows IoT for embedded systems. Defunct Windows families include Windows 9x, Windows Mobile, and Windows Phone.
                 </p>
               </div>
             </div>
@@ -616,10 +605,10 @@
   <!-- end client section -->
 
   <!-- footer section -->
-  <footer class="footer_section">
+  <footer class="footer_section bg-primary">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_detail">
             <h4>
               About
@@ -643,7 +632,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_contact">
             <h4>
               Reach at..
@@ -670,31 +659,11 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Subscribe
-            </h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap"></div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
+          <a href="https://html.design/">FlOppy Shop</a>
         </p>
       </div>
     </div>
@@ -713,10 +682,5 @@
   </script>
   <!-- custom js -->
   <script src="js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
 </body>
-
 </html>
