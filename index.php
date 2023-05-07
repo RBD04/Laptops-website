@@ -2,7 +2,6 @@
 require_once 'connection.php';
 session_start();
 // session_destroy(); //logout
-// echo 'you are'. $_SESSION['name'];
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
@@ -87,7 +86,7 @@ if (array_key_exists('logout', $_POST)) {
                 <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-primary" href="shop.php"> Shop </a>
+                <a class="nav-link" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.php">Contact Us</a>
