@@ -121,7 +121,7 @@ if (array_key_exists('logout', $_POST)) {
     </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section shadow" style="background-color: white;">
+    <section class="slider_section shadow p-4" style="background-color: white;">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
