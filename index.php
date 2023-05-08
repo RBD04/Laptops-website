@@ -80,14 +80,14 @@ if (array_key_exists('logout', $_POST)) {
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <li class="nav-item active text-end">
-                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+              <li class="nav-item active">
+                <a class="nav-link fw-bolder" href="index.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact Us</a>
+                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
               </li>
             </ul>
 
@@ -121,7 +121,7 @@ if (array_key_exists('logout', $_POST)) {
     </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section shadow p-4" style="background-color: white;">
+    <section class="slider_section shadow-lg p-4" style="background-color: white;">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -532,7 +532,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="col-md-6">
           <div class="form_container">
             <div class="heading_container">
-              <h2 class="text-primary">
+              <h2 class="text-primary ms-2">
                 Contact Us
               </h2>
             </div>
@@ -558,79 +558,15 @@ if (array_key_exists('logout', $_POST)) {
           </div>
         </div>
         <div class="col-md-6">
-          <div class="img-box">
+          <div class="img-box ms-1">
             <img src="images/mail.png" alt="">
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <!-- end contact section -->
-
-  <!-- client section -->
-  <section class="client_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Wondering who inspires us?
-        </h2>
-      </div>
-      <div class="carousel-wrap ">
-        <div class="owl-carousel client_owl-carousel">
-          <div class="item">
-            <div class="box bg-primary shadow">
-              <div class="img-box bg-light border-dark">
-                <img src="images/intel.png" alt="">
-              </div>
-              <div class="detail-box">
-                <div class="client_info">
-                  <div class="client_name">
-                    <h5>
-                      Intel
-                    </h5>
-                    <h6 class="text-dark">
-                      Hardware Company
-                    </h6>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Intel Corporation (commonly known as Intel) is an American multinational corporation and technology company headquartered in Santa Clara, California. It is one of the world's largest semiconductor chip manufacturer by revenue,[3][4] and is one of the developers of the x86 series of instruction sets found in most personal computers (PCs).
-                  <br>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="box bg-primary shadow">
-              <div class="img-box bg-light border-dark">
-                <img src="images/windows.png" alt="">
-              </div>
-              <div class="detail-box">
-                <div class="client_info">
-                  <div class="client_name">
-                    <h5>
-                      Microsoft Windows
-                    </h5>
-                    <h6 class="text-dark">
-                      Software Company
-                    </h6>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Microsoft Windows is a group of several proprietary graphical operating system families developed and marketed by Microsoft. Each family caters to a certain sector of the computing industry. For example, Windows NT for consumers, Windows Server for servers, and Windows IoT for embedded systems. Defunct Windows families include Windows 9x, Windows Mobile, and Windows Phone.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end client section -->
-
+  <br>
   <!-- footer section -->
   <footer class="footer_section bg-primary">
     <div class="container">
@@ -643,7 +579,7 @@ if (array_key_exists('logout', $_POST)) {
             <p>
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
             </p>
-            <div class="footer_social">
+            <div class="footer_social justify-content-center">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
@@ -690,7 +626,7 @@ if (array_key_exists('logout', $_POST)) {
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">FlOppy Shop</a>
+          <a href="https://html.design/">Laptops website</a>
         </p>
       </div>
     </div>
