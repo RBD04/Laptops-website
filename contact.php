@@ -106,15 +106,15 @@ if (array_key_exists('logout', $_POST)) {
     <!-- end header section -->
   </div>
 
-  <!-- contact section -->
+   <!-- contact section -->
 
-  <section class="contact_section layout_padding">
+   <section class="contact_section p-4">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <div class="heading_container">
-              <h2>
+            <div>
+              <h2 class="text-primary text-center display-5 fw-bolder">
                 Contact Us
               </h2>
             </div>
@@ -131,30 +131,29 @@ if (array_key_exists('logout', $_POST)) {
               <div>
                 <input type="text" class="message-box" placeholder="Message" />
               </div>
-              <div class="d-flex ">
-                <button>
+              <div>
+                <a class="btn btn-outline-primary ">
                   SEND
-                </button>
+            </a>
               </div>
             </form>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="img-box">
-            <img src="images/contact-img.jpg" alt="">
+          <div class="img-box ms-5">
+            <img src="images/mail.png" alt="">
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <!-- end contact section -->
-
+  <br>
   <!-- footer section -->
-  <footer class="footer_section">
+  <footer class="footer_section bg-primary">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_detail">
             <h4>
               About
@@ -162,7 +161,7 @@ if (array_key_exists('logout', $_POST)) {
             <p>
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
             </p>
-            <div class="footer_social">
+            <div class="footer_social justify-content-center">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
@@ -178,7 +177,7 @@ if (array_key_exists('logout', $_POST)) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_contact">
             <h4>
               Reach at..
@@ -205,31 +204,11 @@ if (array_key_exists('logout', $_POST)) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Subscribe
-            </h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap"></div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
+          <a href="https://html.design/">Laptops website</a>
         </p>
       </div>
     </div>
@@ -248,10 +227,6 @@ if (array_key_exists('logout', $_POST)) {
   </script>
   <!-- custom js -->
   <script src="js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
 </body>
 
 </html>
