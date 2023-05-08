@@ -3,7 +3,7 @@ require_once 'connection.php';
 session_start();
 if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
-    header('Location: admin.php');
+    header('Location: add-product.php');
   else if(isset($_SESSION['user']))
     header('Location: index.php');
 }

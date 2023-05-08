@@ -91,6 +91,10 @@ if (array_key_exists('logout', $_POST)) {
             ?>
             <div class="user_option-box">
               <a href="login.php">
+                <?php
+                if (isset($_SESSION['admin']))
+                  echo 'admin page '
+                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <a href="">
@@ -110,12 +114,12 @@ if (array_key_exists('logout', $_POST)) {
 
     <div class="row">
       <div class="col-4">
-        Dear rachad categories here
-        <ul>
-        <li><a class="btn btn-primary" href="add-category.php">Category</a></li>
-          <li><a class="btn btn-primary" href="#products">Update products</a></li>
-          <li><a class="btn btn-primary" href="">Add products</a></li>
-        </ul>
+        <h3 class="mb-5">Admin control panel</h3>
+        <div class="list-group">
+          <a class="list-group-item active" href="add-product.php" aria-current="true">Add Product</a>
+          <a class="list-group-item" href="product-details.php">Product details (dont press now)</a>
+          <a class="list-group-item" href="category-details.php">Category details</a>
+        </div>
       </div>
       <div id="form-container" class="col">
         <form id="add-product" method="post" action="">

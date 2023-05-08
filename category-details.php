@@ -12,17 +12,17 @@ $categories = mysqli_query($con, $querySelect);
 $num_rows = mysqli_num_rows($categories);
 
 if (isset($_POST) && isset($_POST['category'])) {
-  if (isset($_POST['categoryId'])&&$_POST['categoryId']>0) {
-    $queryUpdate= 'UPDATE category SET categoryName="'.$_POST['category'].'" WHERE categoryId='.$_POST['categoryId'];
+  if (isset($_POST['categoryId']) && $_POST['categoryId'] > 0) {
+    $queryUpdate = 'UPDATE category SET categoryName="' . $_POST['category'] . '" WHERE categoryId=' . $_POST['categoryId'];
     if (mysqli_query($con, $queryUpdate) === false) die("Error updating category");
     else {
-      $message = 'Category ' . $_POST['category'] . ' updated successfully';
+      $message = 'Category \'' . $_POST['category'] . '\' updated successfully';
     }
   } else {
     $query = 'INSERT INTO category(categoryName) values("' . $_POST['category'] . '")';
     if (mysqli_query($con, $query) === false) die("Error adding category");
     else {
-      $message = 'Category ' . $_POST['category'] . ' added successfully';
+      $message = 'Category \'' . $_POST['category'] . '\' added successfully';
     }
   }
 }
@@ -116,6 +116,10 @@ if (array_key_exists('logout', $_POST)) {
             ?>
             <div class="user_option-box">
               <a href="login.php">
+                <?php
+                if (isset($_SESSION['admin']))
+                  echo 'admin page '
+                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <a href="">
@@ -135,17 +139,17 @@ if (array_key_exists('logout', $_POST)) {
 
     <div class="row">
       <div class="col-4">
-        Dear rachad categories here
-        <ul>
-          <li><a class="btn btn-primary" href="add-category">Add category</a></li>
-          <li><a class="btn btn-primary" href="#products">Update products</a></li>
-          <li><a class="btn btn-primary" href="">Add products</a></li>
-        </ul>
+        <h3 class="mb-5">Admin control panel</h3>
+        <div class="list-group">
+          <a class="list-group-item" href="add-product.php">Add product</a>
+          <a class="list-group-item" href="product-details.php">Product details (dont press now)</a>
+          <a class="list-group-item active" href="category-details.php" aria-current="true">Category details</a>
+        </div>
       </div>
       <div id="form-container" class="col">
         <form class="mb-3" id="add-product" method="post">
           <div class="form-group">
-            <h1 class="mb-3">Add category</h1>
+            <h1 class="mb-3">Category details</h1>
             <label for="category">Category name</label>
             <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php if (isset($category)) echo $category["categoryName"];
                                                                                                   else  "" ?>' />
@@ -153,7 +157,7 @@ if (array_key_exists('logout', $_POST)) {
                                                           else  "" ?>' />
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
-          <a href="add-category.php" class="btn btn-primary">Reset</a>
+          <a href="category-details.php" class="btn btn-primary">Refresh</a>
         </form>
         <?php echo $message ?>
         <table class="table table-striped">
@@ -171,7 +175,7 @@ if (array_key_exists('logout', $_POST)) {
               echo "<tr>
             <th scope='row'>" . $i + 1, "</th>" .
                 "<td>" . $row['categoryName'] . "</td>" .
-                "<td><a href='./add-category.php?categoryId=" . $row['categoryId'] . "'>edit</a></td>
+                "<td><a href='./category-details.php?categoryId=" . $row['categoryId'] . "'>edit</a></td>
           </tr>";
             }
             ?>

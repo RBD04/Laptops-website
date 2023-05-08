@@ -3,7 +3,7 @@ require_once 'connection.php';
 session_start();
 // session_destroy(); //(logout)
 if (isset($_SESSION) && isset($_SESSION['admin']))
-    header('Location: admin.php');
+    header('Location: add-product.php');
 
 $error_message = '';
 
@@ -20,7 +20,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
         $_SESSION['admin'] = $admin['adminId'];
         $_SESSION['name']=$admin['username'];
         mysqli_close($con);
-        header('Location: admin.php');
+        header('Location: add-product.php');
     }
 }
 ?>
