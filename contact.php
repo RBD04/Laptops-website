@@ -24,7 +24,8 @@ if (array_key_exists('logout', $_POST)) {
 
   <title>Laptops website</title>
 
-
+  <!--Bootstrap 5.2 style link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!--owl slider stylesheet -->
@@ -67,13 +68,13 @@ if (array_key_exists('logout', $_POST)) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="index.php">Home </a>
+                <a class="nav-link fw-bolder" href="index.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
             </ul>
             <?php
@@ -131,10 +132,10 @@ if (array_key_exists('logout', $_POST)) {
               <div>
                 <input type="text" class="message-box" placeholder="Message" />
               </div>
-              <div>
-                <a class="btn btn-outline-primary ">
+              <div class="text-center">
+                <a class="btn btn-outline-primary">
                   SEND
-            </a>
+                </a>
               </div>
             </form>
           </div>
