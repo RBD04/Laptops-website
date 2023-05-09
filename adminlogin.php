@@ -42,7 +42,8 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
 
     <title>admin login</title>
 
-
+    <!--Bootstrap 5.2 style link-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <!--owl slider stylesheet -->
@@ -63,7 +64,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
     <div class="hero_area">
 
         <!-- header section strats -->
-        <header class="header_section">
+        <header class="header_section mb-5">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
                     <a class="navbar-brand" href="index.php">
@@ -79,13 +80,13 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php">Home </a>
+                                <a class="nav-link fw-bolder" href="index.php">Home </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="shop.php"> Shop </a>
+                                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+                                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
                             </li>
                         </ul>
                         <div class="user_option-box">
@@ -108,28 +109,32 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
 
     <!-- contact section -->
 
-    <section class="contact_section layout_padding pb-5">
+    <section class="contact_section layout_padding p-4 mt-5 justify-content-center">
         <div class="container">
             <div class="form_container">
-                <div class="heading_container">
-                    <h2>
+                <div class="text-center">
+                    <h2 class="display-5 text-primary fw-bolder">
                         Admin Login
                     </h2>
                 </div>
                 <form method="post">
                     <div>
+                        <br>
                         <input type="text" placeholder="Username" name="username" />
+                        <br>
                     </div>
                     <div>
+                        <br>
                         <input type="password" placeholder="Password" name="password" />
+                        <br>
                     </div>
                     <?php
                     echo $error_message;
                     ?>
-                    <div class="d-flex justify-content-center mb-4">
-                        <button class="btn btn-primary">
+                    <div class="text-center mt-5">
+                        <a class="btn btn-primary btn-lg">
                             Sign in
-                        </button>
+                        </a>
                     </div>
                 </form>
             </div>
