@@ -25,7 +25,8 @@ if (array_key_exists('logout', $_POST)) {
 
   <title>Laptops website</title>
 
-
+  <!--Bootstrap 5.2 style link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!--owl slider stylesheet -->
@@ -42,6 +43,8 @@ if (array_key_exists('logout', $_POST)) {
 </head>
 
 <body class="sub_page">
+  <!--Bootstrap 5.2 script section-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
   <div class="hero_area">
 
@@ -68,13 +71,16 @@ if (array_key_exists('logout', $_POST)) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="index.php">Home </a>
+                <a class="nav-link fw-bolder" href="index.php">Home </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
+                <a class="nav-link fw-bolder" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact Us</a>
+                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+              </li>
+              <li>
+                <button class="btn btn-light m-0 p-1 fw-bolder" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Categories</button>
               </li>
             </ul>
             <?php
@@ -106,208 +112,38 @@ if (array_key_exists('logout', $_POST)) {
     </header>
     <!-- end header section -->
   </div>
-
   <!-- shop section -->
 
-  <section class="shop_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Latest Laptops
-        </h2>
-      </div>
-      <div class="row">
-        <div class="col-md-6 ">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w1.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  Featured
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $125
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $145
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w5.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $195
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6  col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w6.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $170
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/w1.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Smartwatch
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    $230
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="btn-box">
-        <a href="">
-          View All
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- end shop section -->
-
+  <!--Categories Offcanvas-->
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-primary fw-bolder" id="offcanvasWithBothOptionsLabel">Shop By Category</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link fw-bolder" href="">Laptops</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bolder" href="">Smartphones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bolder" href="">Earphones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bolder" href="">Desktop Computers</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--End Categories Offcanvas-->
   <!-- footer section -->
-  <footer class="footer_section">
+  <footer class="footer_section bg-primary">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_detail">
             <h4>
               About
@@ -315,7 +151,7 @@ if (array_key_exists('logout', $_POST)) {
             <p>
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
             </p>
-            <div class="footer_social">
+            <div class="footer_social justify-content-center">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
@@ -331,7 +167,7 @@ if (array_key_exists('logout', $_POST)) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
           <div class="footer_contact">
             <h4>
               Reach at..
@@ -358,31 +194,11 @@ if (array_key_exists('logout', $_POST)) {
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Subscribe
-            </h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 footer-col">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap"></div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
+          <a href="https://html.design/">Laptops website</a>
         </p>
       </div>
     </div>
