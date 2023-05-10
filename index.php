@@ -215,7 +215,6 @@ if (array_key_exists('logout', $_POST)) {
   <!-- end slider section -->
 
   <!-- shop section -->
-
   <section class="shop_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
