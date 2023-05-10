@@ -128,9 +128,9 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             <input name="password" type="password" placeholder="Password" />
           </div>
           <div class="text-center pb-3">
-            <a class="btn btn-large text-center btn-primary mx-auto">
+            <button type="submit" class="btn btn-large text-center btn-primary mx-auto">
                 &nbsp;Sign in &nbsp;
-            </a>
+            </button>
             </div>
           <div class="d-flex justify-content-center">
             <a href="register.php" class="text-secondary link">Create Account</a>
