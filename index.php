@@ -68,12 +68,12 @@ if (array_key_exists('logout', $_POST)) {
               Laptops website
             </span>
           </a>
-            <?php
-            if (isset($_SESSION['name']))
-              if (isset($_SESSION['admin']))
-                echo 'Welcome admin ' . $_SESSION['name'];
-              else echo 'Welcome ' . $_SESSION['name'];
-            ?>
+          <?php
+          if (isset($_SESSION['name']))
+            if (isset($_SESSION['admin']))
+              echo 'Welcome admin ' . $_SESSION['name'];
+            else echo 'Welcome ' . $_SESSION['name'];
+          ?>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
@@ -108,9 +108,17 @@ if (array_key_exists('logout', $_POST)) {
                 ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
-              <a href="">
-                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-              </a>
+              <div class="dropstart">
+                <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu">
+                <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><a class="dropdown-item" href="#">First Item</a></li>
+                  <li><a class="dropdown-item" href="#">Second Item</a></li>
+                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                </ul>
+              </div>
               <a href="">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </a>
