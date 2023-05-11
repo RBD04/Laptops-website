@@ -18,7 +18,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
     } else if ($num_rows === 1) {
         $admin = mysqli_fetch_assoc($result);
         $_SESSION['admin'] = $admin['adminId'];
-        $_SESSION['name']=$admin['username'];
+        $_SESSION['name'] = $admin['username'];
         mysqli_close($con);
         header('Location: add-product.php');
     }
@@ -93,9 +93,17 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                             <a href="login.php">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
-                            <a href="">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                            </a>
+                            <div class="dropstart">
+                                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><span class="dropdown-item-text">No Items Available</span></li>
+                                    <li><a class="dropdown-item" href="#">First Item</a></li>
+                                    <li><a class="dropdown-item" href="#">Second Item</a></li>
+                                    <li><a class="dropdown-item" href="#">Third Item</a></li>
+                                </ul>
+                            </div>
                             <a href="">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </a>

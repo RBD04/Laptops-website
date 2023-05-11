@@ -87,15 +87,23 @@ if (array_key_exists('logout', $_POST)) {
             ?>
             <div class="user_option-box">
               <a href="login.php">
-              <?php
+                <?php
                 if (isset($_SESSION['admin']))
                   echo 'admin page '
                 ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
-              <a href="">
-                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-              </a>
+              <div class="dropstart">
+                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><a class="dropdown-item" href="#">First Item</a></li>
+                  <li><a class="dropdown-item" href="#">Second Item</a></li>
+                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                </ul>
+              </div>
               <a href="">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </a>
@@ -107,9 +115,9 @@ if (array_key_exists('logout', $_POST)) {
     <!-- end header section -->
   </div>
 
-   <!-- contact section -->
+  <!-- contact section -->
 
-   <section class="contact_section p-4">
+  <section class="contact_section p-4">
     <div class="container">
       <div class="row">
         <div class="col-md-6">

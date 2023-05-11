@@ -109,7 +109,7 @@ if (array_key_exists('logout', $_POST)) {
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <div class="dropstart">
-                <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
