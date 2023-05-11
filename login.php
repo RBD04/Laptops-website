@@ -135,7 +135,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             </div>
             <br>
           <div class="d-flex justify-content-center">
-            <a href="register.php" class="text-secondary link">Create Account</a>
+            <a href="register.php" class="text-secondary link text-decoration-underline">Create Account</a>
           </div>
         </form>
       </div>
