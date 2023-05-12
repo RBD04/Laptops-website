@@ -140,9 +140,9 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                     echo $error_message;
                     ?>
                     <div class="text-center mt-5">
-                        <a class="btn btn-primary btn-lg">
-                            Sign in
-                        </a>
+                        <button type="submit" class="btn btn-large text-center btn-primary ">
+                            &nbsp;Sign in &nbsp;
+                        </button>
                     </div>
                 </form>
             </div>
