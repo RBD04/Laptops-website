@@ -113,7 +113,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><span class="dropdown-item-text">No Items Available</span></li>
                   <li><a class="dropdown-item" href="#">First Item</a></li>
                   <li><a class="dropdown-item" href="#">Second Item</a></li>
                   <li><a class="dropdown-item" href="#">Third Item</a></li>

@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
     header('Location: add-product.php');
-  else if(isset($_SESSION['user']))
+  else if (isset($_SESSION['user']))
     header('Location: index.php');
 }
 
@@ -14,15 +14,15 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
   $result = mysqli_query($con, $query);
   $num_rows = mysqli_num_rows($result);
   if ($num_rows === 0) {
-      $error_message = 'Authentication failed';
+    $error_message = 'Authentication failed';
   } else if ($num_rows > 1) {
-      $error_message = 'Please contact your administrator';
+    $error_message = 'Please contact your administrator';
   } else if ($num_rows === 1) {
-      $user = mysqli_fetch_assoc($result);
-      $_SESSION['user'] = $user['UserId'];
-      $_SESSION['name'] = $user['firstName'].' '.$user['lastName'];
-      mysqli_close($con);
-      header('Location: index.php');
+    $user = mysqli_fetch_assoc($result);
+    $_SESSION['user'] = $user['UserId'];
+    $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
+    mysqli_close($con);
+    header('Location: index.php');
   }
 }
 ?>
@@ -43,8 +43,8 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
 
   <title>Laptops Website</title>
 
- <!--Bootstrap 5.2 style link-->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!--Bootstrap 5.2 style link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!--owl slider stylesheet -->
@@ -101,7 +101,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><span class="dropdown-item-text">No Items Available</span></li>
                   <li><a class="dropdown-item" href="#">First Item</a></li>
                   <li><a class="dropdown-item" href="#">Second Item</a></li>
                   <li><a class="dropdown-item" href="#">Third Item</a></li>
@@ -136,12 +136,11 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             <input name="password" type="password" placeholder="Password" />
           </div>
           <div class="text-center">
-            <a type="submit" class="btn btn-large text-center btn-primary mx-auto">
-                &nbsp;Sign in &nbsp;
-            </a>
-            
-            </div>
-            <br>
+            <button type="submit" class="btn btn-large text-center btn-primary ">
+              &nbsp;Sign in &nbsp;
+            </button>
+          </div>
+          <br>
           <div class="d-flex justify-content-center">
             <a href="register.php" class="text-secondary link text-decoration-underline">Create Account</a>
           </div>
