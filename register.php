@@ -33,6 +33,8 @@ if (
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <!--Bootstrap 5.2 links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <title>Laptops website</title>
 
@@ -137,12 +139,12 @@ if (
                         <div class="col">
                             <input name="birthday" type="date" min="1920-02-02" />
                         </div>
-                        <div class="col">
-                            <select style="width: 100%;" name="gender" type="radio" placeholder="Gender">
-                                <option value="o" selected>Select your gender (optional)</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                            </select>
+                        <div class="col pb-2">
+                            <input type="radio" class="btn-check" name="options" id="option1" value="M">
+                            <label class="btn btn-primary" for="option1">Male</label>
+                            <input type="radio" class="btn-check" name="options" id="option2" value="F">
+                            <label class="btn btn-primary" for="option2">Female</label>
+                            <span>(Select your Gender)</span>
                         </div>
                     </div>
                     <div>
