@@ -140,9 +140,9 @@ if (
                             <input name="birthday" type="date" min="1920-02-02" />
                         </div>
                         <div class="col pb-2">
-                            <input type="radio" class="btn-check" name="options" id="option1" value="M">
+                            <input type="radio" class="btn-check" name="gender[]" id="option1" value="M">
                             <label class="btn btn-primary" for="option1">Male</label>
-                            <input type="radio" class="btn-check" name="options" id="option2" value="F">
+                            <input type="radio" class="btn-check" name="gender[]" id="option2" value="F">
                             <label class="btn btn-primary" for="option2">Female</label>
                             <span>(Select your Gender)</span>
                         </div>
