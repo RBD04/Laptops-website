@@ -136,7 +136,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             <input name="password" type="password" placeholder="Password" />
           </div>
           <div class="text-center">
-            <button type="submit" class="btn btn-large text-center btn-primary ">
+            <button type="submit" class="btn btn-large text-center btn-primary bg-primary border border-primary">
               &nbsp;Sign in &nbsp;
             </button>
           </div>
