@@ -75,13 +75,13 @@ if (
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php">Home </a>
+                                <a class="nav-link fw-bolder" href="index.php">Home </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="shop.php"> Shop </a>
+                                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+                                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
                             </li>
                         </ul>
                         <div class="user_option-box">
@@ -112,11 +112,11 @@ if (
 
     <!-- contact section -->
 
-    <section class="contact_section layout_padding pb-5">
+    <section class="contact_section layout_padding p-5">
         <div class="container">
             <div class="form_container">
-                <div class="heading_container">
-                    <h2>
+                <div class="text-center text-primary">
+                    <h2 class="display-5 fw-bolder mb-2 mt-0">
                         Register
                     </h2>
                 </div>
@@ -139,7 +139,7 @@ if (
                         <div class="col">
                             <input name="birthday" type="date" min="1920-02-02" />
                         </div>
-                        <div class="col pb-2">
+                        <div class="col pb-2 text-center">
                             <input type="radio" class="btn-check" name="gender[]" id="option1" value="M">
                             <label class="btn btn-primary" for="option1">Male</label>
                             <input type="radio" class="btn-check" name="gender[]" id="option2" value="F">
@@ -153,9 +153,9 @@ if (
                     <div>
                         <input name="confPassword" type="password" placeholder="*Confirm Password" required />
                     </div>
-                    <div class="d-flex justify-content-center mb-4">
-                        <button type="submit">
-                            Sign up
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary">
+                            Create Account
                         </button>
                     </div>
                 </form>
@@ -166,89 +166,69 @@ if (
     <!-- end contact section -->
 
     <!-- footer section -->
-    <footer class="footer_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 footer-col">
-                    <div class="footer_detail">
-                        <h4>
-                            About
-                        </h4>
-                        <p>
-                            Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-                        </p>
-                        <div class="footer_social">
-                            <a href="">
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-twitter" aria-hidden="true"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-linkedin" aria-hidden="true"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-instagram" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 footer-col">
-                    <div class="footer_contact">
-                        <h4>
-                            Reach at..
-                        </h4>
-                        <div class="contact_link_box">
-                            <a href="">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span>
-                                    Location
-                                </span>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                <span>
-                                    Call +01 1234567890
-                                </span>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                <span>
-                                    demo@gmail.com
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 footer-col">
-                    <div class="footer_contact">
-                        <h4>
-                            Subscribe
-                        </h4>
-                        <form action="#">
-                            <input type="text" placeholder="Enter email" />
-                            <button type="submit">
-                                Subscribe
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 footer-col">
-                    <div class="map_container">
-                        <div class="map">
-                            <div id="googleMap"></div>
-                        </div>
-                    </div>
-                </div>
+    <footer class="footer_section bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 footer-col text-center">
+          <div class="footer_detail">
+            <h4>
+              About
+            </h4>
+            <p>
+              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+            </p>
+            <div class="footer_social justify-content-center">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
             </div>
-            <div class="footer-info">
-                <p>
-                    &copy; <span id="displayYear"></span> All Rights Reserved By
-                    <a href="https://html.design/">Free Html Templates</a>
-                </p>
-            </div>
+          </div>
         </div>
-    </footer>
+        <div class="col-md-6 col-lg-6 footer-col text-center">
+          <div class="footer_contact">
+            <h4>
+              Reach at..
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Laptops website</a>
+        </p>
+      </div>
+    </div>
+  </footer>
     <!-- footer section -->
 
     <!-- jQery -->
@@ -263,9 +243,6 @@ if (
     </script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-    <!-- End Google Map -->
 
 </body>
 
