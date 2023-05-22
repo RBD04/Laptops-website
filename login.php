@@ -5,7 +5,7 @@ if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
     header('Location: add-product.php');
   else if (isset($_SESSION['user']))
-    header('Location: index.php');
+    header('Location: home.php');
 }
 
 if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
