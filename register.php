@@ -75,7 +75,7 @@ if (
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="index.php">Home </a>
+                                <a class="nav-link fw-bolder" href="home.php">Home </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
