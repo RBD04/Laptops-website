@@ -1,5 +1,6 @@
 <?php
 require_once 'connection.php';
+include "get-categories.php";
 session_start();
 
 if (array_key_exists('logout', $_POST)) {
@@ -79,9 +80,6 @@ if (array_key_exists('logout', $_POST)) {
               <li class="nav-item">
                 <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
               </li>
-              <li>
-                <button class="btn btn-light m-0 p-1 fw-bolder" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Categories</button>
-              </li>
             </ul>
             <?php
             if (isset($_SESSION['name']))
@@ -121,32 +119,20 @@ if (array_key_exists('logout', $_POST)) {
     <!-- end header section -->
   </div>
   <!-- shop section -->
+<!--Categories Dropdown With Links-->
+<div class="dropdown m-4">
+  <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Categories
+  </a>
 
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div>
+<!--End Categories Dropdown-->
   <!-- end shop section -->
-  <!--Categories Offcanvas-->
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title text-primary fw-bolder" id="offcanvasWithBothOptionsLabel">Shop By Category</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link fw-bolder" href="">Laptops</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bolder" href="">Smartphones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bolder" href="">Earphones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bolder" href="">Desktop Computers</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--End Categories Offcanvas-->
   <!-- footer section -->
   <footer class="footer_section bg-primary">
     <div class="container">
