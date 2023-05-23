@@ -1,13 +1,10 @@
 <?php
 require_once 'connection.php';
+require_once 'get-categories.php';
+require_once 'save-product.php';
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
-
-$query = "SELECT * FROM category";
-$result = mysqli_query($con, $query);
-$r = mysqli_num_rows($result);
-mysqli_close($con);
 
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
@@ -130,22 +127,24 @@ if (array_key_exists('logout', $_POST)) {
         </div>
       </div>
       <div id="form-container" class="col">
-        <form id="add-product" method="post" action="">
+        <form id="add-product" method="post">
           <div class="form-group">
             <h1 class="mb-3">Product section</h1>
             <label for="productName">Product name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="productName" />
+            <input type="text" class="form-control mb-3" id="productName" name="productName" required />
           </div>
           <div class="form-group">
-            <label for="serialNumber">Serial Number</label>
-            <input type="text" class="form-control mb-3" id="serialNumber" name="serialNumber" />
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10"/>
+          </div>
+          <div class="form-group" id="innerSerial">
           </div>
           <div class="form-group">
             <label for="Category">Category</label>
-            <select class="form-control mb-3" id="category" name="category">
+            <select class="form-control mb-3" id="category" name="category" required>
               <?php
-              for ($i = 0; $i < $r; $i++) {
-                $row = mysqli_fetch_assoc($result);
+              for ($i = 0; $i < $countCategories; $i++) {
+                $row = mysqli_fetch_assoc($categoriesResult);
                 echo '<option value=' . $row['categoryId'] . '>' . $row['categoryName'] . '</option>';
               }
               ?>
@@ -169,6 +168,14 @@ if (array_key_exists('logout', $_POST)) {
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="reset" class="btn btn-primary">Reset</button>
+
+          <?php
+          if (isset($_POST['productName'])) {
+            echo $isSuccessAdding;
+            echo $isSuccessAddingSerials;
+          }
+          ?>
+
         </form>
 
       </div>
@@ -188,6 +195,32 @@ if (array_key_exists('logout', $_POST)) {
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
   <!-- End Google Map -->
+
+  <script>
+    function quantityChange() {
+      let quantity = document.getElementById('quantity').value;
+      let innerSerial = document.getElementById('innerSerial');
+      let serialNumbers=document.querySelectorAll('.serialNumber');
+ 
+      serialNumbers.forEach((element)=>{
+        element.remove();
+      })
+      
+      for (let i = 0; i < quantity; i++) {
+        let label = document.createElement('label');
+        let input = document.createElement('input');
+        input.type = 'text';
+        label.className='serialNumber';
+        input.className = 'form-control mb-3 serialNumber';
+        input.name = 'serial' + parseInt(i + 1);
+        label.name = i;
+        label.innerText = 'Serial ' + parseInt(i + 1);
+        innerSerial.appendChild(label);
+        innerSerial.appendChild(input);
+      }
+
+    }
+  </script>
 </body>
 
 </html>

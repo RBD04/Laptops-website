@@ -6,6 +6,7 @@ if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -1,39 +1,11 @@
 <?php
 require_once 'connection.php';
+require_once 'get-categories.php';
 session_start();
 
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
-
-$message = '';
-
-$querySelect = 'SELECT * FROM category';
-$categories = mysqli_query($con, $querySelect);
-$num_rows = mysqli_num_rows($categories);
-
-if (isset($_POST) && isset($_POST['category'])) {
-  if (isset($_POST['categoryId']) && $_POST['categoryId'] > 0) {
-    $queryUpdate = 'UPDATE category SET categoryName="' . $_POST['category'] . '" WHERE categoryId=' . $_POST['categoryId'];
-    if (mysqli_query($con, $queryUpdate) === false) die("Error updating category");
-    else {
-      $message = 'Category \'' . $_POST['category'] . '\' updated successfully';
-    }
-  } else {
-    $query = 'INSERT INTO category(categoryName) values("' . $_POST['category'] . '")';
-    if (mysqli_query($con, $query) === false) die("Error adding category");
-    else {
-      $message = 'Category \'' . $_POST['category'] . '\' added successfully';
-    }
-  }
-}
-
-if (isset($_GET) && isset($_GET['categoryId'])) {
-  $queryGet = 'SELECT * from category WHERE categoryId=' . $_GET["categoryId"];
-  $result = mysqli_query($con, $queryGet);
-  $category = mysqli_fetch_assoc($result);
-  mysqli_close($con);
-}
-
+  
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
@@ -167,7 +139,7 @@ if (array_key_exists('logout', $_POST)) {
           <button type="submit" class="btn btn-primary">Save</button>
           <a href="category-details.php" class="btn btn-primary">Refresh</a>
         </form>
-        <?php echo $message ?>
+        <?php echo $categoryMessage ?>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -178,8 +150,8 @@ if (array_key_exists('logout', $_POST)) {
           </thead>
           <tbody>
             <?php
-            for ($i = 0; $i < $num_rows; $i++) {
-              $row = mysqli_fetch_assoc($categories);
+            for ($i = 0; $i < $countCategories; $i++) {
+              $row = mysqli_fetch_assoc($categoriesResult);
               echo "<tr>
             <th scope='row'>" . $i + 1, "</th>" .
                 "<td>" . $row['categoryName'] . "</td>" .

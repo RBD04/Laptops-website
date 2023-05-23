@@ -22,7 +22,7 @@ if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
     $_SESSION['user'] = $user['UserId'];
     $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
     mysqli_close($con);
-    header('Location: index.php');
+    header('Location: home.php');
   }
 }
 ?>
