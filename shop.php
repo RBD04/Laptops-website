@@ -40,6 +40,8 @@ if (array_key_exists('logout', $_POST)) {
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  <style type=text/css>
+  </style>
 
 </head>
 
@@ -50,7 +52,7 @@ if (array_key_exists('logout', $_POST)) {
   <div class="hero_area">
 
     <!-- header section strats -->
-    <header class="header_section">
+    <header class="header_section mb-4">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
@@ -102,7 +104,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><span class="dropdown-item-text">No Items Available</span></li>
                   <li><a class="dropdown-item" href="#">First Item</a></li>
                   <li><a class="dropdown-item" href="#">Second Item</a></li>
                   <li><a class="dropdown-item" href="#">Third Item</a></li>
@@ -118,20 +120,52 @@ if (array_key_exists('logout', $_POST)) {
     </header>
     <!-- end header section -->
   </div>
+  <!--Categories Dropdown With Links-->
+  <div class="dropdown ms-3" style="position:sticky;">
+    <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Categories
+    </a>
+    <ul class="dropdown-menu">
+      <?php
+      for ($r = 0; $r < $countCategories; $r++) {
+        $listItem = mysqli_fetch_assoc($categoriesResult);
+        echo ' <li><a class="dropdown-item" href="#' . $listItem['categoryId'] . '">' .$listItem['categoryName']. '</a></li>';
+      }
+      ?>
+    </ul>
+  </div>
+  <!--End Categories Dropdown-->
+ <!-- $getCategoriesQuery = "SELECT * FROM category";
+      $categoriesResult = mysqli_query($con, $getCategoriesQuery);
+      $countCategories = mysqli_num_rows($categoriesResult);-->
   <!-- shop section -->
-<!--Categories Dropdown With Links-->
-<div class="dropdown m-4">
-  <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Categories
-  </a>
-
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-</div>
-<!--End Categories Dropdown-->
+  <?php
+  $q1 = "SELECT * FROM category";
+  $r1 = mysqli_query($con,$q1);
+  $n1 = mysqli_num_rows($r1);
+  for($i=0;$i<$n1;$i++){
+    $row1 = mysqli_fetch_assoc($r1);
+    echo "<h1 id='".$row1['categoryId']."' class='display-4 m-5 text-center text-info fw-bolder'>".$row1['categoryName']."</h1>";
+    echo "<div class='container-lg justify-content-center text-center'>";
+    echo "<div class='row col-12'>";
+    $q2 = "SELECT * FROM product WHERE categoryID='".intval($row1['categoryId'])."'";
+    $r2 = mysqli_query($con,$q2);
+    $n2 = mysqli_num_rows($r2);
+    for($j=0;$j<$n2;$j++){
+      $row2 = mysqli_fetch_assoc($r2);
+      echo '<div class="col-lg-3 col-12 text-center" style="width: 18rem;"><div class="card m-2 text-center">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title text-primary">'.$row2['productName'].'</h5>
+        <p class="card-text text-secondary fw-bolder">'.$row2['price'].'$</p>
+        <a href="viewproduct.php" class="btn btn-primary">Buy</a>
+      </div>
+    </div></div>';
+    }
+    echo "</div>";
+    echo "</div>";
+  }
+  ?>
   <!-- end shop section -->
   <!-- footer section -->
   <footer class="footer_section bg-primary">
