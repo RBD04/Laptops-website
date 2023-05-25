@@ -1,6 +1,6 @@
 <?php
 require_once '../helpers/connection.php';
-include "../helpers/get-categories.php";
+require_once '../helpers/get-categories.php';
 session_start();
 
 if (array_key_exists('logout', $_POST)) {
@@ -29,7 +29,7 @@ if (array_key_exists('logout', $_POST)) {
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
@@ -152,7 +152,7 @@ if (array_key_exists('logout', $_POST)) {
     for($j=0;$j<$n2;$j++){
       $row2 = mysqli_fetch_assoc($r2);
       echo '<div class="col-lg-3 col-12 text-center" style="width: 18rem;"><div class="card m-2 text-center">
-      <img src="..." class="card-img-top" alt="...">
+      <img src="'.$row2['thumbnail'].'" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title text-primary">'.$row2['productName'].'</h5>
         <p class="card-text text-secondary fw-bolder">'.$row2['price'].'$</p>

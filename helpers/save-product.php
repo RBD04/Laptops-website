@@ -2,11 +2,23 @@
 require_once 'connection.php';
 
 $isSuccessAdding = '';
-$isSuccessAddingSerials;
+$isSuccessAddingSerials = '';
 
 if (isset($_POST) && isset($_POST['quantity'])) {
-  $addProductQuery = 'INSERT INTO product(categoryId,productName,description,price,quantityAvailable) 
-  values("' . $_POST['category'] . '","' . $_POST['productName'] . '","' . $_POST['description'] . '","' . $_POST['price'] . '","' . $_POST['quantity'] . '") ';
+
+  if (!empty($_FILES['thumbnail']['name'])) {
+    $destination = '../uploads/Thumbnails/' . $_FILES['thumbnail']['name'];
+    if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $destination)) {
+      echo '<script>alert("Successful");</script>';
+    } else {
+      echo '<script>alert("Failed");</script>';
+    }
+  } else {
+    echo '<script>alert("false");</script>';
+  }
+
+  $addProductQuery = 'INSERT INTO product(categoryId,productName,description,price,quantityAvailable,thumbnail) 
+   values("' . $_POST['category'] . '","' . $_POST['productName'] . '","' . $_POST['description'] . '","' . $_POST['price'] . '","' . $_POST['quantity'] . '","'.$destination.'") ';
   $id;
 
   if (!mysqli_query($con, $addProductQuery)) {
@@ -16,7 +28,7 @@ if (isset($_POST) && isset($_POST['quantity'])) {
     $id = mysqli_insert_id($con);
     $isSuccessAdding = 'Product ' . $_POST['productName'] . ' Added successfully';
   }
-  
+
   for ($i = 0; $i < $_POST['quantity']; $i++) {
     $addSerialNumberQuery = 'INSERT INTO serialnumber(productId,serialNumber) values("' . $id . '","' . $_POST['serial' . ($i + 1)] . '")';
     if (!mysqli_query($con, $addSerialNumberQuery)) {
@@ -26,7 +38,4 @@ if (isset($_POST) && isset($_POST['quantity'])) {
       $isSuccessAddingSerials = 'Serial numbers added successfully';
     }
   }
-
 }
-
-?>

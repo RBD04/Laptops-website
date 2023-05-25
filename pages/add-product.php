@@ -2,6 +2,7 @@
 require_once '../helpers/connection.php';
 require_once '../helpers/get-categories.php';
 require_once '../helpers/save-product.php';
+
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
@@ -127,21 +128,21 @@ if (array_key_exists('logout', $_POST)) {
         </div>
       </div>
       <div id="form-container" class="col">
-        <form id="add-product" method="post">
+        <form id="add-product" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <h1 class="mb-3">Product section</h1>
             <label for="productName">Product name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="productName" required />
+            <input type="text" class="form-control mb-3" id="productName" name="productName" />
           </div>
           <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10"/>
+            <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10" />
           </div>
           <div class="form-group" id="innerSerial">
           </div>
           <div class="form-group">
             <label for="Category">Category</label>
-            <select class="form-control mb-3" id="category" name="category" required>
+            <select class="form-control mb-3" id="category" name="category">
               <?php
               for ($i = 0; $i < $countCategories; $i++) {
                 $row = mysqli_fetch_assoc($categoriesResult);
@@ -183,15 +184,15 @@ if (array_key_exists('logout', $_POST)) {
   </div>
 
   <!-- jQery -->
-  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
+  <script src="../js/bootstrap.js"></script>
   <!-- owl slider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <!-- custom js -->
-  <script src="js/custom.js"></script>
+  <script src="../js/custom.js"></script>
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
   <!-- End Google Map -->
@@ -200,17 +201,17 @@ if (array_key_exists('logout', $_POST)) {
     function quantityChange() {
       let quantity = document.getElementById('quantity').value;
       let innerSerial = document.getElementById('innerSerial');
-      let serialNumbers=document.querySelectorAll('.serialNumber');
- 
-      serialNumbers.forEach((element)=>{
+      let serialNumbers = document.querySelectorAll('.serialNumber');
+
+      serialNumbers.forEach((element) => {
         element.remove();
       })
-      
+
       for (let i = 0; i < quantity; i++) {
         let label = document.createElement('label');
         let input = document.createElement('input');
         input.type = 'text';
-        label.className='serialNumber';
+        label.className = 'serialNumber';
         input.className = 'form-control mb-3 serialNumber';
         input.name = 'serial' + parseInt(i + 1);
         label.name = i;
