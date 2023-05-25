@@ -1,5 +1,5 @@
 <?php
-require_once 'connection.php';
+require_once '../helpers/connection.php';
 session_start();
 // session_destroy(); //logout
 if (array_key_exists('logout', $_POST)) {
@@ -28,17 +28,17 @@ if (array_key_exists('logout', $_POST)) {
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
   <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
+  <link href="../css/style.css" rel="stylesheet" />
   <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
 
 </head>
 
@@ -64,7 +64,7 @@ if (array_key_exists('logout', $_POST)) {
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.php">
+          <a class="navbar-brand" href="home.php">
             <span>
               Laptops website
             </span>
@@ -154,7 +154,7 @@ if (array_key_exists('logout', $_POST)) {
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/laptop.gif" alt="">
+                    <img src="../images/laptop.gif" alt="">
                   </div>
                 </div>
               </div>
@@ -180,7 +180,7 @@ if (array_key_exists('logout', $_POST)) {
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/game-controller.gif" alt="">
+                    <img src="../images/game-controller.gif" alt="">
                   </div>
                 </div>
               </div>
@@ -206,7 +206,7 @@ if (array_key_exists('logout', $_POST)) {
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/music.gif" alt="">
+                    <img src="../images/music.gif" alt="">
                   </div>
                 </div>
               </div>
@@ -236,7 +236,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w1.png" alt="">
+                <img src="../images/w1.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -261,7 +261,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w2.png" alt="">
+                <img src="../images/w2.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -286,7 +286,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w3.png" alt="">
+                <img src="../images/w3.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -311,7 +311,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w4.png" alt="">
+                <img src="../images/w4.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -336,7 +336,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w5.png" alt="">
+                <img src="../images/w5.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -361,7 +361,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w6.png" alt="">
+                <img src="../images/w6.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -386,7 +386,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="box">
             <a href="">
               <div class="img-box">
-                <img src="images/w1.png" alt="">
+                <img src="../images/w1.png" alt="">
               </div>
               <div class="detail-box">
                 <h6>
@@ -424,7 +424,7 @@ if (array_key_exists('logout', $_POST)) {
       <div class="row">
         <div class="col-md-6 col-lg-5 ">
           <div class="img-box">
-            <img src="images/group.png" alt="">
+            <img src="../images/group.png" alt="">
           </div>
         </div>
         <div class="col-md-6 col-lg-7">
@@ -464,7 +464,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/fast-delivery.png" alt="">
+              <img src="../images/fast-delivery.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -479,7 +479,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/secure-shield.png" alt="">
+              <img src="../images/secure-shield.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -494,7 +494,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/premium.png" alt="">
+              <img src="../images/premium.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -509,7 +509,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="images/money.png" alt="">
+              <img src="../images/money.png" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -567,7 +567,7 @@ if (array_key_exists('logout', $_POST)) {
         </div>
         <div class="col-md-6">
           <div class="img-box ms-1">
-            <img src="images/mail.png" alt="">
+            <img src="../images/mail.png" alt="">
           </div>
         </div>
       </div>
@@ -642,17 +642,17 @@ if (array_key_exists('logout', $_POST)) {
   <!-- footer section -->
 
   <!-- jQery -->
-  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>
   <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
+  <script src="../js/bootstrap.js"></script>
   <!-- owl slider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <!-- custom js -->
-  <script src="js/custom.js"></script>
+  <script src="../js/custom.js"></script>
 </body>
 
 </html>

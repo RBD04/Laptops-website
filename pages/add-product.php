@@ -1,11 +1,11 @@
 <?php
-require_once 'connection.php';
-require_once 'get-categories.php';
+require_once '../helpers/connection.php';
+require_once '../helpers/get-categories.php';
+require_once '../helpers/save-product.php';
 session_start();
-
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
-  
+
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
@@ -25,7 +25,7 @@ if (array_key_exists('logout', $_POST)) {
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+  <link rel="shortcut icon" href="" type="image/x-icon" />
 
   <title>Laptops website</title>
 
@@ -36,12 +36,12 @@ if (array_key_exists('logout', $_POST)) {
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
   <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
+  <link href="../css/style.css" rel="stylesheet" />
   <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
 </head>
 
 <body class="sub_page">
@@ -52,7 +52,7 @@ if (array_key_exists('logout', $_POST)) {
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="index.php">
+          <a class="navbar-brand" href="home.php">
             <span> Laptops website </span>
           </a>
           <?php
@@ -121,53 +121,65 @@ if (array_key_exists('logout', $_POST)) {
       <div class="col-4">
         <h3 class="mb-5">Admin control panel</h3>
         <div class="list-group">
-          <a class="list-group-item" href="add-product.php">Add product</a>
+          <a class="list-group-item active" href="add-product.php" aria-current="true">Add Product</a>
           <a class="list-group-item" href="product-details.php">Product details (dont press now)</a>
-          <a class="list-group-item active" href="category-details.php" aria-current="true">Category details</a>
+          <a class="list-group-item" href="category-details.php">Category details</a>
         </div>
       </div>
       <div id="form-container" class="col">
-        <form class="mb-3" id="add-product" method="post">
+        <form id="add-product" method="post">
           <div class="form-group">
-            <h1 class="mb-3">Category details</h1>
-            <label for="category">Category name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php if (isset($category)) echo $category["categoryName"];
-                                                                                                  else  "" ?>' />
-            <input name="categoryId" type="hidden" value='<?php if (isset($category)) echo $category["categoryId"];
-                                                          else  "" ?>' />
+            <h1 class="mb-3">Product section</h1>
+            <label for="productName">Product name</label>
+            <input type="text" class="form-control mb-3" id="productName" name="productName" required />
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-          <a href="category-details.php" class="btn btn-primary">Refresh</a>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10"/>
+          </div>
+          <div class="form-group" id="innerSerial">
+          </div>
+          <div class="form-group">
+            <label for="Category">Category</label>
+            <select class="form-control mb-3" id="category" name="category" required>
+              <?php
+              for ($i = 0; $i < $countCategories; $i++) {
+                $row = mysqli_fetch_assoc($categoriesResult);
+                echo '<option value=' . $row['categoryId'] . '>' . $row['categoryName'] . '</option>';
+              }
+              ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Descritpion</label>
+            <textarea type="text" class="form-control mb-3" id="description" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control mb-3" id="price" name="price" />
+          </div>
+          <div class="form-group">
+            <label for="thumbnail" class="form-label">Thumbnail</label>
+            <input type="file" class="form-control mb-3" id="thumbnail" name="thumbnail" />
+          </div>
+          <div class="form-group">
+            <label for="images" class="form-label">Images</label>
+            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-primary">Reset</button>
+
+          <?php
+          if (isset($_POST['productName'])) {
+            echo $isSuccessAdding;
+            echo $isSuccessAddingSerials;
+          }
+          ?>
+
         </form>
-        <?php echo $categoryMessage ?>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            for ($i = 0; $i < $countCategories; $i++) {
-              $row = mysqli_fetch_assoc($categoriesResult);
-              echo "<tr>
-            <th scope='row'>" . $i + 1, "</th>" .
-                "<td>" . $row['categoryName'] . "</td>" .
-                "<td><a href='./category-details.php?categoryId=" . $row['categoryId'] . "'>edit</a></td>
-          </tr>";
-            }
-            ?>
-          </tbody>
-        </table>
+
       </div>
     </div>
-    <?php
-
-    ?>
-
-
   </div>
 
   <!-- jQery -->
@@ -183,6 +195,32 @@ if (array_key_exists('logout', $_POST)) {
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
   <!-- End Google Map -->
+
+  <script>
+    function quantityChange() {
+      let quantity = document.getElementById('quantity').value;
+      let innerSerial = document.getElementById('innerSerial');
+      let serialNumbers=document.querySelectorAll('.serialNumber');
+ 
+      serialNumbers.forEach((element)=>{
+        element.remove();
+      })
+      
+      for (let i = 0; i < quantity; i++) {
+        let label = document.createElement('label');
+        let input = document.createElement('input');
+        input.type = 'text';
+        label.className='serialNumber';
+        input.className = 'form-control mb-3 serialNumber';
+        input.name = 'serial' + parseInt(i + 1);
+        label.name = i;
+        label.innerText = 'Serial ' + parseInt(i + 1);
+        innerSerial.appendChild(label);
+        innerSerial.appendChild(input);
+      }
+
+    }
+  </script>
 </body>
 
 </html>

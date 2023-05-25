@@ -1,6 +1,5 @@
 <?php
-require_once 'connection.php';
-include "get-categories.php";
+require_once '../helpers/connection.php';
 session_start();
 
 if (array_key_exists('logout', $_POST)) {
@@ -8,7 +7,6 @@ if (array_key_exists('logout', $_POST)) {
   header("Refresh:0");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,33 +27,29 @@ if (array_key_exists('logout', $_POST)) {
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
   <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
+  <link href="../css/style.css" rel="stylesheet" />
   <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-  <style type=text/css>
-  </style>
+  <link href="../css/responsive.css" rel="stylesheet" />
 
 </head>
 
 <body class="sub_page">
-  <!--Bootstrap 5.2 script section-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
   <div class="hero_area">
 
     <!-- header section strats -->
-    <header class="header_section mb-4">
+    <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.php">
+          <a class="navbar-brand" href="home.php">
             <span>
               Laptops website
             </span>
@@ -76,11 +70,11 @@ if (array_key_exists('logout', $_POST)) {
               <li class="nav-item">
                 <a class="nav-link fw-bolder" href="home.php">Home </a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link fw-bolder" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
-              </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
             </ul>
             <?php
@@ -120,53 +114,50 @@ if (array_key_exists('logout', $_POST)) {
     </header>
     <!-- end header section -->
   </div>
-  <!--Categories Dropdown With Links-->
-  <div class="dropdown ms-3" style="position:sticky;">
-    <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Categories
-    </a>
-    <ul class="dropdown-menu">
-      <?php
-      for ($r = 0; $r < $countCategories; $r++) {
-        $listItem = mysqli_fetch_assoc($categoriesResult);
-        echo ' <li><a class="dropdown-item" href="#' . $listItem['categoryId'] . '">' .$listItem['categoryName']. '</a></li>';
-      }
-      ?>
-    </ul>
-  </div>
-  <!--End Categories Dropdown-->
- <!-- $getCategoriesQuery = "SELECT * FROM category";
-      $categoriesResult = mysqli_query($con, $getCategoriesQuery);
-      $countCategories = mysqli_num_rows($categoriesResult);-->
-  <!-- shop section -->
-  <?php
-  $q1 = "SELECT * FROM category";
-  $r1 = mysqli_query($con,$q1);
-  $n1 = mysqli_num_rows($r1);
-  for($i=0;$i<$n1;$i++){
-    $row1 = mysqli_fetch_assoc($r1);
-    echo "<h1 id='".$row1['categoryId']."' class='display-4 m-5 text-center text-info fw-bolder'>".$row1['categoryName']."</h1>";
-    echo "<div class='container-lg justify-content-center text-center'>";
-    echo "<div class='row col-12'>";
-    $q2 = "SELECT * FROM product WHERE categoryID='".intval($row1['categoryId'])."'";
-    $r2 = mysqli_query($con,$q2);
-    $n2 = mysqli_num_rows($r2);
-    for($j=0;$j<$n2;$j++){
-      $row2 = mysqli_fetch_assoc($r2);
-      echo '<div class="col-lg-3 col-12 text-center" style="width: 18rem;"><div class="card m-2 text-center">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-primary">'.$row2['productName'].'</h5>
-        <p class="card-text text-secondary fw-bolder">'.$row2['price'].'$</p>
-        <a href="viewproduct.php" class="btn btn-primary">Buy</a>
+
+  <!-- contact section -->
+
+  <section class="contact_section p-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <div>
+              <h2 class="text-primary text-center display-5 fw-bolder">
+                Contact Us
+              </h2>
+            </div>
+            <form action="">
+              <div>
+                <input type="text" placeholder="Full Name " />
+              </div>
+              <div>
+                <input type="email" placeholder="Email" />
+              </div>
+              <div>
+                <input type="text" placeholder="Phone number" />
+              </div>
+              <div>
+                <input type="text" class="message-box" placeholder="Message" />
+              </div>
+              <div class="text-center">
+                <a class="btn btn-outline-primary">
+                  SEND
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="img-box ms-5">
+            <img src="../images/mail.png" alt="">
+          </div>
+        </div>
       </div>
-    </div></div>';
-    }
-    echo "</div>";
-    echo "</div>";
-  }
-  ?>
-  <!-- end shop section -->
+    </div>
+  </section>
+  <!-- end contact section -->
+  <br>
   <!-- footer section -->
   <footer class="footer_section bg-primary">
     <div class="container">
@@ -234,21 +225,17 @@ if (array_key_exists('logout', $_POST)) {
   <!-- footer section -->
 
   <!-- jQery -->
-  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>
   <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
+  <script src="../js/bootstrap.js"></script>
   <!-- owl slider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <!-- custom js -->
-  <script src="js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
+  <script src="../js/custom.js"></script>
 </body>
 
 </html>
