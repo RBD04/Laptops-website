@@ -1,21 +1,33 @@
 <?php
-require_once 'connection.php';
+require_once '../helpers/connection.php';
 session_start();
 if (
-    isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
-    && isset($_POST['phoneNumber']) && isset($_POST['password'])
+  isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
+  && isset($_POST['phoneNumber']) && isset($_POST['password'])
 ) {
-    $query = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
+  $addUserQuery = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
         "' . $_POST["email"] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '","' . $_POST['birthday'] . '",
         "' . $_POST['gender'] . '") ';
-    if (mysqli_query($con, $query) === false) die("Error signing up");
-    else {
-        mysqli_close($con);
-        echo '<script type="text/javascript">
-                        alert("You have successfully registred, login now!");
-                        window.location="./login.php";
-                        </script>';
-    }
+
+  $id;
+
+  if (!mysqli_query($con, $addUserQuery)) {
+    die("Error signing up");
+  } else {
+    $id = mysqli_insert_id($con);
+  }
+
+  $initiateCartQuery= 'INSERT INTO cart(userId) VALUES("'.$id.'")';
+
+  if (!mysqli_query($con, $addUserQuery)||!mysqli_query($con,$initiateCartQuery)) die("Error signing up");
+  else {
+    mysqli_close($con);
+    echo '
+        <script type="text/javascript">
+          alert("You have successfully registred, login now!");
+          window.location="./login.php";
+        </script>                        ';
+  }
 }
 ?>
 
@@ -23,150 +35,150 @@ if (
 <html lang="en">
 
 <head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <!--Bootstrap 5.2 links-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  <!--Bootstrap 5.2 links-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>Laptops website</title>
+  <title>Laptops website</title>
 
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
-    <!--owl slider stylesheet -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
-    <!-- font awesome style -->
-    <link href="../css/font-awesome.min.css" rel="stylesheet" />
+  <!-- font awesome style -->
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="../css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="../css/responsive.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="../css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="../css/responsive.css" rel="stylesheet" />
 
 </head>
 
 <body class="sub_page">
 
-    <div class="hero_area">
+  <div class="hero_area">
 
-        <!-- header section strats -->
-        <header class="header_section">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="home.php">
-                        <span>
-                            Laptops website
-                        </span>
-                    </a>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="home.php">
+            <span>
+              Laptops website
+            </span>
+          </a>
 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class=""> </span>
-                    </button>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="home.php">Home </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
-                            </li>
-                        </ul>
-                        <div class="user_option-box">
-                            <a href="login.php">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropstart">
-                                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><span class="dropdown-item-text">No Items Available</span></li>
-                                    <li><a class="dropdown-item" href="#">First Item</a></li>
-                                    <li><a class="dropdown-item" href="#">Second Item</a></li>
-                                    <li><a class="dropdown-item" href="#">Third Item</a></li>
-                                </ul>
-                            </div>
-                            <a href="">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </nav>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link fw-bolder" href="home.php">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+              </li>
+            </ul>
+            <div class="user_option-box">
+              <a href="login.php">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+              <div class="dropstart">
+                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><span class="dropdown-item-text">No Items Available</span></li>
+                  <li><a class="dropdown-item" href="#">First Item</a></li>
+                  <li><a class="dropdown-item" href="#">Second Item</a></li>
+                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                </ul>
+              </div>
+              <a href="">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </a>
             </div>
-        </header>
-        <!-- end header section -->
-    </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
 
-    <!-- contact section -->
+  <!-- contact section -->
 
-    <section class="contact_section layout_padding p-5">
-        <div class="container">
-            <div class="form_container">
-                <div class="text-center text-primary">
-                    <h2 class="display-5 fw-bolder mb-2 mt-0">
-                        Register
-                    </h2>
-                </div>
-                <form method="post">
-                    <div class="row">
-                        <div class="col">
-                            <input name="firstName" type="text" placeholder="*First Name" required />
-                        </div>
-                        <div class="col">
-                            <input name="lastName" type="text" placeholder="*Last Name" required />
-                        </div>
-                    </div>
-                    <div>
-                        <input name="email" type="email" placeholder="*Email" required />
-                    </div>
-                    <div>
-                        <input name="phoneNumber" type="text" placeholder="*Phone Number" required />
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <input name="birthday" type="date" min="1920-02-02" />
-                        </div>
-                        <div class="col pb-2 text-center">
-                            <input type="radio" class="btn-check" name="gender[]" id="option1" value="M">
-                            <label class="btn btn-primary" for="option1">Male</label>
-                            <input type="radio" class="btn-check" name="gender[]" id="option2" value="F">
-                            <label class="btn btn-primary" for="option2">Female</label>
-                            <span>(Select your Gender)</span>
-                        </div>
-                    </div>
-                    <div>
-                        <input name="password" type="password" placeholder="*Password" required />
-                    </div>
-                    <div>
-                        <input name="confPassword" type="password" placeholder="*Confirm Password" required />
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary">
-                            Create Account
-                        </button>
-                    </div>
-                </form>
-            </div>
+  <section class="contact_section layout_padding p-5">
+    <div class="container">
+      <div class="form_container">
+        <div class="text-center text-primary">
+          <h2 class="display-5 fw-bolder mb-2 mt-0">
+            Register
+          </h2>
         </div>
-    </section>
+        <form method="post">
+          <div class="row">
+            <div class="col">
+              <input name="firstName" type="text" placeholder="*First Name" required />
+            </div>
+            <div class="col">
+              <input name="lastName" type="text" placeholder="*Last Name" required />
+            </div>
+          </div>
+          <div>
+            <input name="email" type="email" placeholder="*Email" required />
+          </div>
+          <div>
+            <input name="phoneNumber" type="text" placeholder="*Phone Number" required />
+          </div>
+          <div class="row">
+            <div class="col">
+              <input name="birthday" type="date" min="1920-02-02" />
+            </div>
+            <div class="col pb-2 text-center">
+              <input type="radio" class="btn-check" name="gender[]" id="option1" value="M">
+              <label class="btn btn-primary" for="option1">Male</label>
+              <input type="radio" class="btn-check" name="gender[]" id="option2" value="F">
+              <label class="btn btn-primary" for="option2">Female</label>
+              <span>(Select your Gender)</span>
+            </div>
+          </div>
+          <div>
+            <input name="password" type="password" placeholder="*Password" required />
+          </div>
+          <div>
+            <input name="confPassword" type="password" placeholder="*Confirm Password" required />
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary">
+              Create Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 
-    <!-- end contact section -->
+  <!-- end contact section -->
 
-    <!-- footer section -->
-    <footer class="footer_section bg-primary">
+  <!-- footer section -->
+  <footer class="footer_section bg-primary">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-lg-6 footer-col text-center">
@@ -229,20 +241,20 @@ if (
       </div>
     </div>
   </footer>
-    <!-- footer section -->
+  <!-- footer section -->
 
-    <!-- jQery -->
-    <script src="../js/jquery-3.4.1.min.js"></script>
-    <!-- popper js -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <!-- bootstrap js -->
-    <script src="../js/bootstrap.js"></script>
-    <!-- owl slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-    </script>
-    <!-- custom js -->
-    <script src="../js/custom.js"></script>
+  <!-- jQery -->
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="../js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script src="../js/custom.js"></script>
 
 </body>
 

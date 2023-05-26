@@ -10,7 +10,6 @@ if (isset($_SESSION)) {
 
 if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
   $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
-  echo $query;
   $result = mysqli_query($con, $query);
   $num_rows = mysqli_num_rows($result);
   if ($num_rows === 0) {

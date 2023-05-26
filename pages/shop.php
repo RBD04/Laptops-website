@@ -62,7 +62,7 @@ if (array_key_exists('logout', $_POST)) {
           if (isset($_SESSION['name']))
             if (isset($_SESSION['admin']))
               echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome '
+            else echo 'Welcome ' .$_SESSION['name'];
           ?>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,36 +127,39 @@ if (array_key_exists('logout', $_POST)) {
       <?php
       for ($r = 0; $r < $countCategories; $r++) {
         $listItem = mysqli_fetch_assoc($categoriesResult);
-        echo ' <li><a class="dropdown-item" href="#' . $listItem['categoryId'] . '">' .$listItem['categoryName']. '</a></li>';
+        echo ' <li><a class="dropdown-item" href="#' . $listItem['categoryId'] . '">' . $listItem['categoryName'] . '</a></li>';
       }
       ?>
     </ul>
   </div>
   <!--End Categories Dropdown-->
- <!-- $getCategoriesQuery = "SELECT * FROM category";
+  <!-- $getCategoriesQuery = "SELECT * FROM category";
       $categoriesResult = mysqli_query($con, $getCategoriesQuery);
       $countCategories = mysqli_num_rows($categoriesResult);-->
   <!-- shop section -->
   <?php
   $q1 = "SELECT * FROM category";
-  $r1 = mysqli_query($con,$q1);
+  $r1 = mysqli_query($con, $q1);
   $n1 = mysqli_num_rows($r1);
-  for($i=0;$i<$n1;$i++){
+  for ($i = 0; $i < $n1; $i++) {
     $row1 = mysqli_fetch_assoc($r1);
-    echo "<h1 id='".$row1['categoryId']."' class='display-4 m-5 text-center text-info fw-bolder'>".$row1['categoryName']."</h1>";
+    echo "<h1 id='" . $row1['categoryId'] . "' class='display-4 m-5 text-center text-info fw-bolder'>" . $row1['categoryName'] . "</h1>";
     echo "<div class='container-lg justify-content-center text-center'>";
     echo "<div class='row col-12'>";
-    $q2 = "SELECT * FROM product WHERE categoryID='".intval($row1['categoryId'])."'";
-    $r2 = mysqli_query($con,$q2);
+    $q2 = "SELECT * FROM product WHERE categoryID='" . intval($row1['categoryId']) . "'";
+    $r2 = mysqli_query($con, $q2);
     $n2 = mysqli_num_rows($r2);
-    for($j=0;$j<$n2;$j++){
+    for ($j = 0; $j < $n2; $j++) {
       $row2 = mysqli_fetch_assoc($r2);
       echo '<div class="col-lg-3 col-12 text-center" style="width: 18rem;"><div class="card m-2 text-center">
-      <img src="'.$row2['thumbnail'].'" class="card-img-top" alt="...">
+      <img src="' . $row2['thumbnail'] . '" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title text-primary">'.$row2['productName'].'</h5>
-        <p class="card-text text-secondary fw-bolder">'.$row2['price'].'$</p>
-        <a href="viewproduct.php" class="btn btn-primary">Buy</a>
+        <h5 class="card-title text-primary">' . $row2['productName'] . '</h5>
+        <p class="card-text text-secondary fw-bolder">' . $row2['price'] . '$</p>
+        <a href="viewproduct.php" class="btn btn-primary">View</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addToCartModal">
+        Add to cart
+        </button>
       </div>
     </div></div>';
     }
@@ -230,6 +233,28 @@ if (array_key_exists('logout', $_POST)) {
     </div>
   </footer>
   <!-- footer section -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ok, 4 items added to cart, what's next?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
+          <button type="button" class="btn btn-primary">Proceed To Checkout</button>
+          <a href="cart.php" class="btn btn-primary">View or edit your cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- jQery -->
   <script src="../js/jquery-3.4.1.min.js"></script>
