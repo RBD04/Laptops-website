@@ -10,5 +10,5 @@ class User{
     public $birthday;
     public $gender;
     public $profilePicture;
-    public $points;
+    public $points; 
 }
