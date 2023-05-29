@@ -24,8 +24,6 @@ if (isset($_SESSION)) {
 //     header('Location: home.php');
 //   }
 // }
-if(isset($_POST['email'])&&isset($_POST['password']))
-validateLogin();
 
 ?>
 <!DOCTYPE html>
@@ -137,6 +135,8 @@ validateLogin();
           <div>
             <input name="password" type="password" placeholder="Password" />
           </div>
+          <?php if (isset($_POST['email']) && isset($_POST['password']))
+            validateLogin(); ?>
           <div class="text-center">
             <button type="submit" class="btn btn-large text-center btn-primary bg-primary border border-primary">
               &nbsp;Sign in &nbsp;
