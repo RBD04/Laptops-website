@@ -62,25 +62,11 @@ $category = getCategoryById($_GET['categoryId']);
           <?php
           if (isset($_SESSION['name']))
             if (isset($_SESSION['admin']))
-              echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome '
+              echo 'Welcome ' . $_SESSION['name'].'(Administrator)';
           ?>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="home.php">Home </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="shop.php"> Shop </a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="contact.php">Contact Us <span class="sr-only">(current)</span>
-                </a>
-              </li>
+      
             </ul>
             <?php
             if (isset($_SESSION['name']))
@@ -90,28 +76,6 @@ $category = getCategoryById($_GET['categoryId']);
             </form>
             '
             ?>
-            <div class="user_option-box">
-              <a href="login.php">
-                <?php
-                if (isset($_SESSION['admin']))
-                  echo 'admin page '
-                ?>
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </a>
-              <div class="dropstart">
-                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
-                </ul>
-              </div>
-              <a href="">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
             </div>
           </div>
         </nav>
