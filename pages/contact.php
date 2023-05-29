@@ -1,6 +1,9 @@
 <?php
 require_once '../helpers/connection.php';
 session_start();
+if(isset($_SESSION['admin'])){
+  header("Location:add-product.php");
+}
 
 if (array_key_exists('logout', $_POST)) {
   session_destroy();

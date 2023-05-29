@@ -1,12 +1,14 @@
 <?php
 require_once '../helpers/connection.php';
 session_start();
+if(isset($_SESSION['admin'])){
+  header("Location:add-product.php");
+}
 // session_destroy(); //logout
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
 }
-
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,9 @@
 <?php
 require_once '../helpers/connection.php';
 session_start();
+if(isset($_SESSION['admin'])){
+  header("Location:add-product.php");
+}
 if (
   isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
   && isset($_POST['phoneNumber']) && isset($_POST['password'])
