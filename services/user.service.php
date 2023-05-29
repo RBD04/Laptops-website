@@ -85,8 +85,15 @@ function signup()
         </script>                        ';
 }
 
-function alreadyExists()
+function alreadyExists($email)
 {
+    $users=getUsers();
+
+    foreach($users as $user){
+        if($user->email=$email) return false;
+        else continue;
+    }
+    return true;
 }
 
 ?>
