@@ -4,9 +4,7 @@ require_once '../services/user.service.php';
 
 session_start();
 if (isset($_SESSION)) {
-  if (isset($_SESSION['admin']))
-    header('Location: add-product.php');
-  else if (isset($_SESSION['user']))
+   if (isset($_SESSION['user']))
     header('Location: home.php');
 }
 
