@@ -7,9 +7,15 @@ if(isset($_SESSION['admin'])){
   header("Location:add-product.php");
 }
 if (isset($_SESSION)) {
-   if (isset($_SESSION['user']))
+  if (isset($_SESSION['user']))
     header('Location: home.php');
+  else if (isset($_SESSION['admin']))
+    header('Location: add-product.php');
 }
+$errorLogin=null;
+
+ if (isset($_POST['email']) && isset($_POST['password']))
+          $errorLogin= validateLogin(); 
 
 // if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
 //   $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
@@ -138,8 +144,10 @@ if (isset($_SESSION)) {
           <div>
             <input name="password" type="password" placeholder="Password" />
           </div>
-          <?php if (isset($_POST['email']) && isset($_POST['password']))
-            validateLogin(); ?>
+          <?php
+          if(isset($_POST))
+          echo $errorLogin;
+          ?>
           <div class="text-center">
             <button type="submit" class="btn btn-large text-center btn-primary bg-primary border border-primary">
               &nbsp;Sign in &nbsp;

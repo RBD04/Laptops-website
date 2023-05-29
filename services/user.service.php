@@ -43,13 +43,10 @@ function validateLogin()
     $count = count($results);
 
     if ($count === 0) {
-        $error_message = 'Authentication failed';
-        echo $error_message;
+        return 'Authentication failed';
     } else if ($count > 1) {
-        $error_message = 'Please contact your administrator';
-        echo $error_message;
+        return 'Please contact your administrator';
     } else if ($count === 1) {
-        session_start();
         $_SESSION['user'] = $results[0]['UserId'];
         $_SESSION['name'] = $results[0]['firstName'] . ' ' . $results[0]['lastName'];
         header('Location: ../pages/home.php');
@@ -91,3 +88,5 @@ function signup()
 function alreadyExists()
 {
 }
+
+?>
