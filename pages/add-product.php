@@ -2,6 +2,7 @@
 require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
 require_once '../helpers/save-product.php';
+require_once '../services/category.service.php';
 
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
@@ -144,9 +145,11 @@ if (array_key_exists('logout', $_POST)) {
             <label for="Category">Category</label>
             <select class="form-control mb-3" id="category" name="category">
               <?php
-              for ($i = 0; $i < $countCategories; $i++) {
-                $row = mysqli_fetch_assoc($categoriesResult);
-                echo '<option value=' . $row['categoryId'] . '>' . $row['categoryName'] . '</option>';
+              $categories = getCategories();
+              if(count($categories)>0){
+                foreach ($categories as $category) {
+                  echo '<option value="' . $category->categoryId . '">' . $category->categoryName . '</option>';
+                }
               }
               ?>
             </select>

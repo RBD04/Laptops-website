@@ -14,7 +14,6 @@ function getUsers()
     $users = [];
 
     if (!empty($results)) {
-        if (!empty($results)) {
             foreach ($results as $result) {
                 $user = new User();
                 $user->UserId = isset($result['UserId']) ? $result['UserId'] : null;
@@ -28,33 +27,28 @@ function getUsers()
                 $users[] = $user;
             }
             return $users;
-        }
+        
     }
 }
 
 
 function validateLogin()
 {
-    $error_message = '';
-
     $wrapper = new dbWrapper();
-    // $users = getUsers();
-
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $email . '" and password="' . $password . '"';
-
+    $query = 'SELECT UserId, firstName, lastName FROM user WHERE email="' . $email . '" AND password="' . $password . '"';
     $results = $wrapper->executeSingleRowQuery($query);
-
     $count = count($results);
 
     if ($count === 0) {
         $error_message = 'Authentication failed';
+        echo $error_message;
     } else if ($count > 1) {
         $error_message = 'Please contact your administrator';
+        echo $error_message;
     } else if ($count === 1) {
-        echo '<script>alert("Success")</script>';
         session_start();
         $_SESSION['user'] = $results[0]['UserId'];
         $_SESSION['name'] = $results[0]['firstName'] . ' ' . $results[0]['lastName'];
@@ -62,6 +56,7 @@ function validateLogin()
         exit();
     }
 }
+
 
 
 function signup()
