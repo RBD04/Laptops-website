@@ -67,7 +67,11 @@ class dbWrapper
             die("Query failed: " . $this->connection->error);
         }
 
-        $array = $this->fetchArray($result);
+        $array = array();
+        while ($row = $this->fetchArray($result)) {
+            $array[] = $row;
+        }
+
         $this->disconnect();
 
         return $array;
@@ -75,6 +79,7 @@ class dbWrapper
         die("Empty SQL query");
     }
 }
+
 
 public function executeSingleRowQuery($sql)
 {

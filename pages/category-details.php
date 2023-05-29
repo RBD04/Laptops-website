@@ -1,15 +1,19 @@
 <?php
 require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
+require_once '../services/category.service.php';
+
 session_start();
 
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
-  
+
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
 }
+if (isset($_GET['categoryId']))
+  $category = getCategoryById($_GET['categoryId']);
 ?>
 
 <!DOCTYPE html>
@@ -58,13 +62,8 @@ if (array_key_exists('logout', $_POST)) {
           <?php
           if (isset($_SESSION['name']))
             if (isset($_SESSION['admin']))
-              echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome '
+              echo 'Welcome ' . $_SESSION['name'] . '(Administrator)';
           ?>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
@@ -130,12 +129,20 @@ if (array_key_exists('logout', $_POST)) {
         <form class="mb-3" id="add-product" method="post">
           <div class="form-group">
             <h1 class="mb-3">Category details</h1>
-            <label for="category">Category name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php if (isset($category)) echo $category["categoryName"];
-                                                                                                  else  "" ?>' />
-            <input name="categoryId" type="hidden" value='<?php if (isset($category)) echo $category["categoryId"];
-                                                          else  "" ?>' />
+            <label for="category"><?php echo isset($category) ? $category->categoryName . ' Selected' : 'Insert new Category'; ?></label><br />
+            <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php
+                                                                                                  if (isset($category)) {
+                                                                                                    echo $category->categoryName;
+                                                                                                  } else  "" ?>' />
+            <input name="categoryId" type="hidden" value='<?php
+                                                          if (isset($category)) {
+                                                            echo $category->categoryId;
+                                                          } else  "" ?>' />
           </div>
+          <?php
+          if (isset($_POST['category']))
+            echo updateCategory()
+          ?>
           <button type="submit" class="btn btn-primary">Save</button>
           <a href="category-details.php" class="btn btn-primary">Refresh</a>
         </form>
@@ -150,13 +157,15 @@ if (array_key_exists('logout', $_POST)) {
           </thead>
           <tbody>
             <?php
-            for ($i = 0; $i < $countCategories; $i++) {
-              $row = mysqli_fetch_assoc($categoriesResult);
-              echo "<tr>
-            <th scope='row'>" . $i + 1, "</th>" .
-                "<td>" . $row['categoryName'] . "</td>" .
-                "<td><a href='./category-details.php?categoryId=" . $row['categoryId'] . "'>edit</a></td>
-          </tr>";
+            $categories = getCategories();
+            if (count($categories) > 0) {
+              foreach ($categories as $i => $category) {
+                echo "<tr>
+                <th scope='row'>" . $i + 1, "</th>" .
+                  "<td>" . $category->categoryName . "</td>" .
+                  "<td><a href='./category-details.php?categoryId=" . $category->categoryId . "'>edit</a></td>
+              </tr>";
+              }
             }
             ?>
           </tbody>

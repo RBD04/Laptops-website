@@ -2,6 +2,7 @@
 require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
 require_once '../helpers/save-product.php';
+require_once '../services/category.service.php';
 
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
@@ -59,8 +60,7 @@ if (array_key_exists('logout', $_POST)) {
           <?php
           if (isset($_SESSION['name']))
             if (isset($_SESSION['admin']))
-              echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome '
+              echo 'Welcome ' . $_SESSION['name'] . '(Administrator)';
           ?>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
@@ -144,9 +144,11 @@ if (array_key_exists('logout', $_POST)) {
             <label for="Category">Category</label>
             <select class="form-control mb-3" id="category" name="category">
               <?php
-              for ($i = 0; $i < $countCategories; $i++) {
-                $row = mysqli_fetch_assoc($categoriesResult);
-                echo '<option value=' . $row['categoryId'] . '>' . $row['categoryName'] . '</option>';
+              $categories = getCategories();
+              if (count($categories) > 0) {
+                foreach ($categories as $category) {
+                  echo '<option value="' . $category->categoryId . '">' . $category->categoryName . '</option>';
+                }
               }
               ?>
             </select>
