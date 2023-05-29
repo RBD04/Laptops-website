@@ -71,9 +71,7 @@ if (array_key_exists('logout', $_POST)) {
           </a>
           <?php
           if (isset($_SESSION['name']))
-            if (isset($_SESSION['admin']))
-              echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome ' . $_SESSION['name'];
+            echo 'Welcome ' . $_SESSION['name'];
           ?>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
@@ -103,10 +101,6 @@ if (array_key_exists('logout', $_POST)) {
 
             <div class="user_option-box">
               <a href="login.php">
-                <?php
-                if (isset($_SESSION['admin']))
-                  echo 'admin page '
-                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <div class="dropstart">
