@@ -3,6 +3,7 @@ require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
 require_once '../helpers/save-product.php';
 require_once '../services/category.service.php';
+require_once '../services/category.service.php';
 
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
@@ -109,12 +110,12 @@ if (array_key_exists('logout', $_POST)) {
               <a href="">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </a>
-            </div>
           </div>
-        </nav>
       </div>
-    </header>
-    <!-- end header section -->
+      </nav>
+  </div>
+  </header>
+  <!-- end header section -->
   </div>
   <div class="container m-5">
 
