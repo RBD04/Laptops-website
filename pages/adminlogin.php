@@ -79,15 +79,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="home.php">Home </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
-                            </li>
+
                         </ul>
                         <div class="user_option-box">
                             <a href="login.php">
@@ -139,8 +131,8 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
                     <?php
                     echo $error_message;
                     ?>
-                    <div class="text-center mt-5">
-                        <button type="submit" class="btn btn-large text-center btn-primary ">
+                    <div class="text-center">
+                        <button type="submit" class="btn border border-primary bg-primary btn-large btn-primary ms-auto me-auto">
                             &nbsp;Sign in &nbsp;
                         </button>
                     </div>
