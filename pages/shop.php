@@ -62,7 +62,7 @@ if (array_key_exists('logout', $_POST)) {
           if (isset($_SESSION['name']))
             if (isset($_SESSION['admin']))
               echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome ' .$_SESSION['name'];
+            else echo 'Welcome ' . $_SESSION['name'];
           ?>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,8 +151,10 @@ if (array_key_exists('logout', $_POST)) {
     $n2 = mysqli_num_rows($r2);
     for ($j = 0; $j < $n2; $j++) {
       $row2 = mysqli_fetch_assoc($r2);
-      echo '<div class="col-lg-3 col-12 text-center" style="width: 18rem;"><div class="card m-2 text-center">
-      <img src="' . $row2['thumbnail'] . '" class="card-img-top" alt="...">
+      echo '
+      <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
+      <div class=" box card m-2 text-center">
+      <img src="' . $row2['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
       <div class="card-body">
         <h5 class="card-title text-primary">' . $row2['productName'] . '</h5>
         <p class="card-text text-secondary fw-bolder">' . $row2['price'] . '$</p>
