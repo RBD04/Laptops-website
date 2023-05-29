@@ -1,5 +1,7 @@
 <?php
 require_once '../helpers/connection.php';
+require_once '../services/user.service.php';
+
 session_start();
 if (isset($_SESSION)) {
   if (isset($_SESSION['admin']))
@@ -8,22 +10,25 @@ if (isset($_SESSION)) {
     header('Location: home.php');
 }
 
-if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
-  $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
-  $result = mysqli_query($con, $query);
-  $num_rows = mysqli_num_rows($result);
-  if ($num_rows === 0) {
-    $error_message = 'Authentication failed';
-  } else if ($num_rows > 1) {
-    $error_message = 'Please contact your administrator';
-  } else if ($num_rows === 1) {
-    $user = mysqli_fetch_assoc($result);
-    $_SESSION['user'] = $user['UserId'];
-    $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
-    mysqli_close($con);
-    header('Location: home.php');
-  }
-}
+// if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
+//   $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
+//   $result = mysqli_query($con, $query);
+//   $num_rows = mysqli_num_rows($result);
+//   if ($num_rows === 0) {
+//     $error_message = 'Authentication failed';
+//   } else if ($num_rows > 1) {
+//     $error_message = 'Please contact your administrator';
+//   } else if ($num_rows === 1) {
+//     $user = mysqli_fetch_assoc($result);
+//     $_SESSION['user'] = $user['UserId'];
+//     $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
+//     mysqli_close($con);
+//     header('Location: home.php');
+//   }
+// }
+if(isset($_POST['email'])&&isset($_POST['password']))
+validateLogin();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

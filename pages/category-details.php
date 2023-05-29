@@ -1,6 +1,6 @@
 <?php
 require_once '../helpers/connection.php';
-require_once '../helpers/get-categories.php';
+require_once '../helpers/categories.php';
 session_start();
 
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
