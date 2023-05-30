@@ -2,15 +2,20 @@
 require_once '../helpers/dbWrapper.php';
 require_once '../models/serialNumber.php';
 
-function addSerialNumber(){
+function addSerialNumber($productId,$serialNumber){
     $wrapper=new dbWrapper();
 
-    $serial=new serialNumber();
-
-    $addSerialQuery=`INSERT INTO serialnumber(productId,serialNumber) values("`.$serial->productId.`","`.$serial->serialNumber.`")`;
+    $addSerialQuery='INSERT INTO serialnumber(productId,serialNumber) values("'.$productId.'","'.$serialNumber.'")';
 
     $wrapper->executeUpdate($addSerialQuery);
 
 }
     
+function setSerialReserved($productId,$quantity){
+    $wrapper=new dbWrapper();
+
+    $query='UPDATE serialnumber SET status="reserved" WHERE productId="'.$productId.'" LIMIT "'.$quantity.'"';
+
+}
+
 ?>

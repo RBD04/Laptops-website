@@ -9,7 +9,7 @@ function getProducts()
 
     $products = [];
 
-    $query = `SELECT * FROM product`;
+    $query = 'SELECT * FROM product';
     $result = $wrapper->executeQuery($query);
 
     for ($i = 0; $i < count($result); $i++) {
@@ -27,24 +27,21 @@ function getProducts()
     return $products;
 }
 
-function getProductById()
+function getProductById($id)
 {
     $wrapper = new dbWrapper();
-    $products = getProducts();
     $product = new Product();
 
-    $id = $_POST['productId'];
-    
     if (isset($id)) {
-        $getProductQuery = `SELECT * FROM product WHERE ProductId="$id"`;
+        $getProductQuery = 'SELECT * FROM product WHERE ProductId="' . $id . '"';
         $result = $wrapper->executeQuery($getProductQuery);
 
-            $product->ProductId = $result[0]['ProductId'];
-            $product->categoryId = $result[0]['categoryId'];
-            $product->productName = $result[0]['productName'];
-            $product->description = $result[0]['description'];
-            $product->quantityAvailable = $result[0]['quantityAvailable'];
-            $product->thumbnail = $result[0]['thumbnail'];
+        $product->ProductId = $result[0]['ProductId'];
+        $product->categoryId = $result[0]['categoryId'];
+        $product->productName = $result[0]['productName'];
+        $product->description = $result[0]['description'];
+        $product->quantityAvailable = $result[0]['quantityAvailable'];
+        $product->thumbnail = $result[0]['thumbnail'];
     }
 
     return $product;
@@ -56,7 +53,7 @@ function getAvailableProducts()
 
     $products = [];
 
-    $query = `SELECT * FROM product NATURAL JOIN serialnumber WHERE status="available"`;
+    $query = 'SELECT * FROM product NATURAL JOIN serialnumber WHERE status="available"';
     $result = $wrapper->executeQuery($query);
 
     for ($i = 0; $i < count($result); $i++) {
@@ -74,42 +71,39 @@ function getAvailableProducts()
     return $products;
 }
 
-$isSuccessAdding = '';
-$isSuccessAddingSerials = '';
+
 
 function addProduct()
 {
     $wrapper = new dbWrapper();
-    $product = new Product();
 
-    $product->categoryId = $_POST['category'];
-    $product->productName = $_POST['productName'];
-    $product->description = $_POST['description'];
-    $product->price = $_POST['price'];
-    $product->quantityAvailable = $_POST['quantity'];
+    $message='';
 
-    if (isset($product->quantityAvailable)) {
+    $categoryId = $_POST['category'];
+    $productName = $_POST['productName'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $quantityAvailable = $_POST['quantity'];
+
+    if (isset($quantityAvailable)) {
         if (!empty($_FILES['thumbnail']['name'])) {
             $destination = '../uploads/Thumbnails/' . $_FILES['thumbnail']['name'];
             if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $destination)) {
-                echo '<script>alert("Successful");</script>';
+                $message= 'Product added successfully';
             } else {
-                echo '<script>alert("Failed");</script>';
+                $message= 'File upload error';
+            }
+            $addProductQuery = 'INSERT INTO product(categoryId,productName,description,price,quantityAvailable,thumbnail)
+                                VALUES("'.$categoryId.'","'.$productName.'","'.$description.'","'.$price.'","'.$quantityAvailable.'","'.$destination.'")';
+            $id = '';
+            $id = $wrapper->executeQueryAndReturnId($addProductQuery);
+
+            for ($i = 0; $i < $quantityAvailable; $i++) {
+                addSerialNumber($id, $_POST['serial' . ($i + 1)]);
             }
         } else {
-            echo '<script>alert("false");</script>';
+            $message= 'Error adding product';
         }
     }
-
-    $addProductQuery = `
-    INSERT INTO product(categoryId,productName,description,price,quantityAvailable,thumbnail) 
-        VALUES(` . "$product->categoryId" . `, ` . "$product->productName" . `,` . "$product->description" . `,
-        ` . "$product->quantityAvailable" . `,"$destination" )`;
-    $id = '';
-
-    $id = $wrapper->executeQueryAndReturnId($addProductQuery);
-
-    for ($i = 0; $i < $product->quantityAvailable; $i++) {
-        addSerialNumber($id, $_POST['serial' . ($i + 1)]);
-    }
+    return $message;
 }

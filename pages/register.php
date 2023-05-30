@@ -1,35 +1,47 @@
 <?php
 require_once '../helpers/connection.php';
+require_once '../services/user.service.php';
+
 session_start();
+
+$msgError = '';
+
 if (
   isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
   && isset($_POST['phoneNumber']) && isset($_POST['password'])
 ) {
-  extract($_POST);
-  $addUserQuery = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
-        "' . $_POST["email"] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '","' . $_POST['birthday'] . '",
-        "' . $gender . '") ';
-
-  $id;
-
-  if (!mysqli_query($con, $addUserQuery)) {
-    die("Error signing up");
-  } else {
-    $id = mysqli_insert_id($con);
-  }
-
-  $initiateCartQuery= 'INSERT INTO cart(userId) VALUES("'.$id.'")';
-
-  if (!mysqli_query($con, $addUserQuery)||!mysqli_query($con,$initiateCartQuery)) die("Error signing up");
-  else {
-    mysqli_close($con);
-    echo '
-        <script type="text/javascript">
-          alert("You have successfully registred, login now!");
-          window.location="./login.php";
-        </script>                        ';
-  }
+  $msgError = signup();
 }
+
+// if (
+//   isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
+//   && isset($_POST['phoneNumber']) && isset($_POST['password'])
+// ) {
+//   extract($_POST);
+//   $addUserQuery = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
+//         "' . $_POST["email"] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '","' . $_POST['birthday'] . '",
+//         "' . $gender . '") ';
+
+//   $id;
+
+//   if (!mysqli_query($con, $addUserQuery)) {
+//     die("Error signing up");
+//   } else {
+//     $id = mysqli_insert_id($con);
+//   }
+
+//   $initiateCartQuery= 'INSERT INTO cart(userId) VALUES("'.$id.'")';
+
+//   if (!mysqli_query($con, $addUserQuery)||!mysqli_query($con,$initiateCartQuery)) die("Error signing up");
+//   else {
+//     mysqli_close($con);
+//     echo '
+//         <script type="text/javascript">
+//           alert("You have successfully registred, login now!");
+//           window.location="./login.php";
+//         </script>                        ';
+//   }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -136,17 +148,17 @@ if (
         <form method="post">
           <div class="row">
             <div class="col">
-              <input name="firstName" type="text" placeholder="*First Name" required />
+              <input name="firstName" type="text" placeholder="*First Name" />
             </div>
             <div class="col">
-              <input name="lastName" type="text" placeholder="*Last Name" required />
+              <input name="lastName" type="text" placeholder="*Last Name" />
             </div>
           </div>
           <div>
-            <input name="email" type="email" placeholder="*Email" required />
+            <input name="email" type="email" placeholder="*Email" />
           </div>
           <div>
-            <input name="phoneNumber" type="text" placeholder="*Phone Number" required />
+            <input name="phoneNumber" type="text" placeholder="*Phone Number" />
           </div>
           <div class="row">
             <div class="col">
@@ -161,11 +173,15 @@ if (
             </div>
           </div>
           <div>
-            <input name="password" type="password" placeholder="*Password" required />
+            <input name="password" type="password" placeholder="*Password" />
           </div>
           <div>
-            <input name="confPassword" type="password" placeholder="*Confirm Password" required />
+            <input name="confPassword" type="password" placeholder="*Confirm Password" />
           </div>
+          <?php
+          if (isset($_POST))
+            echo $msgError;
+          ?>
           <div class="text-center">
             <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary">
               Create Account

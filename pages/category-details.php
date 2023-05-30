@@ -5,6 +5,8 @@ require_once '../services/category.service.php';
 
 session_start();
 
+$msgSuccess='';
+
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
 
@@ -14,6 +16,10 @@ if (array_key_exists('logout', $_POST)) {
 }
 if (isset($_GET['categoryId']))
   $category = getCategoryById($_GET['categoryId']);
+
+if (isset($_POST['category']))
+  $msgSuccess = saveCategory();
+
 ?>
 
 <!DOCTYPE html>
@@ -140,8 +146,7 @@ if (isset($_GET['categoryId']))
                                                           } else  "" ?>' />
           </div>
           <?php
-          if (isset($_POST['category']))
-            echo updateCategory()
+            echo $msgSuccess;
           ?>
           <button type="submit" class="btn btn-primary">Save</button>
           <a href="category-details.php" class="btn btn-primary">Refresh</a>

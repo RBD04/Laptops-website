@@ -1,9 +1,9 @@
 <?php
 require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
-require_once '../helpers/save-product.php';
 require_once '../services/category.service.php';
 require_once '../services/category.service.php';
+require_once '../services/product.service.php';
 
 session_start();
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
@@ -13,6 +13,8 @@ if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
 }
+
+if(isset($_POST)&&isset($_POST['quantity'])) $msgSuccess=addProduct();
 ?>
 
 <!DOCTYPE html>
@@ -169,17 +171,14 @@ if (array_key_exists('logout', $_POST)) {
           <div class="form-group">
             <label for="images" class="form-label">Images</label>
             <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-primary">Reset</button>
-
-          <?php
+          </div>  
+          <?php 
           if (isset($_POST['productName'])) {
-            echo $isSuccessAdding;
-            echo $isSuccessAddingSerials;
+            echo '<br/>'.$msgSuccess;
           }
           ?>
-
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-primary">Reset</button>
         </form>
 
       </div>
