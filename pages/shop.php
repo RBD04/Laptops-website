@@ -1,6 +1,7 @@
 <?php
 require_once '../helpers/connection.php';
 require_once '../helpers/categories.php';
+
 session_start();
 
 if (array_key_exists('logout', $_POST)) {

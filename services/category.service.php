@@ -31,7 +31,7 @@ function getCategories()
 
 
 
-function updateCategory()
+function saveCategory()
 {
     $wrapper = new dbWrapper();
 
@@ -45,10 +45,10 @@ function updateCategory()
     if (isset($categoryName)) {
         if (isset($categoryId) && $categoryId > 0) {
             $wrapper->executeUpdate($updateQuery);
-            echo 'Category \'' . $categoryName . '\' updated successfully. <br/>';
+            return 'Category \'' . $categoryName . '\' updated successfully. <br/>';
         } else {
             $wrapper->executeUpdate($insertQuery);
-            echo 'Category \'' . $categoryName . '\' added successfully. <br/>';
+            return 'Category \'' . $categoryName . '\' added successfully. <br/>';
         }
     }
 }

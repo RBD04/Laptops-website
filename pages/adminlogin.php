@@ -1,28 +1,40 @@
 <?php
 require_once '../helpers/connection.php';
+require_once '../services/admin.service.php';
 session_start();
 // session_destroy(); //(logout)
-if (isset($_SESSION) && isset($_SESSION['admin']))
-    header('Location: add-product.php');
+
+if (isset($_SESSION)) {
+    if (isset($_SESSION['user']))
+        header('Location: home.php');
+    else if (isset($_SESSION['admin']))
+        header('Location: add-product.php');
+}
+
+
 
 $error_message = '';
 
 if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
-    $query = 'SELECT * FROM admin Where username="' . $_POST["username"] . '" and password="' . $_POST["password"] . '"';
-    $result = mysqli_query($con, $query);
-    $num_rows = mysqli_num_rows($result);
-    if ($num_rows === 0) {
-        $error_message = 'Authentication failed';
-    } else if ($num_rows > 1) {
-        $error_message = 'Please contact your administrator';
-    } else if ($num_rows === 1) {
-        $admin = mysqli_fetch_assoc($result);
-        $_SESSION['admin'] = $admin['adminId'];
-        $_SESSION['name'] = $admin['username'];
-        mysqli_close($con);
-        header('Location: add-product.php');
-    }
+    $error_message = validateLogin();
 }
+
+// if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
+//     $query = 'SELECT * FROM admin Where username="' . $_POST["username"] . '" and password="' . $_POST["password"] . '"';
+//     $result = mysqli_query($con, $query);
+//     $num_rows = mysqli_num_rows($result);
+//     if ($num_rows === 0) {
+//         $error_message = 'Authentication failed';
+//     } else if ($num_rows > 1) {
+//         $error_message = 'Please contact your administrator';
+//     } else if ($num_rows === 1) {
+//         $admin = mysqli_fetch_assoc($result);
+//         $_SESSION['admin'] = $admin['adminId'];
+//         $_SESSION['name'] = $admin['username'];
+//         mysqli_close($con);
+//         header('Location: add-product.php');
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
