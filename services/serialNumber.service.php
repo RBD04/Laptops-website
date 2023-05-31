@@ -11,10 +11,10 @@ function addSerialNumber($productId,$serialNumber){
 
 }
     
-function setSerialReserved($productId){
+function setSerialReserved($productId,$quantity){
     $wrapper=new dbWrapper();
 
-    $query='UPDATE serialnumber SET status="reserved" WHERE productId="'.$productId.'" AND status="available" LIMIT 1';
+    $query='UPDATE serialnumber SET status="reserved" WHERE productId="'.$productId.'" AND status="available" LIMIT '.$quantity.'';
 
     $wrapper->executeUpdate($query);
 }

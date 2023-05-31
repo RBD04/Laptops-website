@@ -1,18 +1,18 @@
 <?php
 require_once '../helpers/dbWrapper.php';
 
-function addToCartProduct($cartId, $productId)
+function addToCartProduct($cartId, $productId,$quantity)
 {
     $wrapper = new dbWrapper();
 
 
     if (alreadyAdded($cartId, $productId)) {
         $newQuantity=getAddToCartProductQuantity($cartId,$productId);
-        $newQuantity=$newQuantity+1;
+        $newQuantity=$newQuantity+$quantity;
         $query='UPDATE cartproduct SET quantity="'.$newQuantity.'" ';
         $wrapper->executeUpdate($query);
     } else {
-        $query = 'INSERT INTO cartproduct(cartId,productId,quantity) VALUES("' . $cartId . '","' . $productId . '",1)';
+        $query = 'INSERT INTO cartproduct(cartId,productId,quantity) VALUES("' . $cartId . '","' . $productId . '",'.$quantity.')';
         $wrapper->executeUpdate($query);
     }
 }

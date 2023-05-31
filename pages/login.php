@@ -103,7 +103,7 @@ $errorLogin=null;
             </ul>
             <div class="user_option-box">
               <a href="login.php">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                <i class="fa fa-user text-primary" aria-hidden="true"></i>
               </a>
               <div class="dropstart">
                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
