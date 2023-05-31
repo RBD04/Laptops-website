@@ -101,6 +101,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
             </form>
             '
             ?>
+
   </header><!-- End Header -->
 
 

@@ -3,7 +3,7 @@ require_once '../services/cart.service.php';
 require_once '../services/category.service.php';
 require_once '../services/product.service.php';
 
-$categories=getCategories();
+$categories = getCategories();
 
 session_start();
 
@@ -12,7 +12,6 @@ if (array_key_exists('logout', $_POST)) {
   header("Refresh:0");
 }
 
-if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
 
 ?>
 
@@ -132,42 +131,37 @@ if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
     </a>
     <ul class="dropdown-menu">
       <?php
-      foreach($categories as $category){
+      foreach ($categories as $category) {
         echo ' <li><a class="dropdown-item" href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
       }
       ?>
     </ul>
   </div>
   <!--End Categories Dropdown-->
-  
+
   <!-- shop section -->
   <?php
-  foreach($categories as $category){
-    echo "<h1 id='" . $category->categoryId. "' class='display-4 m-5 text-center text-info fw-bolder'>" . $category->categoryName . "</h1>";
+  foreach ($categories as $category) {
+    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-info fw-bolder'>" . $category->categoryName . "</h1>";
     echo "<div class='container-lg justify-content-center text-center'>";
     echo "<div class='row col-12'>";
-    $products=getProductsByCategory($category->categoryId);
-    foreach($products as $product) {
+    $products = getProductsByCategory($category->categoryId);
+    foreach ($products as $product) {
       echo '
       <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
-      <div class=" box card m-2 text-center">
-      <img src="' . $product->thumbnail . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
-      <div class="card-body">
-        <h5 class="card-title text-primary">' .$product->productName . '</h5>
-        <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
-        <form method="post">
-        <a href="viewproduct.php" class="btn btn-primary">View</a>
-        <input type="hidden" name="productId" value='.$product->ProductId.' />
-        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addToCartModal">
-        Add to cart
-        </button>
-        <form>
-      </div>
-    </div></div>';
+        <div class=" box card m-2 text-center">
+          <img src="' . $product->thumbnail . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
+          <div class="card-body">
+            <h5 class="card-title text-primary">' . $product->productName . '</h5>
+            <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
+              <a href="viewproduct.php?productId=' . $product->ProductId . '" class="btn btn-primary">Add to Cart</a>
+          </div>
+        </div>
+      </div>';
     }
     echo "</div>";
     echo "</div>";
-    }
+  }
   ?>
   <!-- end shop section -->
   <!-- footer section -->
@@ -241,7 +235,7 @@ if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ok, 4 items added to cart, what's next?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Ok, <?php echo $product ?> cart, what's next?</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -250,9 +244,7 @@ if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
           ...
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
-          <button type="button" class="btn btn-primary">Proceed To Checkout</button>
-          <a href="cart.php" class="btn btn-primary">View or edit your cart</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>\
         </div>
       </div>
     </div>
@@ -270,7 +262,6 @@ if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
   </script>
   <!-- custom js -->
   <script src="../js/custom.js"></script>
-
 </body>
 
 </html>

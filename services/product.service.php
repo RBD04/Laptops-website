@@ -20,7 +20,7 @@ function getProducts()
         $product->description = $result[$i]['description'];
         $product->quantityAvailable = $result[$i]['quantityAvailable'];
         $product->thumbnail = $result[$i]['thumbnail'];
-        $product->price=$result[$i]['price'];
+        $product->price = $result[$i]['price'];
 
         $products[$i] = $product;
     }
@@ -43,7 +43,8 @@ function getProductById($id)
         $product->description = $result[0]['description'];
         $product->quantityAvailable = $result[0]['quantityAvailable'];
         $product->thumbnail = $result[0]['thumbnail'];
-    }else $product=null;
+        $product->price = $result[0]['price'];
+    } else $product = null;
 
     return $product;
 }
@@ -54,7 +55,7 @@ function getAvailableProducts()
 
     $products = [];
 
-    $query = 'SELECT * FROM product NATURAL JOIN serialnumber WHERE status="available"';
+    $query = 'SELECT * FROM product NATURAL JOIN serialnumber WHERE status="available" LIMIT 1';
     $result = $wrapper->executeQuery($query);
 
     for ($i = 0; $i < count($result); $i++) {
@@ -65,6 +66,7 @@ function getAvailableProducts()
         $product->description = $result[$i]['description'];
         $product->quantityAvailable = $result[$i]['quantityAvailable'];
         $product->thumbnail = $result[$i]['thumbnail'];
+        $product->price = $result[$i]['price'];
 
         $products[$i] = $product;
     }
