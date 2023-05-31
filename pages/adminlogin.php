@@ -8,7 +8,7 @@ if (isset($_SESSION)) {
     if (isset($_SESSION['user']))
         header('Location: home.php');
     else if (isset($_SESSION['admin']))
-        header('Location: add-product.php');
+        header('Location: admin-home.php');
 }
 
 

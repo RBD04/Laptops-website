@@ -128,7 +128,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link collapsed" href="display-users.php">
+    <a class="nav-link collapsed" href="../pages/user-details.php">
       <i class="bi bi-person-fill-gear"></i>
       <span>Manage Users</span>
     </a>
