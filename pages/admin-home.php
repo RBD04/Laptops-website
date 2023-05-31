@@ -1,3 +1,21 @@
+<?php
+require_once '../helpers/connection.php';
+require_once '../helpers/categories.php';
+require_once '../services/category.service.php';
+require_once '../services/category.service.php';
+require_once '../services/product.service.php';
+
+session_start();
+if (!isset($_SESSION) || !isset($_SESSION['admin']))
+  header('Location: adminlogin.php');
+
+if (array_key_exists('logout', $_POST)) {
+  session_destroy();
+  header("Refresh:0");
+}
+
+if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,8 +65,13 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block text-dark fw-bolder">TechZone(Admin)</span>
+        <span class="d-none d-lg-block text-dark fw-bolder">TechZone</span>
       </a>
+      <?php
+          if (isset($_SESSION['name']))
+            if (isset($_SESSION['admin']))
+              echo 'Welcome ' . $_SESSION['name'].' ';
+          ?>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
     <!-- End Logo -->
@@ -69,7 +92,18 @@
           </a>
         </li><!-- End Search Icon-->
     </nav>
-
+    <?php
+                if (isset($_SESSION['admin']))
+                  echo 'Admin page '
+                ?>
+                <?php
+            if (isset($_SESSION['name']))
+              echo '
+            <form method="post">
+            <button class="btn btn-primary mx-3" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+            '
+            ?>
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
@@ -84,7 +118,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="add-products.php">
+        <a class="nav-link collapsed" href="../pages/add-product.php">
           <i class="bi bi-plus-square"></i>
           <span>Add Products</span>
         </a>
