@@ -2,10 +2,12 @@
 require_once '../services/cart.service.php';
 require_once '../services/category.service.php';
 require_once '../services/product.service.php';
-
-$categories = getCategories();
+require_once '../helpers/cartItems.php';
 
 session_start();
+
+$categories = getCategories();
+$cartProducts = getCartProducts();
 
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
@@ -108,10 +110,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                  <?php renderCartItems($cartProducts)?>
                 </ul>
               </div>
               <a href="">

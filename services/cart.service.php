@@ -17,7 +17,7 @@ function createCart($id)
     }
 }
 
-function getCurrentCart($userId)
+function getCurrentCartId($userId)
 {
     $wrapper = new dbWrapper();
 
@@ -39,7 +39,7 @@ function addToCart($productId, $quantity)
 {
 
     if (isset($_SESSION['user'])) {
-        $cartId = getCurrentCart($_SESSION['user']);
+        $cartId = getCurrentCartId($_SESSION['user']);
 
         $product = getProductById($productId);
 
@@ -58,28 +58,42 @@ function addToCart($productId, $quantity)
     } else echo '<script>alert("You need to login first")</script>';
 }
 
-function displayCart()
+function getCartProducts()
 {
-
+    $wrapper = new dbWrapper();
+    $products = [];
     if (isset($_SESSION['user'])) {
-        $cart = getCurrentCart($_SESSION['user']);
-        $query = 'SELECT * 
-            FROM user 
+        $cartId = getCurrentCartId($_SESSION['user']);
+        $query = 'SELECT *
+            FROM product 
             NATURAL JOIN cartproduct
-            NATURAL JOIN product 
-            NATURAL JOIN serialnumber 
-            WHERE status="reserved" 
-            AND userId="1"
-            AND cartId=' . $cart->cartId . '';
-    }
-    else return 'No items available';
+            NATURAL JOIN cart
+            WHERE cartId="' . $cartId . '"
+            AND confirmed=0';
 
 
+        $results = $wrapper->executeQuery($query);
+
+        foreach ($results as $result) {
+            $product = new Product();
+
+            $product->ProductId = $result['ProductId'];
+            $product->productName = $result['productName'];
+            $product->description = $result['description'];
+            $product->thumbnail = $result['thumbnail'];
+            $product->price = $result['price'];
+            $product->quantityAvailable = $result['quantity'];
+
+            $products[] = $product;
+        }
+    } else $products='No items available';
+
+    return $products;
 }
 
 function cartConfirmed()
 {
-    $query='UPDATE cart
+    $query = 'UPDATE cart
             SET confirmed=1
             ';
 }

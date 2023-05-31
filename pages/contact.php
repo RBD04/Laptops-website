@@ -1,6 +1,10 @@
 <?php
-require_once '../helpers/connection.php';
+require_once '../helpers/cartItems.php';
+require_once '../services/cart.service.php';
+
 session_start();
+
+$cartProducts = getCartProducts();
 
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
@@ -95,10 +99,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                  <?php renderCartItems($cartProducts) ?>
                 </ul>
               </div>
               <a href="">
@@ -229,6 +230,9 @@ if (array_key_exists('logout', $_POST)) {
   <!-- bootstrap js -->
   <script src="../js/bootstrap.js"></script>
   <!-- owl slider -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <!-- custom js -->

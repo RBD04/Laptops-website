@@ -1,8 +1,10 @@
 <?php
 require_once '../services/product.service.php';
 require_once '../services/cart.service.php';
+require_once '../helpers/cartItems.php';
 
 session_start();
+$cartProducts = getCartProducts();
 
 $product = getProductById($_GET['productId']);
 
@@ -13,6 +15,10 @@ if (isset($_POST) && isset($_POST['quantity'])) {
     // header('Location: shop.php?addedToCart=true');
 }
 
+if (array_key_exists('logout', $_POST)) {
+    session_destroy();
+    header("Refresh:0");
+  }
 
 ?>
 <!DOCTYPE html>
@@ -117,10 +123,7 @@ if (isset($_POST) && isset($_POST['quantity'])) {
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><span class="dropdown-item-text">No Items Available</span></li>
-                                    <li><a class="dropdown-item" href="#">First Item</a></li>
-                                    <li><a class="dropdown-item" href="#">Second Item</a></li>
-                                    <li><a class="dropdown-item" href="#">Third Item</a></li>
+                                    <?php renderCartItems($cartProducts) ?>
                                 </ul>
                             </div>
                             <a href="">
@@ -260,6 +263,7 @@ if (isset($_POST) && isset($_POST['quantity'])) {
     </script>
     <!-- custom js -->
     <script src="../js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const quantityChange = (action) => {
