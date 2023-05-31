@@ -61,10 +61,7 @@ if (array_key_exists('logout', $_POST)) {
             margin: 0;
         }
 
-        #quantityGroup input[type="number"] {
-            -moz-appearance: textfield;
-            /* Firefox */
-        }
+    
     </style>
 
 </head>

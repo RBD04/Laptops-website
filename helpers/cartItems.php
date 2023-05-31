@@ -33,8 +33,8 @@ function renderCartItems($cartProducts) {
                   <h4>Total Price: ' . $totalPrice . '$</h4>
               </li>
               <li class="dropdown-item m-2" style="display: flex; flex-direction: column;">
-                  <button class="btn btn-primary mb-2">CHECKOUT NOW</button>
-                  <button class="btn btn-outline-primary">VIEW CART</button>
+                  <a href="checkout.php" class="btn btn-primary mb-2 text-white">CHECKOUT NOW</a>
+                  <a href="cart.php" class="btn btn-outline-primary">VIEW CART</a>
               </li>';
     }
 }

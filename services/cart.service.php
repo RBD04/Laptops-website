@@ -65,28 +65,27 @@ function getCartProducts()
     if (isset($_SESSION['user'])) {
         $cartId = getCurrentCartId($_SESSION['user']);
         $query = 'SELECT *
-            FROM product 
-            NATURAL JOIN cartproduct
-            NATURAL JOIN cart
-            WHERE cartId="' . $cartId . '"
-            AND confirmed=0';
+            FROM cartproduct 
+            NATURAL JOIN product
+            WHERE cartId="' . $cartId . '"';
 
 
         $results = $wrapper->executeQuery($query);
 
-        foreach ($results as $result) {
+        if(!count($results)==0){
+        foreach ($results as $item) {
             $product = new Product();
 
-            $product->ProductId = $result['ProductId'];
-            $product->productName = $result['productName'];
-            $product->description = $result['description'];
-            $product->thumbnail = $result['thumbnail'];
-            $product->price = $result['price'];
-            $product->quantityAvailable = $result['quantity'];
+            $product->ProductId = $item['productId'];
+            $product->productName = $item['productName'];
+            $product->description = $item['description'];
+            $product->thumbnail = $item['thumbnail'];
+            $product->price = $item['price'];
+            $product->quantityAvailable = $item['quantity'];
 
-            $products[] = $product;
-        }
-    } else $products='No items available';
+            $products[] = $product;}
+        }else $products='No Items Available';
+    } else $products='No Items Available';
 
     return $products;
 }
