@@ -206,7 +206,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
             echo $msgSuccess . '<br/><br/>';
           }
           ?>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Add</button>
           <button type="reset" class="btn btn-primary">Reset</button>
         </form>
         </div>
