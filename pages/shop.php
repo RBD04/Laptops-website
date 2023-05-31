@@ -80,13 +80,13 @@ if (array_key_exists('logout', $_POST)) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="home.php">Home </a>
+                <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link fw-bolder" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
+                <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+                <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
               </li>
             </ul>
             <?php
@@ -141,7 +141,7 @@ if (array_key_exists('logout', $_POST)) {
   <!-- shop section -->
   <?php
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-info fw-bolder'>" . $category->categoryName . "</h1>";
+    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
     echo "<div class='container-lg justify-content-center text-center'>";
     echo "<div class='row col-12'>";
     $products = getProductsByCategory($category->categoryId);
