@@ -3,44 +3,14 @@ require_once '../services/user.service.php';
 
 session_start();
 
-$msgError = '';
+if (isset($_SESSION) && isset($_SESSION['user']))
+  $user = getUserById($_SESSION['user']);
+else (header('Location: home.php'));
 
-if (
-  isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
-  && isset($_POST['phoneNumber']) && isset($_POST['password'])
-) {
-  $msgError = signup();
-}
-
-// if (
-//   isset($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])
-//   && isset($_POST['phoneNumber']) && isset($_POST['password'])
-// ) {
-//   extract($_POST);
-//   $addUserQuery = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '",
-//         "' . $_POST["email"] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '","' . $_POST['birthday'] . '",
-//         "' . $gender . '") ';
-
-//   $id;
-
-//   if (!mysqli_query($con, $addUserQuery)) {
-//     die("Error signing up");
-//   } else {
-//     $id = mysqli_insert_id($con);
-//   }
-
-//   $initiateCartQuery= 'INSERT INTO cart(userId) VALUES("'.$id.'")';
-
-//   if (!mysqli_query($con, $addUserQuery)||!mysqli_query($con,$initiateCartQuery)) die("Error signing up");
-//   else {
-//     mysqli_close($con);
-//     echo '
-//         <script type="text/javascript">
-//           alert("You have successfully registred, login now!");
-//           window.location="./login.php";
-//         </script>                        ';
-//   }
-// }
+if (array_key_exists('logout', $_POST)) {
+  session_destroy();
+  header("Refresh:0");
+}   
 ?>
 
 <!DOCTYPE html>
@@ -79,59 +49,70 @@ if (
 </head>
 
 <body class="sub_page">
+  <!-- header section -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="home.php">
+          <span>
+            Laptops website
+          </span>
+        </a>
+        <?php
+        if (isset($_SESSION['name']))
+          echo 'Welcome ' . $_SESSION['name'];
+        ?>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
 
-  <div class="hero_area">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link fw-bolder" href="home.php">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+            </li>
+          </ul>
 
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="home.php">
-            <span>
-              Laptops website
-            </span>
-          </a>
+          <?php
+          if (isset($_SESSION['name']))
+            echo '
+            <form method="post">
+            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+            '
+          ?>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link fw-bolder" href="home.php">Home </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
-              </li>
-            </ul>
-            <div class="user_option-box">
-              <a href="login.php">
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </a>
-              <div class="dropstart">
-                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
-                </ul>
-              </div>
-              <a href="">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
+          <div class="user_option-box">
+            <a href="login.php">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </a>
+            <div class="dropstart">
+              <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><span class="dropdown-item-text">No Items Available</span></li>
+                <li><a class="dropdown-item" href="#">First Item</a></li>
+                <li><a class="dropdown-item" href="#">Second Item</a></li>
+                <li><a class="dropdown-item" href="#">Third Item</a></li>
+              </ul>
             </div>
+            <a href="">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+
   </div>
 
   <!-- contact section -->
@@ -141,49 +122,54 @@ if (
       <div class="form_container">
         <div class="text-center text-primary">
           <h2 class="display-5 fw-bolder mb-2 mt-0">
-            Register
+            Account
           </h2>
         </div>
         <form method="post">
           <div class="row">
             <div class="col">
-              <input name="firstName" type="text" placeholder="*First Name" />
+              <img src="../uploads/Thumbnails/sony-vaio-2.jpg" width="360px" height="480px" class="rounded float-left" alt="...">
             </div>
             <div class="col">
-              <input name="lastName" type="text" placeholder="*Last Name" />
+              <label for="first">First Name</label>
+              <input name="firstName" id="first" type="text" placeholder="*First Name" value=<?php echo $user->firstName ?> disabled />
+            </div>
+            <div class="col">
+              <label for="first">Last Name</label>
+              <input name="lastName" type="text" placeholder="*Last Name" value=<?php echo $user->lastName ?> disabled />
             </div>
           </div>
+          </div>
+          <div class="row">
+            
+            
           <div>
-            <input name="email" type="email" placeholder="*Email" />
+            <label for="first">Email</label>
+            <input name="email" type="email" placeholder="*Email" value=<?php echo $user->email ?> disabled />
           </div>
           <div>
-            <input name="phoneNumber" type="text" placeholder="*Phone Number" />
+            <label for="first">Phone Number</label>
+            <input name="phoneNumber" type="text" placeholder="*Phone Number" value=<?php echo $user->phoneNumber ?> disabled />
           </div>
           <div class="row">
             <div class="col">
-              <input name="birthday" type="date" min="1920-02-02" />
+              <label for="first">Birthday</label>
+              <input name="birthday" type="date" min="1920-02-02" value=<?php echo $user->birthday ?> disabled />
             </div>
             <div class="col pb-2 text-center">
-              <input type="radio" class="btn-check" name="gender" id="option1" value="M">
+              <input type="radio" class="btn-check" name="gender" id="option1" value="M" disabled>
               <label class="btn btn-primary" for="option1">Male</label>
-              <input type="radio" class="btn-check" name="gender" id="option2" value="F">
+              <input type="radio" class="btn-check" name="gender" id="option2" value="F" disabled>
               <label class="btn btn-primary" for="option2">Female</label>
               <span>(Select your Gender)</span>
             </div>
           </div>
-          <div>
-            <input name="password" type="password" placeholder="*Password" />
-          </div>
-          <div>
-            <input name="confPassword" type="password" placeholder="*Confirm Password" />
-          </div>
-          <?php
-          if (isset($_POST))
-            echo $msgError;
-          ?>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary">
-              Create Account
+            <button class="btn btn-primary btn-lg bg-primary border border-primary">
+              Edit
+            </button>
+            <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary" disabled>
+              Save Changes
             </button>
           </div>
         </form>

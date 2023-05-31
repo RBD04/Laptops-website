@@ -1,5 +1,6 @@
 <?php
-class admin{
+class admin
+{
     public $adminId;
     public $username;
     public $password;

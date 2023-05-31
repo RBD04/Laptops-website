@@ -14,7 +14,7 @@ if (array_key_exists('logout', $_POST)) {
   header("Refresh:0");
 }
 
-if(isset($_POST)&&isset($_POST['quantity'])) $msgSuccess=addProduct();
+if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
 ?>
 
 <!DOCTYPE html>
@@ -112,12 +112,12 @@ if(isset($_POST)&&isset($_POST['quantity'])) $msgSuccess=addProduct();
               <a href="">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </a>
+            </div>
           </div>
+        </nav>
       </div>
-      </nav>
-  </div>
-  </header>
-  <!-- end header section -->
+    </header>
+    <!-- end header section -->
   </div>
   <div class="container m-5">
 
@@ -171,10 +171,10 @@ if(isset($_POST)&&isset($_POST['quantity'])) $msgSuccess=addProduct();
           <div class="form-group">
             <label for="images" class="form-label">Images</label>
             <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-          </div>  
-          <?php 
+          </div>
+          <?php
           if (isset($_POST['productName'])) {
-            echo '<br/>'.$msgSuccess;
+            echo $msgSuccess . '<br/><br/>';
           }
           ?>
           <button type="submit" class="btn btn-primary">Submit</button>

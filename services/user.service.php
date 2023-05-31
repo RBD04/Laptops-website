@@ -30,6 +30,29 @@ function getUsers()
     }
 }
 
+function getUserById($id)
+{
+    $wrapper = new dbWrapper();
+    $user = new User();
+
+    if (isset($id)) {
+        $query = 'SELECT * FROM user WHERE UserId="' . $id . '"';
+        $result = $wrapper->executeQuery($query);
+
+        $user->UserId = $result[0]['UserId'];
+        $user->firstName = $result[0]['firstName'];
+        $user->lastName = $result[0]['lastName'];
+        $user->email = $result[0]['email'];
+        $user->birthday = $result[0]['birthday'];
+        $user->gender = $result[0]['gender'];
+        $user->profilePicture = $result[0]['profilePicture'];
+        $user->phoneNumber = $result[0]['phoneNumber'];
+
+        return $user;
+    } else $user = null;
+    return $user;
+}
+
 
 function validateLogin()
 {
@@ -91,10 +114,10 @@ function alreadyExists($email)
     $wrapper = new dbWrapper();
 
     $query = 'SELECT email FROM user WHERE email="' . $email . '"';
-    
+
     $result = $wrapper->executeSingleRowQuery($query);
-    
+
     $count = count($result);
-    
+
     return ($count > 0);
 }
