@@ -82,13 +82,13 @@ if (array_key_exists('logout', $_POST)) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link fw-bolder" href="home.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link fw-bolder text-primary" href="home.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+                <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
               </li>
             </ul>
 
@@ -103,6 +103,10 @@ if (array_key_exists('logout', $_POST)) {
 
             <div class="user_option-box">
               <a href="login.php">
+                <?php
+                if (isset($_SESSION['admin']))
+                  echo 'admin page '
+                ?>  
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <div class="dropstart">

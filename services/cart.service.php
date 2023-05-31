@@ -35,25 +35,51 @@ function getCurrentCart($userId)
     }
 }
 
-function addToCart($productId)
+function addToCart($productId, $quantity)
 {
-        
+
     if (isset($_SESSION['user'])) {
         $cartId = getCurrentCart($_SESSION['user']);
 
         $product = getProductById($productId);
 
-        $quantity = $product->quantityAvailable-1;
+        if ($quantity > $product->quantityAvailable) {
+            return 'Sorry, quantity requested is not available now!';
+        } else {
+            $newQuantity = $product->quantityAvailable - $quantity;
 
-        setSerialReserved($product->ProductId);
+            setSerialReserved($product->ProductId, $quantity);
 
-        addToCartProduct($cartId, $product->ProductId);
+            addToCartProduct($cartId, $product->ProductId, $quantity);
 
-        updateProductQuantity($product->ProductId, $quantity);
-        
+            updateProductQuantity($product->ProductId, $newQuantity);
+            return $product->productName . ' added to cart successfully';
+        }
     } else echo '<script>alert("You need to login first")</script>';
+}
+
+function displayCart()
+{
+
+    if (isset($_SESSION['user'])) {
+        $cart = getCurrentCart($_SESSION['user']);
+        $query = 'SELECT * 
+            FROM user 
+            NATURAL JOIN cartproduct
+            NATURAL JOIN product 
+            NATURAL JOIN serialnumber 
+            WHERE status="reserved" 
+            AND userId="1"
+            AND cartId=' . $cart->cartId . '';
+    }
+    else return 'No items available';
+
+
 }
 
 function cartConfirmed()
 {
+    $query='UPDATE cart
+            SET confirmed=1
+            ';
 }

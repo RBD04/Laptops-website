@@ -5,7 +5,7 @@ require_once '../services/category.service.php';
 
 session_start();
 
-$msgSuccess='';
+$msgSuccess = '';
 
 if (!isset($_SESSION) || !isset($_SESSION['admin']))
   header('Location: adminlogin.php');
@@ -93,11 +93,11 @@ if (isset($_POST['category']))
             ?>
             <div class="user_option-box">
               <a href="login.php">
-                <?php
-                if (isset($_SESSION['admin']))
-                  echo 'admin page '
-                ?>
-                <i class="fa fa-user" aria-hidden="true"></i>
+                <i class="fa fa-user text-primary" aria-hidden="true"><?php
+                                                                      if (isset($_SESSION['admin']))
+                                                                        echo ' admin page '
+                                                                      ?>
+                </i>
               </a>
               <div class="dropstart">
                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,7 +146,7 @@ if (isset($_POST['category']))
                                                           } else  "" ?>' />
           </div>
           <?php
-            echo $msgSuccess;
+          echo $msgSuccess;
           ?>
           <button type="submit" class="btn btn-primary">Save</button>
           <a href="category-details.php" class="btn btn-primary">Refresh</a>
