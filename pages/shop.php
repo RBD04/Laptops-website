@@ -1,6 +1,9 @@
 <?php
-require_once '../helpers/connection.php';
-require_once '../helpers/categories.php';
+require_once '../services/cart.service.php';
+require_once '../services/category.service.php';
+require_once '../services/product.service.php';
+
+$categories=getCategories();
 
 session_start();
 
@@ -8,6 +11,9 @@ if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
 }
+
+if(isset($_POST)&&isset($_POST['productId'])) addToCart($_POST['productId']);
+
 ?>
 
 <!DOCTYPE html>
@@ -126,49 +132,42 @@ if (array_key_exists('logout', $_POST)) {
     </a>
     <ul class="dropdown-menu">
       <?php
-      for ($r = 0; $r < $countCategories; $r++) {
-        $listItem = mysqli_fetch_assoc($categoriesResult);
-        echo ' <li><a class="dropdown-item" href="#' . $listItem['categoryId'] . '">' . $listItem['categoryName'] . '</a></li>';
+      foreach($categories as $category){
+        echo ' <li><a class="dropdown-item" href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
       }
       ?>
     </ul>
   </div>
   <!--End Categories Dropdown-->
-  <!-- $getCategoriesQuery = "SELECT * FROM category";
-      $categoriesResult = mysqli_query($con, $getCategoriesQuery);
-      $countCategories = mysqli_num_rows($categoriesResult);-->
+  
   <!-- shop section -->
   <?php
-  $q1 = "SELECT * FROM category";
-  $r1 = mysqli_query($con, $q1);
-  $n1 = mysqli_num_rows($r1);
-  for ($i = 0; $i < $n1; $i++) {
-    $row1 = mysqli_fetch_assoc($r1);
-    echo "<h1 id='" . $row1['categoryId'] . "' class='display-4 m-5 text-center text-info fw-bolder'>" . $row1['categoryName'] . "</h1>";
+  foreach($categories as $category){
+    echo "<h1 id='" . $category->categoryId. "' class='display-4 m-5 text-center text-info fw-bolder'>" . $category->categoryName . "</h1>";
     echo "<div class='container-lg justify-content-center text-center'>";
     echo "<div class='row col-12'>";
-    $q2 = "SELECT * FROM product WHERE categoryID='" . intval($row1['categoryId']) . "'";
-    $r2 = mysqli_query($con, $q2);
-    $n2 = mysqli_num_rows($r2);
-    for ($j = 0; $j < $n2; $j++) {
-      $row2 = mysqli_fetch_assoc($r2);
+    $products=getProductsByCategory($category->categoryId);
+    foreach($products as $product) {
       echo '
       <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
       <div class=" box card m-2 text-center">
-      <img src="' . $row2['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
+      <img src="' . $product->thumbnail . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
       <div class="card-body">
-        <h5 class="card-title text-primary">' . $row2['productName'] . '</h5>
-        <p class="card-text text-secondary fw-bolder">' . $row2['price'] . '$</p>
+        <h5 class="card-title text-primary">' .$product->productName . '</h5>
+        <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
+        <form method="post">
         <a href="viewproduct.php" class="btn btn-primary">View</a>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addToCartModal">
+        <input type="hidden" name="productId" value='.$product->ProductId.' />
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addToCartModal">
         Add to cart
         </button>
+        <form>
       </div>
     </div></div>';
     }
     echo "</div>";
     echo "</div>";
-  }
+    }
   ?>
   <!-- end shop section -->
   <!-- footer section -->
@@ -271,9 +270,6 @@ if (array_key_exists('logout', $_POST)) {
   </script>
   <!-- custom js -->
   <script src="../js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
 
 </body>
 

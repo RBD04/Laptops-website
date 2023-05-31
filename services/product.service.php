@@ -20,6 +20,7 @@ function getProducts()
         $product->description = $result[$i]['description'];
         $product->quantityAvailable = $result[$i]['quantityAvailable'];
         $product->thumbnail = $result[$i]['thumbnail'];
+        $product->price=$result[$i]['price'];
 
         $products[$i] = $product;
     }
@@ -42,7 +43,7 @@ function getProductById($id)
         $product->description = $result[0]['description'];
         $product->quantityAvailable = $result[0]['quantityAvailable'];
         $product->thumbnail = $result[0]['thumbnail'];
-    }
+    }else $product=null;
 
     return $product;
 }
@@ -77,7 +78,7 @@ function addProduct()
 {
     $wrapper = new dbWrapper();
 
-    $message='';
+    $message = '';
 
     $categoryId = $_POST['category'];
     $productName = $_POST['productName'];
@@ -89,12 +90,12 @@ function addProduct()
         if (!empty($_FILES['thumbnail']['name'])) {
             $destination = '../uploads/Thumbnails/' . $_FILES['thumbnail']['name'];
             if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $destination)) {
-                $message= 'Product added successfully';
+                $message = 'Product added successfully';
             } else {
-                $message= 'File upload error';
+                $message = 'File upload error';
             }
             $addProductQuery = 'INSERT INTO product(categoryId,productName,description,price,quantityAvailable,thumbnail)
-                                VALUES("'.$categoryId.'","'.$productName.'","'.$description.'","'.$price.'","'.$quantityAvailable.'","'.$destination.'")';
+                                VALUES("' . $categoryId . '","' . $productName . '","' . $description . '","' . $price . '","' . $quantityAvailable . '","' . $destination . '")';
             $id = '';
             $id = $wrapper->executeQueryAndReturnId($addProductQuery);
 
@@ -102,8 +103,32 @@ function addProduct()
                 addSerialNumber($id, $_POST['serial' . ($i + 1)]);
             }
         } else {
-            $message= 'Error adding product';
+            $message = 'Error adding product';
         }
     }
     return $message;
+}
+
+function getProductsByCategory($id)
+{
+    $products = getAvailableProducts();
+    $matchingProducts = [];
+
+    foreach ($products as $product) {
+        if ($product->categoryId == $id) {
+            $matchingProducts[] = $product;
+        }
+    }
+
+    return $matchingProducts;
+}
+
+
+function updateProductQuantity($productId, $quantity)
+{
+    $wrapper = new dbWrapper();
+
+    $query = 'UPDATE product SET quantityAvailable="' . $quantity . '" WHERE ProductId="' . $productId . '" ';
+
+    $wrapper->executeUpdate($query);
 }

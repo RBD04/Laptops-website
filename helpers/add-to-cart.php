@@ -20,7 +20,7 @@ $updateSerialNumbersQuery=`UPDATE serialnumber SET status="reserved" WHERE produ
 
 $updateProductQuery='UPDATE product SET quantity="'.$quantityAvailable.'" WHERE productId="'.$productId.'"';
 
-$addToCartProductQuery='INSERT INTO table cartproduct(cartId,productId,quantity) values('.$cartId.','.$productId.','.$quantity.')';
+$addToCartProductQuery='INSERT INTO cartproduct(cartId,productId,quantity) values('.$cartId.','.$productId.','.$quantity.')';
 
 $updateCartQuery='UPDATE cart SET ';
 

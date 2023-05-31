@@ -1,6 +1,8 @@
 <?php
 require_once '../helpers/connection.php';
+require_once '../services/cart.service.php';
 session_start();
+
 // session_destroy(); //logout
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
