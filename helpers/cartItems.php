@@ -34,7 +34,7 @@ function renderCartItems($cartProducts) {
               </li>
               <li class="dropdown-item m-2" style="display: flex; flex-direction: column;">
                   <a href="checkout.php" class="btn btn-primary mb-2 text-white">CHECKOUT NOW</a>
-                  <a href="cart.php" class="btn btn-outline-primary">VIEW CART</a>
+                  <a href="cart.php" class="btn btn-outline-primary">VIEW OR EDIT CART</a>
               </li>';
     }
 }

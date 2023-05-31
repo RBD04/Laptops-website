@@ -1,6 +1,4 @@
 <?php
-require_once '../helpers/connection.php';
-require_once '../helpers/categories.php';
 require_once '../services/category.service.php';
 require_once '../services/category.service.php';
 require_once '../services/product.service.php';
