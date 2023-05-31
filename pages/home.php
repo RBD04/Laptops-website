@@ -1,8 +1,9 @@
 <?php
-require_once '../helpers/connection.php';
 require_once '../services/cart.service.php';
+require_once '../helpers/cartItems.php';
 session_start();
 
+$cartProducts = getCartProducts();
 // session_destroy(); //logout
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
@@ -26,7 +27,7 @@ if (array_key_exists('logout', $_POST)) {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Laptops website</title>
+  <title>Tech Zone</title>
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
@@ -68,7 +69,7 @@ if (array_key_exists('logout', $_POST)) {
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="home.php">
             <span>
-              Laptops website
+              Tech Zone
             </span>
           </a>
           <?php
@@ -106,20 +107,19 @@ if (array_key_exists('logout', $_POST)) {
                 <?php
                 if (isset($_SESSION['admin']))
                   echo 'admin page '
-                ?>  
+                ?>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
+
               <div class="dropstart">
                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
+                  <?php renderCartItems($cartProducts)?>
                 </ul>
               </div>
+
               <a href="">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </a>
