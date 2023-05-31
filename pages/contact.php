@@ -65,13 +65,13 @@ if (array_key_exists('logout', $_POST)) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="home.php">Home </a>
+                <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+                <a class="nav-link fw-bolder text-primary" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
             </ul>
             <?php
