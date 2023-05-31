@@ -225,7 +225,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
   <script src="../css/admin-style/tinymce/tinymce.min.js"></script>
   <script src="../css/admin-style/php-email-form/validate.js"></script>
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="../js/adminJS.js"></script>
   <script>
     function quantityChange() {
       let quantity = document.getElementById('quantity').value;
