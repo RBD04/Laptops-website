@@ -1,16 +1,26 @@
 <?php
 require_once '../services/user.service.php';
+require_once '../helpers/cartItems.php';
+
 
 session_start();
+$cartProducts = getCartProducts();
 
 if (isset($_SESSION) && isset($_SESSION['user']))
   $user = getUserById($_SESSION['user']);
 else (header('Location: home.php'));
 
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+  updateUser($_SESSION['user']);
+  header("Refresh:0");
+
+}
+
 if (array_key_exists('logout', $_POST)) {
   session_destroy();
   header("Refresh:0");
-}   
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,13 +79,16 @@ if (array_key_exists('logout', $_POST)) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link fw-bolder" href="home.php">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link fw-bolder text-muted" href="home.php">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bolder" href="shop.php"> Shop </a>
+              <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+              <a class="nav-link fw-bolder text-primary" href="account.php">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
             </li>
           </ul>
 
@@ -97,10 +110,7 @@ if (array_key_exists('logout', $_POST)) {
                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
               </button>
               <ul class="dropdown-menu">
-                <li><span class="dropdown-item-text">No Items Available</span></li>
-                <li><a class="dropdown-item" href="#">First Item</a></li>
-                <li><a class="dropdown-item" href="#">Second Item</a></li>
-                <li><a class="dropdown-item" href="#">Third Item</a></li>
+                <?php renderCartItems($cartProducts) ?>
               </ul>
             </div>
             <a href="">
@@ -117,63 +127,80 @@ if (array_key_exists('logout', $_POST)) {
 
   <!-- contact section -->
 
-  <section class="contact_section layout_padding p-5">
+
+  <section>
     <div class="container">
-      <div class="form_container">
-        <div class="text-center text-primary">
-          <h2 class="display-5 fw-bolder mb-2 mt-0">
-            Account
-          </h2>
-        </div>
-        <form method="post">
-          <div class="row">
-            <div class="col">
-              <img src="../uploads/Thumbnails/sony-vaio-2.jpg" width="360px" height="480px" class="rounded float-left" alt="...">
-            </div>
-            <div class="col">
-              <label for="first">First Name</label>
-              <input name="firstName" id="first" type="text" placeholder="*First Name" value=<?php echo $user->firstName ?> disabled />
-            </div>
-            <div class="col">
-              <label for="first">Last Name</label>
-              <input name="lastName" type="text" placeholder="*Last Name" value=<?php echo $user->lastName ?> disabled />
-            </div>
-          </div>
-          </div>
-          <div class="row">
-            
-            
-          <div>
-            <label for="first">Email</label>
-            <input name="email" type="email" placeholder="*Email" value=<?php echo $user->email ?> disabled />
-          </div>
-          <div>
-            <label for="first">Phone Number</label>
-            <input name="phoneNumber" type="text" placeholder="*Phone Number" value=<?php echo $user->phoneNumber ?> disabled />
-          </div>
-          <div class="row">
-            <div class="col">
-              <label for="first">Birthday</label>
-              <input name="birthday" type="date" min="1920-02-02" value=<?php echo $user->birthday ?> disabled />
-            </div>
-            <div class="col pb-2 text-center">
-              <input type="radio" class="btn-check" name="gender" id="option1" value="M" disabled>
-              <label class="btn btn-primary" for="option1">Male</label>
-              <input type="radio" class="btn-check" name="gender" id="option2" value="F" disabled>
-              <label class="btn btn-primary" for="option2">Female</label>
-              <span>(Select your Gender)</span>
-            </div>
-          </div>
-          <div class="text-center">
-            <button class="btn btn-primary btn-lg bg-primary border border-primary">
-              Edit
-            </button>
-            <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary" disabled>
-              Save Changes
-            </button>
-          </div>
-        </form>
+      <div class="row text-center text-primary mt-3 mb-3">
+        <h2 class="display-5 fw-bolder mb-2">
+          Account
+        </h2>
       </div>
+      <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value=<?php echo $user->UserId ?> />
+        <div class="row mb-4">
+          <div class="col-4">
+            <label for="profilePicture">
+              <small class="text-primary fs-6">Click Image Below To Upload Profile Picture</small>
+              <img src=<?php echo $user->profilePicture?$user->profilePicture:"../images/defaultProfile.jpg" ?> width="360px" height="405" class="rounded float-left" alt="Profile Picture" id="profilePicturePreview">
+              <input type="file" id="profilePicture" name="profilePicture" style="display: none;" onchange="handleProfilePicture(event)" disabled>
+            </label>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="firstName" class="text-primary fs-4">First Name</label>
+                  <input type="text" class="form-control text-primary fs-5" id="firstName" name="firstName" value=<?php echo $user->firstName ?> disabled />
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="lastName" class="text-primary fs-4">Last Name</label>
+                  <input type="text" class="form-control text-primary fs-5" id="lastName" name="lastName" value=<?php echo $user->lastName ?> disabled />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="email" class="text-primary fs-4">Email</label>
+                  <input type="text" class="form-control text-primary fs-5" id="email" name="email" value=<?php echo $user->email ?> disabled />
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="phoneNumber" class="text-primary fs-4">Phone Number</label>
+                  <input type="text" class="form-control text-primary fs-5" id="phoneNumber" name="phoneNumber" value=<?php echo $user->phoneNumber ?> disabled />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="birthday" class="text-primary fs-4">Birthday</label>
+                  <input type="date" class="form-control text-primary fs-5" id="birthday" name="birthday" value=<?php echo $user->birthday ?> disabled />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mb-4 mt-4">
+          <div class="col">
+            <button type="button" class="btn btn-primary w-100 fs-5" id="edit" name="edit" onclick="editFields()">Edit</button>
+          </div>
+          <div class="col">
+            <input type="submit" class="btn btn-primary fs-5 w-100" id="submit" name="submit" value="Save Changes" disabled />
+          </div>
+        </div>
+    </div>
+    </form>
+    </div>
     </div>
   </section>
 
@@ -257,7 +284,27 @@ if (array_key_exists('logout', $_POST)) {
   </script>
   <!-- custom js -->
   <script src="../js/custom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function editFields() {
+      var inputs = document.getElementsByTagName("input");
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
+      document.getElementById("submit").disabled = false;
+    }
 
+    function handleProfilePicture(event) {
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePicturePreview").src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 </body>
 
 </html>

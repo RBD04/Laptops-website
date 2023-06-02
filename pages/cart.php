@@ -11,6 +11,18 @@ if (array_key_exists('logout', $_POST)) {
     header("Refresh:0");
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    extract($_POST);
+
+    if (isset($removeProduct)) {
+        removeProductFromCart($productId, $quantity);
+        header("Refresh:0");
+        exit();
+    }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -85,13 +97,17 @@ if (array_key_exists('logout', $_POST)) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="home.php">Home </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link fw-bolder" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
+                                <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="contact.php">Contact Us</a>
+                                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
+                            </li>
+                            <?php if (isset($_SESSION['user'])) echo '
+                                    <li class="nav-item">
+                                     <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
+                                    </li>' ?>
+                            <li class="nav-item active">
+                                <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
                             </li>
                         </ul>
                         <?php
@@ -112,7 +128,7 @@ if (array_key_exists('logout', $_POST)) {
                             </a>
                             <div class="dropstart">
                                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-cart-plus text-primary" aria-hidden="true"> MY CART</i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <?php renderCartItems($cartProducts) ?>
@@ -133,7 +149,7 @@ if (array_key_exists('logout', $_POST)) {
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center mb-5 text-primary">My Cart</h1>
+                <h1 class="text-center mb-5 text-primary">Your Cart</h1>
             </div>
         </div>
 
@@ -143,6 +159,7 @@ if (array_key_exists('logout', $_POST)) {
             echo '
     <div class="row mb-4">
       <div class="col-12">
+      <form method="post">
         <table class="table">
           <thead>
             <tr>
@@ -154,40 +171,42 @@ if (array_key_exists('logout', $_POST)) {
             </tr>
           </thead>
           <tbody>';
-
             foreach ($cartProducts as $cartProduct) {
                 $total += $cartProduct->price * $cartProduct->quantityAvailable;
                 echo '
             <tr>
-              <td style="vertical-align: middle;">
-              <a href="viewproduct?productId='.$cartProduct->ProductId.'">
-                <img src="' . $cartProduct->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;">
-                </a>
+                <input type="hidden" name="productId" value="' . $cartProduct->ProductId . '">
+                <input type="hidden" name="quantity" value="' . $cartProduct->quantityAvailable . '">
+                <td style="vertical-align: middle;">
+                    <a href="viewproduct?productId=' . $cartProduct->ProductId . '">
+                        <img src="' . $cartProduct->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;">
+                    </a>
                 </td>
-              <td style="vertical-align: middle;">
-              <a href="viewproduct?productId='.$cartProduct->ProductId.'">
-                <h3 class="card-title font-weight-bolder " style="font-size: 1.2rem;">' . $cartProduct->productName . '</h3>
-                <p class="card-text text-muted" style="font-size: 1rem;">' . $cartProduct->description . '</p>
-                <p class="card-text font-weight-bold" style="font-size: 1.2rem;">Price: $' . $cartProduct->price . '</p>
-                </a>
+                <td style="vertical-align: middle;">
+                    <a href="viewproduct?productId=' . $cartProduct->ProductId . '">
+                        <h3 class="card-title font-weight-bolder " style="font-size: 1.2rem;">' . $cartProduct->productName . '</h3>
+                            <p class="card-text text-muted" style="font-size: 1rem;">' . $cartProduct->description . '</p>
+                            <p class="card-text font-weight-bold" style="font-size: 1.2rem;">Price: $' . $cartProduct->price . '</p>
+                    </a>
                 </td>
-              <td style="vertical-align: middle;">
-                <div class="input-group" id="quantityGroup">
-                  <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") disabled>-</button>
-                  <input type="number" id="quantity" name="quantity" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" disabled>
-                  <button class="btn btn-primary" type="button" onclick=quantityChange("add") disabled>+</button>
-                </div>
-              </td>
-              <td style="vertical-align: middle;">$' . ($cartProduct->price * $cartProduct->quantityAvailable) . '</td>
-              <td style="vertical-align: middle;">
-                <button class="btn btn-outline-danger" style="font-size: 1.1rem;" >Remove</button>
-              </td>
+                <td style="vertical-align: middle;">
+                    <div class="input-group" id="quantityGroup">
+                        <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") disabled>-</button>
+                            <input type="number" id="quantity" name="quantity" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" disabled>
+                        <button class="btn btn-primary" type="button" onclick=quantityChange("add") disabled>+</button>
+                    </div>
+                </td>
+                <td style="vertical-align: middle;">$' . ($cartProduct->price * $cartProduct->quantityAvailable) . '</td>
+                <td style="vertical-align: middle;">
+                    <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="removeProduct">Remove</button>
+                </td>
             </tr>';
             }
 
             echo '
           </tbody>
         </table>    
+        </form>
       </div>
       <div class="col-6">           
         </div>    

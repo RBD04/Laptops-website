@@ -44,7 +44,6 @@ function getUserById($id)
         $user->lastName = $result[0]['lastName'];
         $user->email = $result[0]['email'];
         $user->birthday = $result[0]['birthday'];
-        $user->gender = $result[0]['gender'];
         $user->profilePicture = $result[0]['profilePicture'];
         $user->phoneNumber = $result[0]['phoneNumber'];
 
@@ -57,8 +56,7 @@ function getUserById($id)
 function validateLogin()
 {
     $wrapper = new dbWrapper();
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    extract($_POST);
 
     $query = 'SELECT UserId, firstName, lastName FROM user WHERE email="' . $email . '" AND password="' . $password . '"';
     $result = $wrapper->executeSingleRowQuery($query);
@@ -84,18 +82,12 @@ function signup()
     if (alreadyExists($_POST['email'])) {
         return 'Email not valid! Please use another one';
     } else {
-        $firstName = ($_POST['firstName']) ? $_POST['firstName'] : null;
-        $lastName = ($_POST['lastName']) ? $_POST['lastName'] : null;
-        $email = ($_POST['email']) ? $_POST['email'] : null;
-        $phoneNumber = ($_POST['phoneNumber']) ? $_POST['phoneNumber'] : null;
-        $password = ($_POST['password']) ? $_POST['password'] : null;
-        $birthday = $_POST['birthday'];
-        $gender = null;
+        extract($_POST);
 
         if (isset($firstName) && isset($lastName) && isset($email) && isset($phoneNumber) && isset($password)) {
-            $query = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday,gender) 
+            $query = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday) 
                 VALUES("' . $firstName . '","' . $lastName . '","' . $email . '","' . $phoneNumber . '","' . $password . '",
-                "' . $birthday . '","' . $gender . '")';
+                "' . $birthday . '")';
             echo $query;
             $id = $wrapper->executeQueryAndReturnId($query);
             createCart($id);
@@ -106,6 +98,28 @@ function signup()
                     window.location="../pages/login.php";
                 </script>                        ';
         } else return 'Error creating account';
+    }
+}
+
+function updateUser($id)
+{
+    $wrapper = new dbWrapper();
+
+    extract($_POST);
+    $destination;
+    
+    if (isset($firstName) && isset($lastName) && isset($email) && isset($phoneNumber)) {
+        if (!empty($_FILES['profilePicture']['name'])) {
+            
+            $destination = '../uploads/ProfilePictures/' . $_FILES['profilePicture']['name'];
+            if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $destination)) {
+                $message = 'Info updated successfully';
+            } else {
+                $message = 'File upload error';
+            }
+        }
+        $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE UserId=' . $id . '';
+        $wrapper->executeUpdate($query);
     }
 }
 

@@ -19,4 +19,12 @@ function setSerialReserved($productId,$quantity){
     $wrapper->executeUpdate($query);
 }
 
+function setSerialAvailable($productId,$quantity){
+    $wrapper=new dbWrapper();
+
+    $query='UPDATE serialnumber SET status="available" WHERE productId="'.$productId.'" AND status="reserved" LIMIT '.$quantity.'';
+
+    $wrapper->executeUpdate($query);
+}
+
 ?>

@@ -74,6 +74,10 @@ if (array_key_exists('logout', $_POST)) {
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
+              <?php if (isset($_SESSION['user'])) echo '
+              <li class="nav-item">
+                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
+              </li>' ?>
               <li class="nav-item active">
                 <a class="nav-link fw-bolder text-primary" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
