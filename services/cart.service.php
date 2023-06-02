@@ -44,7 +44,7 @@ function addToCart($productId, $quantity)
         $product = getProductById($productId);
 
         if ($quantity > $product->quantityAvailable) {
-            return 'Sorry, quantity requested is not available now!';
+            return false;
         } else {
             $newQuantity = $product->quantityAvailable - $quantity;
 
@@ -53,8 +53,28 @@ function addToCart($productId, $quantity)
             addToCartProduct($cartId, $product->ProductId, $quantity);
 
             updateProductQuantity($product->ProductId, $newQuantity);
-            return $product->productName . ' added to cart successfully';
+            return true;
         }
+    } else echo '<script>alert("You need to login first")</script>';
+}
+
+
+function removeProductFromCart($productId,$quantity){
+
+    if (isset($_SESSION['user'])) {
+        $cartId = getCurrentCartId($_SESSION['user']);
+
+        $product = getProductById($productId);
+
+            $newQuantity = $product->quantityAvailable + $quantity;
+
+            setSerialAvailable($product->ProductId, $quantity);
+
+            updateCartProduct($cartId, $product->ProductId, $quantity);
+
+            updateProductQuantity($product->ProductId, $newQuantity);
+            return $product->productName . ' added to cart successfully';
+        
     } else echo '<script>alert("You need to login first")</script>';
 }
 
@@ -67,7 +87,8 @@ function getCartProducts()
         $query = 'SELECT *
             FROM cartproduct 
             NATURAL JOIN product
-            WHERE cartId="' . $cartId . '"';
+            WHERE cartId="' . $cartId . '"
+            AND quantity>0';
 
 
         $results = $wrapper->executeQuery($query);

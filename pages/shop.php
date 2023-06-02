@@ -85,6 +85,10 @@ if (array_key_exists('logout', $_POST)) {
               <li class="nav-item active">
                 <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
               </li>
+              <?php if (isset($_SESSION['user'])) echo '
+              <li class="nav-item">
+                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
+              </li>' ?>
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
               </li>
@@ -110,7 +114,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <?php renderCartItems($cartProducts)?>
+                  <?php renderCartItems($cartProducts) ?>
                 </ul>
               </div>
               <a href="">
@@ -153,7 +157,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="card-body">
             <h5 class="card-title text-primary">' . $product->productName . '</h5>
             <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
-              <a href="viewproduct.php?productId=' . $product->ProductId . '" class="btn btn-primary">Add to Cart</a>
+              <a href="viewproduct.php?productId=' . $product->ProductId . '" class="btn btn-primary w-100 font-weight-bold">View</a>
           </div>
         </div>
       </div>';

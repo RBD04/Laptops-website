@@ -149,7 +149,7 @@ $errorLogin=null;
           echo $errorLogin;
           ?>
           <div class="text-center">
-            <button type="submit" class="btn btn-large text-center btn-primary bg-primary border border-primary">
+            <button type="submit" class="btn btn-large text-center btn-primary bg-primary border border-primary font-weight-bold">
               &nbsp;Sign in &nbsp;
             </button>
           </div>

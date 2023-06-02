@@ -5,20 +5,33 @@ require_once '../helpers/cartItems.php';
 
 session_start();
 $cartProducts = getCartProducts();
-
-$product = getProductById($_GET['productId']);
+if (isset($_GET['productId']))
+    $product = getProductById($_GET['productId']);
+else header('Location: shop.php');
 
 $Message = '';
 
-if (isset($_POST) && isset($_POST['quantity'])) {
-    $Message = addToCart($product->ProductId, $_POST['quantity']);
-    // header('Location: shop.php?addedToCart=true');
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    extract($_POST);
 
-if (array_key_exists('logout', $_POST)) {
-    session_destroy();
-    header("Refresh:0");
-  }
+    if (isset($quantity) && isset($add_to_cart)) {
+        $Message = addToCart($product->ProductId, $quantity);
+        if ($Message) {
+            $Message = $product->productName . ' added successfully to cart<br/><a href="cart.php" class="fw-bolder fs-4 text-decoration-underline"><i class="fa fa-cart-plus" aria-hidden="true"> Go To Cart</i></a>';
+        } else {
+            $Message = 'Sorry, quantity requested is not available now!';
+        }
+    }
+
+    if (isset($quantity) && isset($checkout)) {
+        header('Location: checkout.php?quantity=' . $quantity . '?productId=' . $product->ProductId . '');
+    }
+
+    if (isset($logout)) {
+        session_destroy();
+        header("Refresh:0");
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -60,8 +73,6 @@ if (array_key_exists('logout', $_POST)) {
             -webkit-appearance: none;
             margin: 0;
         }
-
-    
     </style>
 
 </head>
@@ -92,11 +103,15 @@ if (array_key_exists('logout', $_POST)) {
                             <li class="nav-item">
                                 <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
-                            </li>
                             <li class="nav-item active">
-                                <a class="nav-link fw-bolder text-primary" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
+                                <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
+                            </li>
+                            <?php if (isset($_SESSION['user'])) echo '
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
+                                </li>' ?>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
                             </li>
                         </ul>
                         <?php
@@ -140,8 +155,14 @@ if (array_key_exists('logout', $_POST)) {
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="img-box ms-5">
-                        <img src=<?php echo $product->thumbnail ?> class="img-thumbnail" alt="">
+                    <div class="img-box">
+                        <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail" alt="">
+                    </div>
+                    <div>
+                        <h3 class="mt-5 mb-3">Product Reviews</h3>
+                        <p><i class="fa fa-user" aria-hidden="true"></i> So Amazing</p>
+                        <p><i class="fa fa-user" aria-hidden="true"></i> Nice product!</p>
+                        <p><i class="fa fa-user" aria-hidden="true"></i> I bought it and I loved it so much I bought it and I loved it so much I bought it and I loved it so much I bought it and I loved it so much</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -153,33 +174,98 @@ if (array_key_exists('logout', $_POST)) {
                         </div>
                         <form method="post">
                             <div>
-                                <h3 class="mb-5">
+                                <h3 class="mb-5 text-muted fw-light">
                                     <?php echo $product->description; ?>
                                 </h3>
                             </div>
                             <div>
-                                <h4 class="mb-5">
-                                    <?php echo $product->price . '$'; ?>
+                                <h4 class="mb-5 text-muted fw-light">
+                                    Price: <?php echo $product->price . '$'; ?>
                                 </h4>
                             </div>
-                            <label for="quantityGroup">Quantity</label><br />
+                            <label for="quantityGroup" class="text-muted fw-light">Quantity</label><br />
                             <div id="quantityGroup" class="btn-group mb-5" role="group" aria-label="Basic example">
                                 <button type="button" id="reduce" onclick="quantityChange('reduce')" class="btn btn-primary">-</button>
-                                <input type="number" name="quantity" id="quantity" style="width: 50px;" class="form-control text-center" min="1" value="1" />
+                                <input type="number" name="quantity" id="quantity" style="width: 50px;" class="form-control text-center w-50" min="1" value="1" readonly />
                                 <button type="button" id="add" onclick="quantityChange('add')" class="btn btn-primary">+</button>
                             </div>
-                            <div class="text-white">
-                                <button type="submit" class="btn btn-primary">
-                                    Add to Cart
-                                </button>
+                            <?php
+                            if (isset($_SESSION['user'])) echo '<p class="text-primary fs-5">' . $Message . '</p><div class="text-white mb-5">
+                            <button type="submit" name="add_to_cart" class="btn btn-primary w-100  font-weight-bold ">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="text-white">
+                            <button type="submit" name="checkout" class="btn btn-primary w-100 font-weight-bold">
+                                Buy it now
+                            </button>
+
+                        </div>';
+                            else echo '<div class="text-white mb-5">
+                            <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="text-white">
+                        <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                Buy it now
+                            </button>
+
+                        </div>'
+                            ?>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-primary font-weight-bolder" id="exampleModalLabel">Please Login First</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p href="login.php" class="text-muted font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                                Logging in is an essential step to ensure a seamless and secure online shopping experience on our website.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary font-weight-bold" data-dismiss="modal">Close</button>
+                                            <a href="login.php" class="btn btn-primary font-weight-bold">Login</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <?php echo $Message; ?>
+
                         </form>
+                        <div>
+                            <h3 class="mt-5 mb-3">Add a Review</h3>
+                            <form method="post">
+                                <div class="form-group">
+                                    <label for="comment">Comment</label>
+                                    <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rating">Rating</label>
+                                    <select name="rating" id="rating" class="form-control" required>
+                                        <option value="">Select Rating</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary font-weight-bold">Submit Review</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- end contact section -->
     <br>
     <!-- footer section -->
@@ -247,6 +333,7 @@ if (array_key_exists('logout', $_POST)) {
         </div>
     </footer>
     <!-- footer section -->
+
 
     <!-- jQery -->
     <script src="../js/jquery-3.4.1.min.js"></script>

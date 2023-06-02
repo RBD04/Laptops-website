@@ -88,6 +88,10 @@ if (array_key_exists('logout', $_POST)) {
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
+              <?php if (isset($_SESSION['user'])) echo '
+              <li class="nav-item">
+                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
+              </li>' ?>
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
               </li>
@@ -116,7 +120,7 @@ if (array_key_exists('logout', $_POST)) {
                   <i class="fa fa-cart-plus" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <?php renderCartItems($cartProducts)?>
+                  <?php renderCartItems($cartProducts) ?>
                 </ul>
               </div>
 

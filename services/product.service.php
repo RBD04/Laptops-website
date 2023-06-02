@@ -55,7 +55,13 @@ function getAvailableProducts()
 
     $products = [];
 
-    $query = 'SELECT * FROM product NATURAL JOIN serialnumber WHERE status="available" LIMIT 1';
+    $query = 'SELECT *
+    FROM product
+    WHERE productId IN (
+        SELECT productId
+        FROM serialnumber
+        WHERE status = "available"
+    )';
     $result = $wrapper->executeQuery($query);
 
     for ($i = 0; $i < count($result); $i++) {
