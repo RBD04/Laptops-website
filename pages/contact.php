@@ -5,11 +5,21 @@ require_once '../services/cart.service.php';
 session_start();
 
 $cartProducts = getCartProducts();
-
-if (array_key_exists('logout', $_POST)) {
-  session_destroy();
-  header("Refresh:0");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
+  if (isset($removeProduct)) {
+    removeProductFromCart($cartProductId, $cartQuantity);
+    header("Refresh:0");
+    exit();
+    
+    if (array_key_exists('logout', $_POST)) {
+      session_destroy();
+      header("Refresh:0");
+    }
+  }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

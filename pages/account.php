@@ -5,16 +5,48 @@ require_once '../helpers/cartItems.php';
 
 session_start();
 $cartProducts = getCartProducts();
-
-if (isset($_SESSION) && isset($_SESSION['user']))
+$successMsg = '';
+if (isset($_SESSION['user']))
   $user = getUserById($_SESSION['user']);
 else (header('Location: home.php'));
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['MS'])) {
+  $successMsg = $_GET['MS'];
+  switch ($successMsg) {
+    case 1:
+      $successMsg = 'Error Updating User';
+      break;
+    case 2:
+      $successMsg = 'Error Uploading Profile Picture';
+      break;
+    case 3:
+      $successMsg = 'Info Updated Successfully';
+      break;
+    case 4:
+      $successMsg = 'Error! Password is Incorrect';
+      break;
+    case 5:
+      $successMsg = 'Password Updated Successfully';
+      break;
+    default:
+      $successMsg = null;
+      break;
+  }
+}
 
-  updateUser($_SESSION['user']);
-  header("Refresh:0");
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  extract($_POST);
+  if (isset($submit)) {
+    $MSG = updateUser($_SESSION['user']);
+
+    header('Location: account.php?MS=' . $MSG . '');
+  }
+  if (isset($removeProduct)) {
+    removeProductFromCart($cartProductId, $cartQuantity);
+    header("Refresh:0");
+    exit();
+  }
 }
 
 if (array_key_exists('logout', $_POST)) {
@@ -40,7 +72,7 @@ if (array_key_exists('logout', $_POST)) {
   <!--Bootstrap 5.2 links-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-  <title>Laptops website</title>
+  <title>Tech Zone</title>
 
 
   <!-- bootstrap core css -->
@@ -65,7 +97,7 @@ if (array_key_exists('logout', $_POST)) {
       <nav class="navbar navbar-expand-lg custom_nav-container ">
         <a class="navbar-brand" href="home.php">
           <span>
-            Laptops website
+            Tech Zone
           </span>
         </a>
         <?php
@@ -141,7 +173,7 @@ if (array_key_exists('logout', $_POST)) {
           <div class="col-4">
             <label for="profilePicture">
               <small class="text-primary fs-6">Click Image Below To Upload Profile Picture</small>
-              <img src=<?php echo $user->profilePicture?$user->profilePicture:"../images/defaultProfile.jpg" ?> width="360px" height="405" class="rounded float-left" alt="Profile Picture" id="profilePicturePreview">
+              <img src=<?php echo $user->profilePicture ? $user->profilePicture : "../images/defaultProfile.jpg" ?> width="360px" height="380px " class="rounded float-left" alt="Profile Picture" id="profilePicturePreview">
               <input type="file" id="profilePicture" name="profilePicture" style="display: none;" onchange="handleProfilePicture(event)" disabled>
             </label>
           </div>
@@ -177,8 +209,6 @@ if (array_key_exists('logout', $_POST)) {
                   <input type="text" class="form-control text-primary fs-5" id="phoneNumber" name="phoneNumber" value=<?php echo $user->phoneNumber ?> disabled />
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col">
                 <div class="form-group">
                   <label for="birthday" class="text-primary fs-4">Birthday</label>
@@ -186,6 +216,23 @@ if (array_key_exists('logout', $_POST)) {
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="currentPassword" class="text-primary fs-4">Current Password</label>
+                  <input type="text" class="form-control text-primary fs-5" id="currentPassword" name="currentPassword" disabled />
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="newPassword" class="text-primary fs-4">New Password</label>
+                  <input type="text" class="form-control text-primary fs-5" id="newPassword" name="newPassword" disabled />
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
 
@@ -196,6 +243,7 @@ if (array_key_exists('logout', $_POST)) {
           </div>
           <div class="col">
             <input type="submit" class="btn btn-primary fs-5 w-100" id="submit" name="submit" value="Save Changes" disabled />
+            <p class="text-primary"><?php echo $successMsg   ?></p>
           </div>
         </div>
     </div>
@@ -265,7 +313,7 @@ if (array_key_exists('logout', $_POST)) {
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Laptops website</a>
+          <a href="https://html.design/">Tech Zone</a>
         </p>
       </div>
     </div>
