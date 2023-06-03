@@ -3,6 +3,7 @@ require_once '../helpers/dbWrapper.php';
 require_once '../models/user.php';
 require_once 'cart.service.php';
 
+
 function getUsers()
 {
     $wrapper = new dbWrapper();
@@ -46,6 +47,7 @@ function getUserById($id)
         $user->birthday = $result[0]['birthday'];
         $user->profilePicture = $result[0]['profilePicture'];
         $user->phoneNumber = $result[0]['phoneNumber'];
+        $user->password = $result[0]['password'];
 
         return $user;
     } else $user = null;
@@ -107,21 +109,50 @@ function updateUser($id)
 
     extract($_POST);
     $destination;
-    
+    $isSuccessUploadingImg;
+    $isSuccessUpdatingUser;
+    $isSuccessUpdatingPass;
     if (isset($firstName) && isset($lastName) && isset($email) && isset($phoneNumber)) {
         if (!empty($_FILES['profilePicture']['name'])) {
             
             $destination = '../uploads/ProfilePictures/' . $_FILES['profilePicture']['name'];
+            
             if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $destination)) {
-                $message = 'Info updated successfully';
+                $isSuccessUploadingImg = true;
             } else {
-                $message = 'File upload error';
+                $isSuccessUploadingImg = false;
             }
         }
         $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE UserId=' . $id . '';
-        $wrapper->executeUpdate($query);
+        $wrapper->executeUpdate($query) ? $isSuccessUpdatingUser = true : $isSuccessUpdatingUser = false;
+        if (isset($currentPassword) && isset($newPassword))
+            updatePassword($id, $currentPassword, $newPassword) ? $isSuccessUpdatingPass = true : $isSuccessUpdatingPass = false;
+    }
+
+    if(!$isSuccessUpdatingUser) return 1;
+    else if(!$isSuccessUploadingImg&&(!empty($isSuccessUploadingImg))) return 2;
+    else if(empty($currentPassword)||empty($newPassword)) return 3;
+    else if(!$isSuccessUpdatingPass) return 4;
+    else return 5;
+}
+
+
+function updatePassword($id, $currentPassword, $newPassword)
+{
+    $wrapper = new dbWrapper();
+
+    if (isset($currentPassword) && isset($newPassword)) {
+        $user = getUserById($id);
+        print_r('<script>alert(' . $user->password . ')</script>');
+        if ($user->password == $currentPassword) {
+            $query = 'UPDATE user SET password="' . $newPassword . '" WHERE UserId=' . $id . '';
+
+            $wrapper->executeUpdate($query);
+            return true;
+        } else return false;
     }
 }
+
 
 function alreadyExists($email)
 {

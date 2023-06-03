@@ -3,6 +3,7 @@ include "../helpers/connection.php";
 include "../helpers/dbWrapper.php";
 include "../services/user.service.php";
 $user = getUsers();
+
 ?>
 
 <!DOCTYPE html>

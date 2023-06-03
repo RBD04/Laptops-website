@@ -31,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_destroy();
         header("Refresh:0");
     }
+    if (isset($removeProduct)) {
+        removeProductFromCart($cartProductId, $cartQuantity);
+        header("Refresh:0");
+        exit();
+      }
 }
 
 ?>

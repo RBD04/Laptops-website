@@ -1,27 +1,48 @@
 <?php
 require_once '../services/cart.service.php';
-require_once '../helpers/cartItems.php';
-
+require_once '../models/cartUpdater.php';
 session_start();
 
 $cartProducts = getCartProducts();
 
-if (array_key_exists('logout', $_POST)) {
-    session_destroy();
-    header("Refresh:0");
-}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
 
-    if (isset($removeProduct)) {
-        removeProductFromCart($productId, $quantity);
+    if (isset($productToUpdate)) {
+        $allProducts=[];
+        $selectedProduct;
+        foreach($cartProducts as $i=>$cartProduct){
+            $product=new cartUpdater($productIds[$i],$quantity[$i]);
+            $allProducts[]=$product;
+        }
+        foreach($allProducts as $item){
+            if($item->productId==$productToUpdate){
+                $selectedProduct=$item;
+            }
+        }
+        print_r($selectedProduct);
+        // updateProductFromCart($selectedProduct->productId, $selectedProduct->quantityToUpdate);
+        // header("Refresh:0");
+        // exit();
+    } else if (isset($productToRemove)) {
+        $productId = $productToRemove;
+        $updatedQuantity;
+        print_r($productToRemove);
+        foreach ($cartProducts as $cartProduct) {
+            if ($cartProduct->ProductId == $productId) $updatedQuantity = $cartProduct->quantityAvailable;
+        }
+
+        removeProductFromCart($productId, $updatedQuantity);
         header("Refresh:0");
         exit();
     }
+    if (array_key_exists('logout', $_POST)) {
+        session_destroy();
+        header("Refresh:0");
+    }
 }
-
-
 
 ?>
 
@@ -127,12 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                             <div class="dropstart">
-                                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false" disabled>
                                     <i class="fa fa-cart-plus text-primary" aria-hidden="true"> MY CART</i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <?php renderCartItems($cartProducts) ?>
-                                </ul>
                             </div>
                             <a href="">
                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -175,8 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total += $cartProduct->price * $cartProduct->quantityAvailable;
                 echo '
             <tr>
-                <input type="hidden" name="productId" value="' . $cartProduct->ProductId . '">
-                <input type="hidden" name="quantity" value="' . $cartProduct->quantityAvailable . '">
                 <td style="vertical-align: middle;">
                     <a href="viewproduct?productId=' . $cartProduct->ProductId . '">
                         <img src="' . $cartProduct->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;">
@@ -191,14 +207,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
                 <td style="vertical-align: middle;">
                     <div class="input-group" id="quantityGroup">
-                        <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") disabled>-</button>
-                            <input type="number" id="quantity" name="quantity" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" disabled>
-                        <button class="btn btn-primary" type="button" onclick=quantityChange("add") disabled>+</button>
+                        <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") >-</button>
+                            <input type="hidden" name="productIds[]"value="' . $cartProduct->ProductId . '" >
+                            <input type="number" id="quantity" name="quantity[]" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" readonly>
+                        <button class="btn btn-primary" type="button" onclick=quantityChange("add") >+</button>
                     </div>
                 </td>
                 <td style="vertical-align: middle;">$' . ($cartProduct->price * $cartProduct->quantityAvailable) . '</td>
                 <td style="vertical-align: middle;">
-                    <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="removeProduct">Remove</button>
+                    <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="productToRemove" value="' . $cartProduct->ProductId . ' ">Remove</button>
+                </td>
+                <td style="vertical-align: middle;">
+                    <button class="btn btn-outline-primary" style="font-size: 1.1rem;" name="productToUpdate" value="' . $cartProduct->ProductId . ' ">Save</button>
                 </td>
             </tr>';
             }
@@ -212,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>    
         <div class="col-6">
         <h4 class="text-muted font-weight-bolder">Subtotal: ' . $total . '$</h4>
-        <button class="btn btn-primary w-100">Checkout</button>
+        <a href="checkout.php" class="btn btn-primary w-100">Checkout</a>
         </div>
     </div>';
         } else {
