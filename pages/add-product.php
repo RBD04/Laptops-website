@@ -59,7 +59,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="../pages/admin-home.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">TechZone</span>
       </a>
@@ -115,13 +115,13 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
     </a>
   </li><!-- End Dashboard Nav -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="../pages/add-product.php">
+    <a class="nav-link collapsed text-primary" href="../pages/add-product.php">
       <i class="bi bi-plus-square"></i>
       <span>Add Products</span>
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link collapsed" href="add-categories.php">
+    <a class="nav-link collapsed" href="../pages/category-details.php">
       <i class="bi bi-ui-radios-grid"></i>
       <span>Manage Categories</span>
     </a>
@@ -161,7 +161,16 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         <div class="col-lg-12">
         <form id="add-product" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <h1 class="mb-3">Product section</h1>
+            
+          <div class="pagetitle">
+      <h1>Products</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">products Section</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
             <label for="productName">Product name</label>
             <input type="text" class="form-control mb-3" id="productName" name="productName" />
           </div>

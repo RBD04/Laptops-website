@@ -1,9 +1,6 @@
 <?php
 include "../helpers/connection.php";
-include "../helpers/dbWrapper.php";
-include "../services/user.service.php";
-$user = getUsers();
-
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +8,7 @@ $user = getUsers();
 
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scal.0" name="viewport">
 
     <title>Add Products</title>
     <meta content="" name="description">
@@ -38,7 +35,7 @@ $user = getUsers();
 
     <!-- =======================================================
   * Template Name: NiceAdmin
-  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Updated: Mar 09 2023 with Bootstrap v5
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
@@ -51,7 +48,7 @@ $user = getUsers();
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="../pages/admin-home.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">TechZone</span>
             </a>
@@ -87,7 +84,7 @@ $user = getUsers();
         if (isset($_SESSION['name']))
             echo '
             <form method="post">
-            <button class="btn btn-primary mx-3" type="submit" name="logout" value="logout">Logout</button>
+            <button class="btn btn-primary m-3" type="submit" name="logout" value="logout">Logout</button>
             </form>
             ';
         ?>
@@ -112,17 +109,16 @@ $user = getUsers();
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="add-categories.php">
+                <a class="nav-link collapsed" href="../pages/category-details.php">
                     <i class="bi bi-ui-radios-grid"></i>
                     <span>Manage Categories</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="../pages/user-details.php">
+                <a class="nav-link collapsed text-primary" href="../pages/user-details.php">
                     <i class="bi bi-person-fill-gear"></i>
                     <span>Manage Users</span>
                 </a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="view-products.php">
                     <i class="bi bi-newspaper"></i>
@@ -146,12 +142,48 @@ $user = getUsers();
         </ul>
 
     </aside><!-- End Sidebar-->
+
+
+    <!-- End Page Title -->
     <main id="main" class="main">
         <section class="section">
+            <div class="pagetitle">
+                <h1>Manage Users</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">Users Details</li>
+                    </ol>
+                </nav>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <table>
-                     
+                    <table class="border border-secondary shadow ms-auto me-auto container-fluid">
+                        <tr>
+                            <th class="text-primary text-center">ID</th>
+                            <th class="text-primary text-center ">First Name</th>
+                            <th class="text-primary  text-center">Last Name</th>
+                            <th class="text-primary  text-center">Email</th>
+                            <th class="text-primary  text-center">Password</th>
+                            <th class="text-primary  text-center">Phone</th>
+                            <th class="text-primary  text-center">Birth Date</th>
+                            <th class="text-primary  text-center">Picture</th>
+                            <th class="text-primary  text-center">Points</th>
+                            <th class="text-primary  text-center">Actions</th>
+                        </tr>
+                        <?php
+                        $q = "SELECT * FROM user";
+                        $res = mysqli_query($con, $q);
+                        $n = mysqli_num_rows($res);
+                        if ($res) {
+                            for ($i = 0; $i < $n; $i++) {
+                                $row = mysqli_fetch_assoc($res);
+                                echo "
+                            <tr><td class='text-secondary text-center'>" . $row['UserId'] . "</td><td class='text-secondary text-center'>" . $row['firstName'] . "</td><td class='text-secondary text-center'>" . $row['lastName'] . "</td><td class='text-secondary text-center'>" . $row['email'] . "</td><td class='text-secondary text-center'>" . $row['password'] . "</td><td class='text-secondary text-center'>" . $row['phoneNumber'] . "</td><td class='text-secondary text-center'>" . $row['birthday'] . "</td><td class='text-secondary text-center'><img src=''></img></td><td class='text-secondary text-center'>" . $row['points'] . "</td><td class='text-secondary text-center'><a href='editUser.php' class='btn btn-primary btn-sm m-2'>Edit</a><a href='deleteUser.php' class='btn btn-secondary btn-sm m-2'>Delete</a></td></tr>
+                           ";
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
             </div>
@@ -159,7 +191,7 @@ $user = getUsers();
 
     </main><!-- End #main -->
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    <!--JS Files -->
+    <!--JS Files-->
     <script src="../css/admin-style/apexcharts/apexcharts.min.js"></script>
     <script src="../css/admin-style/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../css/admin-style/chart.js/chart.umd.js"></script>
