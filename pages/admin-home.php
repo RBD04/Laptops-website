@@ -1,7 +1,5 @@
 <?php
 require_once '../helpers/connection.php';
-require_once '../helpers/categories.php';
-require_once '../services/category.service.php';
 require_once '../services/category.service.php';
 require_once '../services/product.service.php';
 
@@ -64,7 +62,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="../pages/admin-home.php" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block text-dark fw-bolder">TechZone</span>
       </a>
       <?php
@@ -112,7 +110,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link" href="admin-home.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -124,7 +122,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="add-categories.php">
+        <a class="nav-link collapsed" href="../pages/category-details.php">
           <i class="bi bi-ui-radios-grid"></i>
           <span>Manage Categories</span>
         </a>
