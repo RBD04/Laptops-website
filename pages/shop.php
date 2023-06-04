@@ -105,16 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_SESSION['name']))
               echo '
             <form method="post">
-            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
             </form>
             '
             ?>
             <div class="user_option-box">
-              <a href="login.php">
-                <?php
+            <?php
                 if (isset($_SESSION['admin']))
-                  echo 'admin page '
+                  echo 'Admin page '
                 ?>
+              <a href="login.php">
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <div class="dropstart">
