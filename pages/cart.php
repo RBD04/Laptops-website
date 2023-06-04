@@ -7,6 +7,7 @@ $cartProducts = getCartProducts();
 
 
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
 
@@ -175,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($cartProducts) && gettype($cartProducts) == 'array') {
             $total = 0;
             echo '
-    <div class="row mb-4">
+    <div class="row mb-4 container-fluid">
       <div class="col-12">
       <form method="post">
         <table class="table">
@@ -189,6 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
           </thead>
           <tbody>';
+
             foreach ($cartProducts as $cartProduct) {
                 $total += $cartProduct->price * $cartProduct->quantityAvailable;
                 echo '
@@ -232,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>    
         <div class="col-6">
         <h4 class="text-muted font-weight-bolder">Subtotal: ' . $total . '$</h4>
-        <a href="checkout.php" class="btn btn-primary w-100">Checkout</a>
+        <a href="checkout.php?x='.$_SESSION['user'] .'" class="btn btn-primary w-100">Checkout</a>
         </div>
     </div>';
         } else {
