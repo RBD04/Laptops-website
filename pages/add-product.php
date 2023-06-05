@@ -115,9 +115,15 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
     </a>
   </li><!-- End Dashboard Nav -->
   <li class="nav-item">
-    <a class="nav-link collapsed text-primary" href="../pages/add-product.php">
+    <a class="nav-link collapsed " href="../pages/home.php">
       <i class="bi bi-plus-square"></i>
-      <span>Add Products</span>
+      <span>Home</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed " href="../pages/shop.php">
+      <i class="bi bi-plus-square"></i>
+      <span>Shop</span>
     </a>
   </li>
   <li class="nav-item">
@@ -139,7 +145,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link collapsed" href="view-products.php">
+    <a class="nav-link collapsed" href="stock.php">
       <i class="bi bi-ui-checks-grid"></i>
       <span>View Stock</span>
     </a>

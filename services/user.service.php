@@ -23,7 +23,7 @@ function getUsers()
             $user->email = isset($result['email']) ? $result['email'] : null;
             $user->phoneNumber = isset($result['phoneNumber']) ? $result['phoneNumber'] : null;
             $user->birthday = isset($result['birthday']) ? $result['birthday'] : null;
-            $user->gender = isset($result['gender']) ? $result['gender'] : null;
+            $user->profilePicture = isset($result['profilePicture']) ? $result['profilePicture'] : null;
             $user->points = isset($result['points']) ? $result['points'] : null;
             $users[] = $user;
         }

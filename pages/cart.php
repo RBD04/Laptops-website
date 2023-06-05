@@ -234,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>    
         <div class="col-6">
         <h4 class="text-muted font-weight-bolder">Subtotal: ' . $total . '$</h4>
-        <a href="checkout.php?x='.$_SESSION['user'] .'" class="btn btn-primary w-100">Checkout</a>
+        <a href="checkout.php" class="btn btn-primary w-100">Checkout</a>
         </div>
     </div>';
         } else {
