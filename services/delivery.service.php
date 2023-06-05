@@ -28,6 +28,6 @@ function setDelivery($cartId,$userId, $governorate, $city, $street, $building,$a
     $total=$price-$deliveryFees;
     $query='INSERT INTO delivery(cartId,userId,governorate,city,street,building,deliveryAddress,paymentStatus,deliveryFees,total)
             VALUES("'.$cartId.'","'.$userId.'","'.$governorate.'","'.$city.'","'.$street.'","'.$building.'","'.$address.'","waiting approval","'.$deliveryFees.'","'.$total.'")';
-    $wrapper->executeQueryAndReturnId($query);
+    $wrapper->executeUpdate($query);
 
 }

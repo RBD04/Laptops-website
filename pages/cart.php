@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updatedQuantity;
         print_r($productToRemove);
         foreach ($cartProducts as $cartProduct) {
-            if ($cartProduct->ProductId == $productId) $updatedQuantity = $cartProduct->quantityAvailable;
+            if ($cartProduct->productId == $productId) $updatedQuantity = $cartProduct->quantityAvailable;
         }
 
         removeProductFromCart($productId, $updatedQuantity);
@@ -196,12 +196,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo '
             <tr>
                 <td style="vertical-align: middle;">
-                    <a href="viewproduct?productId=' . $cartProduct->ProductId . '">
+                    <a href="viewproduct?productId=' . $cartProduct->productId . '">
                         <img src="' . $cartProduct->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;">
                     </a>
                 </td>
                 <td style="vertical-align: middle;">
-                    <a href="viewproduct?productId=' . $cartProduct->ProductId . '">
+                    <a href="viewproduct?productId=' . $cartProduct->productId . '">
                         <h3 class="card-title font-weight-bolder " style="font-size: 1.2rem;">' . $cartProduct->productName . '</h3>
                             <p class="card-text text-muted" style="font-size: 1rem;">' . $cartProduct->description . '</p>
                             <p class="card-text font-weight-bold" style="font-size: 1.2rem;">Price: $' . $cartProduct->price . '</p>
@@ -210,17 +210,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td style="vertical-align: middle;">
                     <div class="input-group" id="quantityGroup">
                         <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") >-</button>
-                            <input type="hidden" name="productIds[]"value="' . $cartProduct->ProductId . '" >
+                            <input type="hidden" name="productIds[]"value="' . $cartProduct->productId . '" >
                             <input type="number" id="quantity" name="quantity[]" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" readonly>
                         <button class="btn btn-primary" type="button" onclick=quantityChange("add") >+</button>
                     </div>
                 </td>
                 <td style="vertical-align: middle;">$' . ($cartProduct->price * $cartProduct->quantityAvailable) . '</td>
                 <td style="vertical-align: middle;">
-                    <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="productToRemove" value="' . $cartProduct->ProductId . ' ">Remove</button>
+                    <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="productToRemove" value="' . $cartProduct->productId . ' ">Remove</button>
                 </td>
                 <td style="vertical-align: middle;">
-                    <button class="btn btn-outline-primary" style="font-size: 1.1rem;" name="productToUpdate" value="' . $cartProduct->ProductId . ' ">Save</button>
+                    <button class="btn btn-outline-primary" style="font-size: 1.1rem;" name="productToUpdate" value="' . $cartProduct->productId . ' ">Save</button>
                 </td>
             </tr>';
             }

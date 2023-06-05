@@ -168,7 +168,7 @@ if (array_key_exists('logout', $_POST)) {
         </h2>
       </div>
       <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value=<?php echo $user->UserId ?> />
+        <input type="hidden" name="id" value=<?php echo $user->userId ?> />
         <div class="row mb-4">
           <div class="col-4">
             <label for="profilePicture">

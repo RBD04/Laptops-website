@@ -57,11 +57,11 @@ function addToCart($productId, $quantity)
         } else {
             $newQuantity = $product->quantityAvailable - $quantity;
 
-            setSerialReserved($product->ProductId, $quantity);
+            setSerialReserved($product->productId, $quantity);
 
-            addToCartProduct($cartId, $product->ProductId, $quantity);
+            addToCartProduct($cartId, $product->productId, $quantity);
 
-            updateProductQuantity($product->ProductId, $newQuantity);
+            updateProductQuantity($product->productId, $newQuantity);
             return true;
         }
     } else echo '<script>alert("You need to login first")</script>';
@@ -78,11 +78,11 @@ function removeProductFromCart($productId, $quantity)
 
         $newQuantity = $product->quantityAvailable + $quantity;
 
-        setSerialAvailable($product->ProductId, $quantity);
+        setSerialAvailable($product->productId, $quantity);
 
-        updateCartProduct($cartId, $product->ProductId, $quantity);
+        updateCartProduct($cartId, $product->productId, $quantity);
 
-        updateProductQuantity($product->ProductId, $newQuantity);
+        updateProductQuantity($product->productId, $newQuantity);
     } else echo '<script>alert("You need to login first")</script>';
 }
 
@@ -105,7 +105,7 @@ function getCartProducts()
             foreach ($results as $item) {
                 $product = new Product();
 
-                $product->ProductId = $item['productId'];
+                $product->productId = $item['productId'];
                 $product->productName = $item['productName'];
                 $product->description = $item['description'];
                 $product->thumbnail = $item['thumbnail'];
@@ -131,9 +131,9 @@ function cartConfirmed($governorate,$city,$street,$building,$address)
         $cartProductPrice=0;
         $discount=0;
         foreach ($products as $obj) {
-            setItemPrices($cartId, $obj->ProductId, $obj->price);
-            setSerialSoldOut($obj->ProductId);
-            $cartProductPrice=getCartProductQuantity($cartId,$obj->ProductId)*$obj->price;
+            setItemPrices($cartId, $obj->productId, $obj->price);
+            setSerialSoldOut($obj->productId);
+            $cartProductPrice=getCartProductQuantity($cartId,$obj->productId)*$obj->price;
             $totalPrice+=$cartProductPrice;
         }
 

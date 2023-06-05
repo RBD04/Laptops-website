@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="card-body">
             <h5 class="card-title text-primary">' . $product->productName . '</h5>
             <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
-              <a href="viewproduct.php?productId=' . $product->ProductId . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+              <a href="viewproduct.php?productId=' . $product->productId . '" class="btn btn-primary w-100 font-weight-bold">View</a>
           </div>
         </div>
       </div>';

@@ -17,7 +17,7 @@ function renderCartItems($cartProducts) {
             $totalPrice += $total;
             echo '
             <form method="post">
-            <input type="hidden" name="cartProductId" value='.$cartProduct->ProductId.' />
+            <input type="hidden" name="cartProductId" value='.$cartProduct->productId.' />
             <input type="hidden" name="cartQuantity" value='.$cartProduct->quantityAvailable.' />
             <li class="dropdown-item" style="border-bottom: 1px solid #ccc; position: relative;">
                 <div class="d-flex">
