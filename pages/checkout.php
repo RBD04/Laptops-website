@@ -1,14 +1,29 @@
 <?php
 include "../helpers/connection.php";
+require_once '../services/cart.service.php';
+require_once '../services/user.service.php';
 session_start();
+
 if (!(isset($_SESSION['user']) || isset($_SESSION['admin']))) {
     header("Location:../pages/home.php");
 }
-if (array_key_exists('logout', $_POST)) {
-    session_destroy();
-    header("Refresh:0");
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    extract($_POST);
+    if (isset($governorate) && isset($street) && isset($address) && isset($building) && isset($city)) {
+        cartConfirmed($governorate, $city, $street, $building, $address);
+    }
+    if (array_key_exists('logout', $_POST)) {
+        session_destroy();
+        header("Refresh:0");
+    }
 }
 
+$cartProducts = getCartProducts();
+$userId = $_SESSION['user'];
+
+$user = getUserById($userId);
 ?>
 
 <!DOCTYPE html>
@@ -90,10 +105,10 @@ if (array_key_exists('logout', $_POST)) {
                         <?php
                         if (isset($_SESSION['name']))
                             echo '
-            <form method="post">
-            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
+                             <form method="post">
+                                 <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
+                            </form>
+                            '
                         ?>
                         <div class="user_option-box">
                             <?php
@@ -115,45 +130,41 @@ if (array_key_exists('logout', $_POST)) {
     </div>
 
     <!--Invoices-->
-    <div class="row">
-        <h1 class="text-primary display-4 text-center my-3">Invoice</h1>
-        <table class="text-center border border-dark shadow mx-auto col-10 my-3">
-            <tr>
-                <th class="text-center text-primary p-1">Product Name</th>
-                <th class="text-center text-primary p-1">Ordered Quantity</th>
-                <th class="text-center text-primary p-1">Unit Price</th>
-            </tr>
-            <?php
-            $user = $_GET['x'];
-
-            $q = "SELECT * FROM cart WHERE UserID='" . $user . "'";
-            $res = mysqli_query($con, $q);
-            $row = mysqli_fetch_assoc($res);
-            $cartId = $row['cartId'];
-            if ($res) {
-                $q1 = "SELECT * FROM cartproduct NATURAL JOIN product WHERE cartId='" . $cartId . "'";
-                $res1 = mysqli_query($con, $q1);
-                $n = mysqli_num_rows($res1);
+    <div class="container">
+        <div class="row">
+            <h1 class="text-primary display-4 text-center my-3">Invoice</h1>
+            <table class="table">
+                <tr>
+                    <th class="text-primary p-1">Product</th>
+                    <th class="text-primary p-1">Product Name</th>
+                    <th class="text-primary p-1">Ordered Quantity</th>
+                    <th class="text-primary p-1">Unit Price</th>
+                </tr>
+                <?php
                 $total = 0;
-                for ($i = 0; $i < $n; $i++) {
-                    $f = mysqli_fetch_assoc($res1);
-                    $total += $f['quantity'] * $f['price'];
-                    echo "<tr><td class='p-1'>" . $f['productName'] . "</td><td class='p-1'>" . $f['quantity'] . "</td><td class='p1'>" . $f['price'] . "$</td></th>";
+                foreach ($cartProducts as $obj) {
+                    $total += $obj->price * $obj->quantityAvailable;
+                    echo '
+                <tr>
+                <td style="vertical-align: middle;"><img src="' . $obj->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;" /></td>
+                <td style="vertical-align: middle;">' . $obj->productName . '</td>
+                <td style="vertical-align: middle;">x ' . $obj->quantityAvailable . '</td>
+                <td style="vertical-align: middle;">' . $obj->price . ' $</td>
+                </tr>';
                 }
-                echo "<tr><th colspan='2' class='text-light bg-primary text-center p-1'>Total Price</td><td class='bg-dark text-light'>$total$</td></tr>";
-            }
-            ?>
-        </table>
+                echo "
+                <tr>
+                <th colspan='2' class='text-light bg-primary text-center p-1' style='vertical-align: middle;'>Total Price</td>
+                <td  colspan='2'  class='bg-dark text-light text-center' style='vertical-align: middle;'>" . $total . " $</td>
+                </tr>
+                ";
+
+                ?>
+            </table>
+        </div>
     </div>
-    <?php
-    $q2  = "SELECT * FROM user WHERE UserId='".$user."'";
-    $res2  =mysqli_query($con,$q2);
-    $get = mysqli_fetch_assoc($res2); 
-    $FN = $get['firstName'];
-    $LN = $get['lastName'];
-    echo'
     <section class="contact_section layout_padding p-5">
-        <form action="save-delivery.php" method="post">
+        <form method="post">
 
             <div class="container">
                 <div class="form_container">
@@ -166,10 +177,10 @@ if (array_key_exists('logout', $_POST)) {
                     <form method="post">
                         <div class="row">
                             <div class="col">
-                                <input name="firstName" type="text" placeholder="*First Name" value="'.$FN.'" readonly />
+                                <input name="firstName" type="text" placeholder="*First Name" value="<?php echo $user->firstName ?> " readonly />
                             </div>
                             <div class="col">
-                                <input name="lastName" type="text" placeholder="*Last Name" value="'.$LN.'" readonly />
+                                <input name="lastName" type="text" placeholder="*Last Name" value="<?php echo $user->lastName ?>" readonly />
                             </div>
                         </div>
                         <div>
@@ -180,26 +191,41 @@ if (array_key_exists('logout', $_POST)) {
                                 <input name="street" type="text" size="30" placeholder="*Street" required />
                             </div>
                             <div>
-                            <input name="governorate" type="text" placeholder="Governorate" size="30"/>
-                        </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text btn-primary" for="inputGroupSelect01">Governorate</label>
+                                    </div>
+                                    <select class="custom-select" id="inputGroupSelect01" name="governorate">
+                                        <option>Choose...</option>
+                                        <option value="Beirout">Beirout</option>
+                                        <option value="Nabatiyeh">Nabatiyeh</option>
+                                        <option value="Jouniyeh">Jouniyeh</option>
+                                        <option value="Baabda">Baabda</option>
+                                        <option value="Tripoli">Tripoli</option>
+                                        <option value="Bekaa">Bekaa</option>
+                                        <option value="Akkar">Akkar</option>
+                                        <option value="Baalback">Baalback</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <input name="building" type="text" placeholder="Building Name" size="30"/>
+                            <input name="building" type="text" placeholder="Building Name" size="30" />
                         </div>
                         <div>
-                        <input name="total" type="hidde" value="'.$total.'"/>
-                    </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary font-weight-bold">
-                                Finish Order
-                            </button>
+                            <input name="address" type="text" placeholder="Full Address" size="30" />
                         </div>
                 </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary font-weight-bold">
+                        Confirm Order
+                    </button>
+                </div>
+            </div>
             </div>
         </form>
     </section>
     </div>
-    '?>
     <!--Invoices-->
 
     <!-- footer section -->

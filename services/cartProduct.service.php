@@ -1,31 +1,31 @@
 <?php
 require_once '../helpers/dbWrapper.php';
 
-function addToCartProduct($cartId, $productId,$quantity)
+function addToCartProduct($cartId, $productId, $quantity)
 {
     $wrapper = new dbWrapper();
 
 
     if (alreadyAdded($cartId, $productId)) {
-        $newQuantity=getAddToCartProductQuantity($cartId,$productId);
-        $newQuantity=$newQuantity+$quantity;
-        $query='UPDATE cartproduct SET quantity="'.$newQuantity.'" WHERE cartId = "' . $cartId . '" AND productId = "' . $productId . '"';
+        $newQuantity = getCartProductQuantity($cartId, $productId);
+        $newQuantity = $newQuantity + $quantity;
+        $query = 'UPDATE cartproduct SET quantity="' . $newQuantity . '" WHERE cartId = "' . $cartId . '" AND productId = "' . $productId . '"';
         $wrapper->executeUpdate($query);
     } else {
-        $query = 'INSERT INTO cartproduct(cartId,productId,quantity) VALUES("' . $cartId . '","' . $productId . '",'.$quantity.')';
+        $query = 'INSERT INTO cartproduct(cartId,productId,quantity) VALUES("' . $cartId . '","' . $productId . '",' . $quantity . ')';
         $wrapper->executeUpdate($query);
     }
 }
 
-function updateCartProduct($cartId, $productId,$quantity){
-    $wrapper=new dbWrapper();
+function updateCartProduct($cartId, $productId, $quantity)
+{
+    $wrapper = new dbWrapper();
 
-    if (alreadyAdded($cartId, $productId)){
-        $newQuantity=getAddToCartProductQuantity($cartId,$productId);
-        $newQuantity=$newQuantity-$quantity;
-        $query='UPDATE cartproduct SET quantity="'.$newQuantity.'" WHERE cartId = "' . $cartId . '" AND productId = "' . $productId . '"';
+    if (alreadyAdded($cartId, $productId)) {
+        $newQuantity = getCartProductQuantity($cartId, $productId);
+        $newQuantity = $newQuantity - $quantity;
+        $query = 'UPDATE cartproduct SET quantity="' . $newQuantity . '" WHERE cartId = "' . $cartId . '" AND productId = "' . $productId . '"';
         $wrapper->executeUpdate($query);
-        
     }
 }
 
@@ -47,11 +47,12 @@ function alreadyAdded($cartId, $productId)
     }
 }
 
-function getAddToCartProductQuantity($cartId,$productId){
-    $wrapper=new dbWrapper();
+function getCartProductQuantity($cartId, $productId)
+{
+    $wrapper = new dbWrapper();
 
-    $query='SELECT quantity FROM cartproduct WHERE cartId="' . $cartId . '" AND productId="' . $productId . '"';
-    
+    $query = 'SELECT quantity FROM cartproduct WHERE cartId="' . $cartId . '" AND productId="' . $productId . '"';
+
     $result = $wrapper->executeSingleRowQuery($query);
     $count = count($result);
 
@@ -62,5 +63,12 @@ function getAddToCartProductQuantity($cartId,$productId){
     } else if ($count === 1) {
         return $result[0]['quantity'];
     }
+}
 
+function setItemPrices($cartId, $productId, $price)
+{
+    $wrapper = new dbWrapper();
+
+    $query = 'UPDATE cartproduct SET itemPrice=' . $price . ' WHERE cartId="' . $cartId . '" AND productId="' . $productId . '" AND quantity>0';
+    $wrapper->executeUpdate($query);
 }

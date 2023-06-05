@@ -27,4 +27,12 @@ function setSerialAvailable($productId,$quantity){
     $wrapper->executeUpdate($query);
 }
 
+function setSerialSoldOut($productId){
+    $wrapper=new dbWrapper();
+
+    $query='UPDATE serialnumber SET status="sold out" WHERE productId="'.$productId.'" AND status="reserved"';
+
+    $wrapper->executeUpdate($query);
+}
+
 ?>

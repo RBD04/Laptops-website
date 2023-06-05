@@ -1,6 +1,12 @@
 <?php
-include "../helpers/connection.php";
+require_once '../services/user.service.php';
+
 session_start();
+
+$users = getUsers();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +115,18 @@ session_start();
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed " href="../pages/home.php">
+                    <i class="bi bi-plus-square"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed " href="../pages/shop.php">
+                    <i class="bi bi-plus-square"></i>
+                    <span>Shop</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="../pages/category-details.php">
                     <i class="bi bi-ui-radios-grid"></i>
                     <span>Manage Categories</span>
@@ -158,30 +176,31 @@ session_start();
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <table class="border border-secondary shadow ms-auto me-auto container-fluid">
+                    <table class="table table-striped ms-auto me-auto container-fluid">
                         <tr>
-                            <th class="text-primary text-center">ID</th>
+                            <th class="text-primary text-center">Number</th>
+                            <th class="text-primary text-center">Profile</th>
                             <th class="text-primary text-center ">First Name</th>
                             <th class="text-primary  text-center">Last Name</th>
                             <th class="text-primary  text-center">Email</th>
-                            <th class="text-primary  text-center">Password</th>
                             <th class="text-primary  text-center">Phone</th>
-                            <th class="text-primary  text-center">Birth Date</th>
-                            <th class="text-primary  text-center">Picture</th>
-                            <th class="text-primary  text-center">Points</th>
+                            <th class="text-primary  text-center">Birthday</th>
                             <th class="text-primary  text-center">Actions</th>
                         </tr>
                         <?php
-                        $q = "SELECT * FROM user";
-                        $res = mysqli_query($con, $q);
-                        $n = mysqli_num_rows($res);
-                        if ($res) {
-                            for ($i = 0; $i < $n; $i++) {
-                                $row = mysqli_fetch_assoc($res);
-                                echo "
-                            <tr><td class='text-secondary text-center'>" . $row['UserId'] . "</td><td class='text-secondary text-center'>" . $row['firstName'] . "</td><td class='text-secondary text-center'>" . $row['lastName'] . "</td><td class='text-secondary text-center'>" . $row['email'] . "</td><td class='text-secondary text-center'>" . $row['password'] . "</td><td class='text-secondary text-center'>" . $row['phoneNumber'] . "</td><td class='text-secondary text-center'>" . $row['birthday'] . "</td><td class='text-secondary text-center'><img src=''></img></td><td class='text-secondary text-center'>" . $row['points'] . "</td><td class='text-secondary text-center'><a href='editUser.php' class='btn btn-primary btn-sm m-2'>Edit</a><a href='deleteUser.php' class='btn btn-secondary btn-sm m-2'>Delete</a></td></tr>
-                           ";
-                            }
+                        foreach ($users as $key => $obj) {
+                            echo '
+                            <tr class="text-muted text-center">
+                                <td >' . ++$key . '</td>
+                                <td><img src="' . $obj->profilePicture . '" width="100px" height="100px" class="m-4" /></td>
+                                <td>' . $obj->firstName . '</td>
+                                <td>' . $obj->lastName . '</td>
+                                <td>' . $obj->email . '</td>
+                                <td>' . $obj->phoneNumber . '</td>
+                                <td>' . $obj->birthday . '</td>
+                                <td><button class="btn btn-primary">Edit</button></td>
+                            </tr>
+                            ';
                         }
                         ?>
                     </table>
