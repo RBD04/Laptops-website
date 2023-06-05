@@ -172,7 +172,7 @@ if (array_key_exists('logout', $_POST)) {
         <div class="row mb-4">
           <div class="col-4">
             <label for="profilePicture">
-              <small class="text-primary fs-6">Click Image Below To Upload Profile Picture</small>
+              <small class="text-primary fs-6">*Click Image Below To Upload Profile Picture</small>
               <img src=<?php echo $user->profilePicture ? $user->profilePicture : "../images/defaultProfile.jpg" ?> width="360px" height="380px " class="rounded float-left" alt="Profile Picture" id="profilePicturePreview">
               <input type="file" id="profilePicture" name="profilePicture" style="display: none;" onchange="handleProfilePicture(event)" disabled>
             </label>

@@ -103,36 +103,39 @@ function signup()
     }
 }
 
+
 function updateUser($id)
 {
     $wrapper = new dbWrapper();
 
     extract($_POST);
+    print_r($_FILES['profilePicture']['name']);
     $destination;
     $isSuccessUploadingImg;
     $isSuccessUpdatingUser;
     $isSuccessUpdatingPass;
     if (isset($firstName) && isset($lastName) && isset($email) && isset($phoneNumber)) {
         if (!empty($_FILES['profilePicture']['name'])) {
-            
+
             $destination = '../uploads/ProfilePictures/' . $_FILES['profilePicture']['name'];
-            
+
             if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $destination)) {
                 $isSuccessUploadingImg = true;
             } else {
                 $isSuccessUploadingImg = false;
             }
         }
-        $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE UserId=' . $id . '';
+        isset($destination) ? $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE UserId=' . $id . ''
+            : $query='UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '"," WHERE UserId=' . $id . '';
         $wrapper->executeUpdate($query) ? $isSuccessUpdatingUser = true : $isSuccessUpdatingUser = false;
         if (isset($currentPassword) && isset($newPassword))
             updatePassword($id, $currentPassword, $newPassword) ? $isSuccessUpdatingPass = true : $isSuccessUpdatingPass = false;
     }
 
-    if(!$isSuccessUpdatingUser) return 1;
-    else if(!$isSuccessUploadingImg&&(!empty($isSuccessUploadingImg))) return 2;
-    else if(empty($currentPassword)||empty($newPassword)) return 3;
-    else if(!$isSuccessUpdatingPass) return 4;
+    if (!$isSuccessUpdatingUser) return 1;
+    else if (!$isSuccessUploadingImg && (!empty($isSuccessUploadingImg))) return 2;
+    else if (empty($currentPassword) || empty($newPassword)) return 3;
+    else if (!$isSuccessUpdatingPass) return 4;
     else return 5;
 }
 

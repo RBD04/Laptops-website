@@ -97,7 +97,7 @@ function getCartProducts()
         foreach ($results as $item) {
             $product = new Product();
 
-            $product->ProductId = $item['ProductId'];
+            $product->ProductId = $item['productId'];
             $product->productName = $item['productName'];
             $product->description = $item['description'];
             $product->thumbnail = $item['thumbnail'];
