@@ -32,7 +32,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-<!--style CSS Files -->
+  <!--style CSS Files -->
   <link href="../css/admin-style/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/admin-style/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../css/admin-style/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -64,10 +64,10 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         <span class="d-none d-lg-block">TechZone</span>
       </a>
       <?php
-          if (isset($_SESSION['name']))
-            if (isset($_SESSION['admin']))
-              echo 'Welcome ' . $_SESSION['name'].' ';
-          ?>
+      if (isset($_SESSION['name']))
+        if (isset($_SESSION['admin']))
+          echo 'Welcome ' . $_SESSION['name'] . ' ';
+      ?>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
@@ -88,148 +88,154 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </li><!-- End Search Icon-->
     </nav><!-- End Icons Navigation -->
     <?php
-                if (isset($_SESSION['admin']))
-                  echo 'Admin page '
-                ?>
-                           <?php
-            if (isset($_SESSION['name']))
-              echo '
+    if (isset($_SESSION['admin']))
+      echo 'Admin page '
+    ?>
+    <?php
+    if (isset($_SESSION['name']))
+      echo '
             <form method="post">
             <button class="btn btn-primary mx-3" type="submit" name="logout" value="logout">Logout</button>
             </form>
             '
-            ?>
+    ?>
 
   </header><!-- End Header -->
 
 
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
 
-<ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-  <li class="nav-item">
-    <a class="nav-link " href="admin-home">
-      <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
-    </a>
-  </li><!-- End Dashboard Nav -->
-  <li class="nav-item">
-    <a class="nav-link collapsed " href="../pages/home.php">
-      <i class="bi bi-plus-square"></i>
-      <span>Home</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed " href="../pages/shop.php">
-      <i class="bi bi-plus-square"></i>
-      <span>Shop</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../pages/category-details.php">
-      <i class="bi bi-ui-radios-grid"></i>
-      <span>Manage Categories</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../pages/user-details.php">
-      <i class="bi bi-person-fill-gear"></i>
-      <span>Manage Users</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="view-products.php">
-      <i class="bi bi-newspaper"></i>
-      <span>Manage News</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="stock.php">
-      <i class="bi bi-ui-checks-grid"></i>
-      <span>View Stock</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="view-products.php">
-      <i class="bi bi-card-checklist"></i>
-      <span>View Orders</span>
-    </a>
-  </li>
-  <!-- End Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="admin-home">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="../pages/home.php">
+          <i class="bi bi-plus-square"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="../pages/shop.php">
+          <i class="bi bi-plus-square"></i>
+          <span>Shop</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/category-details.php">
+          <i class="bi bi-ui-radios-grid"></i>
+          <span>Manage Categories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/user-details.php">
+          <i class="bi bi-person-fill-gear"></i>
+          <span>Manage Users</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/orders.php">
+          <i class="bi bi-person-fill-gear"></i>
+          <span>Manage Orders</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="view-products.php">
+          <i class="bi bi-newspaper"></i>
+          <span>Manage News</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="stock.php">
+          <i class="bi bi-ui-checks-grid"></i>
+          <span>View Stock</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="view-products.php">
+          <i class="bi bi-card-checklist"></i>
+          <span>View Orders</span>
+        </a>
+      </li>
+      <!-- End Page Nav -->
 
-</ul>
+    </ul>
 
-</aside><!-- End Sidebar-->
+  </aside><!-- End Sidebar-->
   <main id="main" class="main">
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-        <form id="add-product" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            
-          <div class="pagetitle">
-      <h1>Products</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">products Section</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-            <label for="productName">Product name</label>
-            <input type="text" class="form-control mb-3" id="productName" name="productName" />
-          </div>
-          <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10" />
-          </div>
-          <div class="form-group" id="innerSerial">
-          </div>
-          <div class="form-group">
-            <label for="Category">Category</label>
-            <select class="form-control mb-3" id="category" name="category">
-              <?php
-              $categories = getCategories();
-              if (count($categories) > 0) {
-                foreach ($categories as $category) {
-                  echo '<option value="' . $category->categoryId . '">' . $category->categoryName . '</option>';
+          <form id="add-product" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+
+              <div class="pagetitle">
+                <h1>Products</h1>
+                <nav>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">products Section</li>
+                  </ol>
+                </nav>
+              </div><!-- End Page Title -->
+              <label for="productName">Product name</label>
+              <input type="text" class="form-control mb-3" id="productName" name="productName" />
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10" />
+            </div>
+            <div class="form-group" id="innerSerial">
+            </div>
+            <div class="form-group">
+              <label for="Category">Category</label>
+              <select class="form-control mb-3" id="category" name="category">
+                <?php
+                $categories = getCategories();
+                if (count($categories) > 0) {
+                  foreach ($categories as $category) {
+                    echo '<option value="' . $category->categoryId . '">' . $category->categoryName . '</option>';
+                  }
                 }
-              }
-              ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="description">Descritpion</label>
-            <textarea type="text" class="form-control mb-3" id="description" name="description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" class="form-control mb-3" id="price" name="price" />
-          </div>
-          <div class="form-group">
-            <label for="thumbnail" class="form-label">Thumbnail</label>
-            <input type="file" class="form-control mb-3" id="thumbnail" name="thumbnail" />
-          </div>
-          <div class="form-group">
-            <label for="images" class="form-label">Images</label>
-            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-          </div>
-          <?php
-          if (isset($_POST['productName'])) {
-            echo $msgSuccess . '<br/><br/>';
-          }
-          ?>
-          <button type="submit" class="btn btn-primary">Add</button>
-          <button type="reset" class="btn btn-primary">Reset</button>
-        </form>
+                ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="description">Descritpion</label>
+              <textarea type="text" class="form-control mb-3" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="text" class="form-control mb-3" id="price" name="price" />
+            </div>
+            <div class="form-group">
+              <label for="thumbnail" class="form-label">Thumbnail</label>
+              <input type="file" class="form-control mb-3" id="thumbnail" name="thumbnail" />
+            </div>
+            <div class="form-group">
+              <label for="images" class="form-label">Images</label>
+              <input type="file" class="form-control mb-3" id="images" name="images" multiple />
+            </div>
+            <?php
+            if (isset($_POST['productName'])) {
+              echo $msgSuccess . '<br/><br/>';
+            }
+            ?>
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+          </form>
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-<!--JS Files -->
+  <!--JS Files -->
   <script src="../css/admin-style/apexcharts/apexcharts.min.js"></script>
   <script src="../css/admin-style/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../css/admin-style/chart.js/chart.umd.js"></script>

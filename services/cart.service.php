@@ -120,7 +120,7 @@ function getCartProducts()
     return $products;
 }
 
-function cartConfirmed($governorate,$city,$street,$building,$address)
+function cartConfirmed($governorate,$city,$street,$building,$contactNumber,$address)
 {
 
     if (isset($_SESSION['user'])) {
@@ -139,7 +139,7 @@ function cartConfirmed($governorate,$city,$street,$building,$address)
 
         $finalPrice=$totalPrice-$discount;
         setCartConfirmed($userId,$totalPrice,$finalPrice);
-        setDelivery($cartId,$userId,$governorate,$city,$street,$building,$address,$finalPrice);
+        setDelivery($cartId,$userId,$governorate,$city,$street,$building,$contactNumber,$address,$finalPrice);
 
         createCart($userId);
     }

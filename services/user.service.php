@@ -109,7 +109,6 @@ function updateUser($id)
     $wrapper = new dbWrapper();
 
     extract($_POST);
-    print_r($_FILES['profilePicture']['name']);
     $destination;
     $isSuccessUploadingImg;
     $isSuccessUpdatingUser;
@@ -126,7 +125,7 @@ function updateUser($id)
             }
         }
         isset($destination) ? $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE userId=' . $id . ''
-            : $query='UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '"," WHERE userId=' . $id . '';
+            : $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '" WHERE userId=' . $id . '';
         $wrapper->executeUpdate($query) ? $isSuccessUpdatingUser = true : $isSuccessUpdatingUser = false;
         if (isset($currentPassword) && isset($newPassword))
             updatePassword($id, $currentPassword, $newPassword) ? $isSuccessUpdatingPass = true : $isSuccessUpdatingPass = false;
