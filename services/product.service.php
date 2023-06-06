@@ -14,7 +14,7 @@ function getProducts()
 
     for ($i = 0; $i < count($result); $i++) {
         $product = new Product();
-        $product->ProductId = $result[$i]['ProductId'];
+        $product->productId = $result[$i]['productId'];
         $product->categoryId = $result[$i]['categoryId'];
         $product->productName = $result[$i]['productName'];
         $product->description = $result[$i]['description'];
@@ -34,10 +34,10 @@ function getProductById($id)
     $product = new Product();
 
     if (isset($id)) {
-        $getProductQuery = 'SELECT * FROM product WHERE ProductId="' . $id . '"';
+        $getProductQuery = 'SELECT * FROM product WHERE productId="' . $id . '"';
         $result = $wrapper->executeQuery($getProductQuery);
 
-        $product->ProductId = $result[0]['ProductId'];
+        $product->productId = $result[0]['productId'];
         $product->categoryId = $result[0]['categoryId'];
         $product->productName = $result[0]['productName'];
         $product->description = $result[0]['description'];
@@ -66,7 +66,7 @@ function getAvailableProducts()
 
     for ($i = 0; $i < count($result); $i++) {
         $product = new Product();
-        $product->ProductId = $result[$i]['ProductId'];
+        $product->productId = $result[$i]['productId'];
         $product->categoryId = $result[$i]['categoryId'];
         $product->productName = $result[$i]['productName'];
         $product->description = $result[$i]['description'];
@@ -136,7 +136,7 @@ function updateProductQuantity($productId, $quantity)
 {
     $wrapper = new dbWrapper();
 
-    $query = 'UPDATE product SET quantityAvailable="' . $quantity . '" WHERE ProductId="' . $productId . '" ';
+    $query = 'UPDATE product SET quantityAvailable="' . $quantity . '" WHERE productId="' . $productId . '" ';
 
     $wrapper->executeUpdate($query);
 }

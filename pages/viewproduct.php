@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
 
     if (isset($quantity) && isset($add_to_cart)) {
-        $Message = addToCart($product->ProductId, $quantity);
+        $Message = addToCart($product->productId, $quantity);
         if ($Message) {
             $Message = $product->productName . ' added successfully to cart<br/><a href="cart.php" class="fw-bolder fs-4 text-decoration-underline"><i class="fa fa-cart-plus" aria-hidden="true"> Go To Cart</i></a>';
         } else {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($quantity) && isset($checkout)) {
-        header('Location: checkout.php?quantity=' . $quantity . '?productId=' . $product->ProductId . '');
+        header('Location: checkout.php?quantity=' . $quantity . '?productId=' . $product->productId . '');
     }
 
     if (isset($logout)) {

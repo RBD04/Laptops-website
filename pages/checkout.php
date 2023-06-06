@@ -11,8 +11,8 @@ if (!(isset($_SESSION['user']) || isset($_SESSION['admin']))) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
-    if (isset($governorate) && isset($street) && isset($address) && isset($building) && isset($city)) {
-        cartConfirmed($governorate, $city, $street, $building, $address);
+    if (isset($governorate) && isset($street) && isset($address) && isset($building) && isset($contactNumber) && isset($city)) {
+        cartConfirmed($governorate, $city, $street, $building, $contactNumber, $address);
     }
     if (array_key_exists('logout', $_POST)) {
         session_destroy();
@@ -177,18 +177,26 @@ $user = getUserById($userId);
                     <form method="post">
                         <div class="row">
                             <div class="col">
-                                <input name="firstName" type="text" placeholder="*First Name" value="<?php echo $user->firstName ?> " readonly />
+                                <label for="firstName">First Name</label>
+                                <input name="firstName" id="firstName" type="text" value="<?php echo $user->firstName ?> " readonly />
                             </div>
                             <div class="col">
-                                <input name="lastName" type="text" placeholder="*Last Name" value="<?php echo $user->lastName ?>" readonly />
+                                <label for="firstName">Last Name</label>
+                                <input name="lastName" type="text" value="<?php echo $user->lastName ?>" readonly />
                             </div>
                         </div>
                         <div>
-                            <input name="city" type="text" placeholder="*City" required />
+                            <label for="contactNumber">*Contact Number</label>
+                            <input name="contactNumber" id="contactNumber" type="text" placeholder="*Contact Number" value="<?php echo $user->phoneNumber ?>" required />
+                        </div>
+                        <div>
+                            <label for="city">*City</label>
+                            <input name="city" id="city" type="text" required />
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input name="street" type="text" size="30" placeholder="*Street" required />
+                                <label for="street">*Street</label>
+                                <input name="street" id="street" type="text" size="30" required />
                             </div>
                             <div>
                                 <div class="input-group mb-3">
@@ -210,10 +218,12 @@ $user = getUserById($userId);
                             </div>
                         </div>
                         <div>
-                            <input name="building" type="text" placeholder="Building Name" size="30" />
+                            <label for="building">*Building</label>
+                            <input name="building" id="building" type="text" size="30" />
                         </div>
                         <div>
-                            <input name="address" type="text" placeholder="Full Address" size="30" />
+                            <label for="address">*Full Address</label>
+                            <input name="address" id="address" type="text" />
                         </div>
                 </div>
                 <div class="text-center">

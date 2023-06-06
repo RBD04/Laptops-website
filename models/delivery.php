@@ -8,6 +8,7 @@ class Delivery{
     public $city;
     public $street;
     public $building;
+    public $contactNumber;
     public $paymentStatus;
     public $deliveryFees;
     public $total;

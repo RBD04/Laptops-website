@@ -1,7 +1,7 @@
 <?php
 
 class Product{
-    public $ProductId;
+    public $productId;
     public $categoryId;
     public $productName;
     public $description;

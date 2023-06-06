@@ -72,3 +72,9 @@ function setItemPrices($cartId, $productId, $price)
     $query = 'UPDATE cartproduct SET itemPrice=' . $price . ' WHERE cartId="' . $cartId . '" AND productId="' . $productId . '" AND quantity>0';
     $wrapper->executeUpdate($query);
 }
+
+function getAllCartProductsReserved(){
+    $wrapper=new dbWrapper();
+
+    $query='';
+}

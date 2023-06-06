@@ -17,7 +17,7 @@ function getUsers()
     if (!empty($results)) {
         foreach ($results as $result) {
             $user = new User();
-            $user->UserId = isset($result['UserId']) ? $result['UserId'] : null;
+            $user->userId = isset($result['userId']) ? $result['userId'] : null;
             $user->firstName = isset($result['firstName']) ? $result['firstName'] : null;
             $user->lastName = isset($result['lastName']) ? $result['lastName'] : null;
             $user->email = isset($result['email']) ? $result['email'] : null;
@@ -37,10 +37,10 @@ function getUserById($id)
     $user = new User();
 
     if (isset($id)) {
-        $query = 'SELECT * FROM user WHERE UserId="' . $id . '"';
+        $query = 'SELECT * FROM user WHERE userId="' . $id . '"';
         $result = $wrapper->executeQuery($query);
 
-        $user->UserId = $result[0]['UserId'];
+        $user->userId = $result[0]['userId'];
         $user->firstName = $result[0]['firstName'];
         $user->lastName = $result[0]['lastName'];
         $user->email = $result[0]['email'];
@@ -60,7 +60,7 @@ function validateLogin()
     $wrapper = new dbWrapper();
     extract($_POST);
 
-    $query = 'SELECT UserId, firstName, lastName FROM user WHERE email="' . $email . '" AND password="' . $password . '"';
+    $query = 'SELECT userId, firstName, lastName FROM user WHERE email="' . $email . '" AND password="' . $password . '"';
     $result = $wrapper->executeSingleRowQuery($query);
     $count = count($result);
 
@@ -69,7 +69,7 @@ function validateLogin()
     } else if ($count > 1) {
         return 'Please contact your administrator';
     } else if ($count === 1) {
-        $_SESSION['user'] = $result[0]['UserId'];
+        $_SESSION['user'] = $result[0]['userId'];
         $_SESSION['name'] = $result[0]['firstName'] . ' ' . $result[0]['lastName'];
         header('Location: ../pages/home.php');
         exit();
@@ -109,7 +109,6 @@ function updateUser($id)
     $wrapper = new dbWrapper();
 
     extract($_POST);
-    print_r($_FILES['profilePicture']['name']);
     $destination;
     $isSuccessUploadingImg;
     $isSuccessUpdatingUser;
@@ -125,8 +124,8 @@ function updateUser($id)
                 $isSuccessUploadingImg = false;
             }
         }
-        isset($destination) ? $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE UserId=' . $id . ''
-            : $query='UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '"," WHERE UserId=' . $id . '';
+        isset($destination) ? $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '",profilePicture="' . $destination . '" WHERE userId=' . $id . ''
+            : $query = 'UPDATE user SET firstName="' . $firstName . '",lastName="' . $lastName . '",email="' . $email . '",phoneNumber="' . $phoneNumber . '",birthday="' . $birthday . '" WHERE userId=' . $id . '';
         $wrapper->executeUpdate($query) ? $isSuccessUpdatingUser = true : $isSuccessUpdatingUser = false;
         if (isset($currentPassword) && isset($newPassword))
             updatePassword($id, $currentPassword, $newPassword) ? $isSuccessUpdatingPass = true : $isSuccessUpdatingPass = false;
@@ -148,7 +147,7 @@ function updatePassword($id, $currentPassword, $newPassword)
         $user = getUserById($id);
         print_r('<script>alert(' . $user->password . ')</script>');
         if ($user->password == $currentPassword) {
-            $query = 'UPDATE user SET password="' . $newPassword . '" WHERE UserId=' . $id . '';
+            $query = 'UPDATE user SET password="' . $newPassword . '" WHERE userId=' . $id . '';
 
             $wrapper->executeUpdate($query);
             return true;
