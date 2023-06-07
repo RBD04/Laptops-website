@@ -176,9 +176,9 @@ $users = getUsers();
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <table class="table table-striped ms-auto me-auto container-fluid">
+                    <table class="table table-striped ms-auto me-auto container-fluid" style="vertical-align: middle;">
                         <tr>
-                            <th class="text-primary text-center">Number</th>
+                            <th class="text-primary text-center ">Number</th>
                             <th class="text-primary text-center">Profile</th>
                             <th class="text-primary text-center ">First Name</th>
                             <th class="text-primary  text-center">Last Name</th>

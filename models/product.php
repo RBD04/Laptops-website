@@ -10,4 +10,5 @@ class Product{
     public $thumbnail;
 }
 
+
 ?>
