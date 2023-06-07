@@ -36,6 +36,28 @@ function getCurrentCartId($userId)
     }
 }
 
+// function getCartConfirmedWaitingApprovalId($userId){
+//     $wrapper = new dbWrapper();
+
+//     $query = '  SELECT cartId 
+//                 FROM cart
+//                 NATURAL JOIN delivery 
+//                 WHERE userId="' . $userId . '"
+//                 AND confirmed="1" 
+//                 AND paymentStatus="waiting approval"';
+
+//     $result = $wrapper->executeSingleRowQuery($query);
+//     $count = count($result);
+
+//     if ($count === 0) {
+//         return 'No record found';
+//     } else if ($count > 1) {
+//         return 'Please contact your administrator';
+//     } else if ($count === 1) {
+//         return $result[0]['cartId'];
+//     }
+// }
+
 function setCartConfirmed($userId, $totalPrice, $finalPrice)
 {
     $wrapper = new dbWrapper();
@@ -119,6 +141,74 @@ function getCartProducts()
 
     return $products;
 }
+
+function getCartProductsFromUserId($userId)
+{
+    $wrapper = new dbWrapper();
+    $products = [];
+    if (isset($userId)) {
+        $cartId = getCurrentCartId($userId);
+        $query = 'SELECT *
+            FROM cartproduct 
+            NATURAL JOIN product
+            WHERE cartId="' . $cartId . '"
+            AND quantity>0';
+
+
+        $results = $wrapper->executeQuery($query);
+
+        if (!count($results) == 0) {
+            foreach ($results as $item) {
+                $product = new Product();
+
+                $product->productId = $item['productId'];
+                $product->productName = $item['productName'];
+                $product->description = $item['description'];
+                $product->thumbnail = $item['thumbnail'];
+                $product->price = $item['price'];
+                $product->quantityAvailable = $item['quantity'];
+
+                $products[] = $product;
+            }
+        } else $products = null;
+    } else $products = null;
+
+    return $products;
+}
+
+// function getProductsConfirmedWaitingApproval($userId)
+// {
+//     $wrapper = new dbWrapper();
+//     $products = [];
+//     if (isset($userId)) {
+//         $cartId = getCartConfirmedWaitingApprovalId($userId);
+//         $query = 'SELECT *
+//             FROM cartproduct 
+//             NATURAL JOIN product
+//             WHERE cartId="' . $cartId . '"
+//             AND price>0';
+
+
+//         $results = $wrapper->executeQuery($query);
+
+//         if (!count($results) == 0) {
+//             foreach ($results as $item) {
+//                 $product = new Product();
+
+//                 $product->productId = $item['productId'];
+//                 $product->productName = $item['productName'];
+//                 $product->description = $item['description'];
+//                 $product->thumbnail = $item['thumbnail'];
+//                 $product->price = $item['price'];
+//                 $product->quantityAvailable = $item['quantity'];
+
+//                 $products[] = $product;
+//             }
+//         } else $products = null;
+//     } else $products = null;
+
+//     return $products;
+// }
 
 function cartConfirmed($governorate,$city,$street,$building,$contactNumber,$address)
 {

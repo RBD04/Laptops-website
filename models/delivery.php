@@ -13,3 +13,13 @@ class Delivery{
     public $deliveryFees;
     public $total;
 }
+
+class DeliveryProduct extends Delivery{
+    public $productId;
+    public $categoryId;
+    public $productName;
+    public $description;
+    public $price;
+    public $quantityAvailable;
+    public $thumbnail;
+}
