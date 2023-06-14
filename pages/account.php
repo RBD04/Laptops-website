@@ -157,7 +157,7 @@ if (array_key_exists('logout', $_POST)) {
 
   </div>
 
-  <!-- contact section -->
+  <!-- Account section -->
 
 
   <section>
