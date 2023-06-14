@@ -2,6 +2,7 @@
 require_once '../services/product.service.php';
 require_once '../services/cart.service.php';
 require_once '../helpers/cartItems.php';
+require_once '../services/review.service.php';
 
 session_start();
 $cartProducts = getCartProducts();
@@ -10,6 +11,10 @@ if (isset($_GET['productId']))
 else header('Location: shop.php');
 
 $Message = '';
+
+$reviews = getReviews($product->productId);
+if (isset($_SESSION['user']))
+    $user = getUserById($_SESSION['user']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_POST);
@@ -21,6 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $Message = 'Sorry, quantity requested is not available now!';
         }
+    }
+
+    if (isset($review)) {
+        addReview($_SESSION['user'], $product->productId, $comment, $rating);
     }
 
     if (isset($quantity) && isset($checkout)) {
@@ -35,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         removeProductFromCart($cartProductId, $cartQuantity);
         header("Refresh:0");
         exit();
-      }
+    }
 }
 
 ?>
@@ -77,6 +86,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #quantityGroup input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
+
+        html,
+        body {
+            height: 100%
+        }
+
+
+        .card {
+            margin-top: 70px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 20px;
+            width: 100%;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border-radius: 6px;
+        }
+
+        .comment-box {
+
+            padding: 5px;
+        }
+
+
+
+        .comment-area textarea {
+            resize: none;
+            border: 1px solid #ad9f9f;
+        }
+
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ffffff;
+            outline: 0;
+            box-shadow: 0 0 0 1px #007bff !important;
+        }
+
+        .send {
+            color: #fff;
+        }
+
+        .send:hover {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+
+        .rating {
+            display: flex;
+            margin-top: -10px;
+            flex-direction: row-reverse;
+            margin-left: -4px;
+            float: left;
+        }
+
+        .rating>input {
+            display: none
+        }
+
+        .rating>label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .rating>label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0
+        }
+
+        .rating>label:hover:before,
+        .rating>label:hover~label:before {
+            opacity: 1
+        }
+
+        .rating>input:checked~label:before {
+            opacity: 1
+        }
+
+        .rating:hover>input:checked~label:before {
+            opacity: 0.4
+        }
+
+        .card .custom-rating>label:hover:before,
+        .card .custom-rating>label:hover~label:before {
+            opacity: 1;
+        }
+
+        .card .custom-rating>input:checked~label:before {
+            opacity: 1;
         }
     </style>
 
@@ -154,7 +265,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- end header section -->
     </div>
 
-    <!-- contact section -->
 
     <section class="p-4">
         <div class="container">
@@ -164,10 +274,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail" alt="">
                     </div>
                     <div>
-                        <h3 class="mt-5 mb-3">Product Reviews</h3>
-                        <p><i class="fa fa-user" aria-hidden="true"></i> So Amazing</p>
-                        <p><i class="fa fa-user" aria-hidden="true"></i> Nice product!</p>
-                        <p><i class="fa fa-user" aria-hidden="true"></i> I bought it and I loved it so much I bought it and I loved it so much I bought it and I loved it so much I bought it and I loved it so much</p>
+                        <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
+                        <?php
+                        foreach ($reviews as $item) {
+                            if ($item instanceof Review) {
+                                echo '
+                                
+                                <p><i class="fa fa-user" aria-hidden="true"></i> ' . $item->comment . '</p>
+                                    ';
+                            }
+                        }
+                        ?>
+                        <div class="card">
+
+                            <div class="row">
+
+                                <div class="col-2">
+
+
+                                    <img src=<?php if (isset($user->profilePicture)) echo $user->profilePicture;
+                                                else echo "../images/defaultProfile.jpg" ?> width="70" class="rounded-circle mt-2">
+
+
+                                </div>
+
+                                <div class="col-10">
+                                    <form method="post">
+                                        <div class="comment-box ml-2">
+
+                                            <h4 class="text-muted">Ghady Khalil</h4>
+
+                                            <div class="rating custom-rating">
+                                                <input type="radio" class="disabled" value="5" id="5"><label for="5">☆</label>
+                                                <input type="radio" class="disabled" value="4" id="4"><label for="4">☆</label>
+                                                <input type="radio" class="disabled" value="3" id="3"><label for="3">☆</label>
+                                                <input type="radio" class="disabled" value="2" id="2"><label for="2">☆</label>
+                                                <input type="radio" class="disabled" value="1" id="1"><label for="1">☆</label>
+                                            </div>
+
+                                            <div class="comment-area" style="margin-block: 30px;">
+
+                                                <p>
+                                                    sakdjasjkd askjdgaskdgas kasjdhaskjh
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -242,28 +401,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
                         </form>
-                        <div>
-                            <h3 class="mt-5 mb-3">Add a Review</h3>
-                            <form method="post">
-                                <div class="form-group">
-                                    <label for="comment">Comment</label>
-                                    <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                        <div class="card">
+
+                            <div class="row">
+
+                                <div class="col-2">
+
+
+                                    <img src=<?php if (isset($user->profilePicture)) echo $user->profilePicture;
+                                                else echo "../images/defaultProfile.jpg" ?> width="70" class="rounded-circle mt-2">
+
+
                                 </div>
-                                <div class="form-group">
-                                    <label for="rating">Rating</label>
-                                    <select name="rating" id="rating" class="form-control" required>
-                                        <option value="">Select Rating</option>
-                                        <option value="1">1 Star</option>
-                                        <option value="2">2 Stars</option>
-                                        <option value="3">3 Stars</option>
-                                        <option value="4">4 Stars</option>
-                                        <option value="5">5 Stars</option>
-                                    </select>
+
+                                <div class="col-10">
+                                    <form method="post">
+                                        <div class="comment-box ml-2">
+
+                                            <h4 class="text-muted">Add a Review</h4>
+
+                                            <div class="rating">
+                                                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                                <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                                <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                                <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                                                <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                            </div>
+
+                                            <div class="comment-area">
+
+                                                <textarea class="form-control" name="comment" placeholder="what is your review?" rows="4"></textarea>
+
+                                            </div>
+
+                                            <div class="comment-btns mt-2">
+
+                                                <div class="row">
+
+                                                    <div class="col-6">
+
+                                                        <div class="pull-left">
+
+                                                            <input type="reset" value="Clear" class="btn btn-outline-primary btn-sm" />
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-6">
+
+                                                        <div class="pull-right">
+
+                                                            <input type="submit" name="review" value="Add Review" class="btn btn-primary btn-sm" />
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary font-weight-bold">Submit Review</button>
-                                </div>
-                            </form>
+
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -370,6 +576,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     break;
             }
         }
+
+
+        function disableInputsByClass(className) {
+            var inputs = document.querySelectorAll('.' + className);
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = true;
+            }
+        }
+
+        // Call the function to disable the inputs with the "disabled" class
+        disableInputsByClass('disabled');
     </script>
 </body>
 
