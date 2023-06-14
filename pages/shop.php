@@ -135,27 +135,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
     <!-- end header section -->
   </div>
-  <!--Categories Dropdown With Links-->
-  <div class="dropdown ms-3" style="position:sticky;">
-    <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Categories
+
+  <!-- shop section -->
+              <!--Search-->
+              <div class="mx-auto text-center">
+  <form class="search-form align-items-center" method="POST" action="#">
+        <input type="text" name="search" placeholder="Search (Empty to refresh)" title="Enter search keyword">
+        <button type="submit" title="Search" class="btn-primary"><i class="fa fa-search"></i></button>
+      </form>
+      </div>
+        <!--Search End-->
+                   <!--Categories Dropdown With Links-->
+        <?php
+
+      if(!(isset($_POST['search']))||$_POST['search'] == ""){
+       
+  echo '<div class="dropdown ms-3" style="position:fixed;">
+  <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+   Categories
     </a>
-    <ul class="dropdown-menu">
-      <?php
+    <ul class="dropdown-menu">';
+      
       foreach ($categories as $category) {
         echo ' <li><a class="dropdown-item" href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
+      }
       }
       ?>
     </ul>
   </div>
   <!--End Categories Dropdown-->
-
-  <!-- shop section -->
   <?php
+  if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
     echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
     echo "<div class='container-lg justify-content-center text-center'>";
-    echo "<div class='row col-12'>";
+    echo "<div class='row col-12 p-5 mt-5' >";
     $products = getProductsByCategory($category->categoryId);
     foreach ($products as $product) {
       echo '
@@ -173,6 +187,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "</div>";
     echo "</div>";
   }
+  }else{
+    $value = $_POST['search'];
+    $q = "SELECT * FROM product WHERE productName LIKE '%".$value."%'";
+    $res = mysqli_query($con,$q);
+    $n = mysqli_num_rows($res);
+    echo "<div class='container-lg justify-content-center text-center'>";
+    echo "<div class='row col-12 p-5 mt-5' >";
+    if($n > 0){
+      for($i =0;$i<$n;$i++){
+        $row = mysqli_fetch_assoc($res);
+       echo' <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
+        <div class=" box card m-2 text-center">
+          <img src="' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
+          <div class="card-body">
+            <h5 class="card-title text-primary">' . $row['productName']. '</h5>
+            <p class="card-text text-secondary fw-bolder">' . $row['price'] . '$</p>
+              <a href="viewproduct.php?productId=' . $row['productId'] . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+          </div>
+        </div>
+      </div>';
+      }
+      echo "</div>";
+      echo "</div>";
+    }
+    else if($n == 0){
+      echo  "<p class='text-info text-center'>No results found for “".$value."”. Check the spelling or use a different word or phrase.</p>";
+    }
+   
+  }
+  
   ?>
   <!-- end shop section -->
   <!-- footer section -->

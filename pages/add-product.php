@@ -115,15 +115,9 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed " href="../pages/home.php">
+        <a class="nav-link collapsed text-primary" href="../pages/add-product.php">
           <i class="bi bi-plus-square"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed " href="../pages/shop.php">
-          <i class="bi bi-plus-square"></i>
-          <span>Shop</span>
+          <span>Add Products</span>
         </a>
       </li>
       <li class="nav-item">
@@ -139,25 +133,19 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../pages/orders.php">
-          <i class="bi bi-person-fill-gear"></i>
-          <span>Manage Orders</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link collapsed" href="view-products.php">
           <i class="bi bi-newspaper"></i>
           <span>Manage News</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock.php">
+        <a class="nav-link collapsed" href="../pages/stocks.php">
           <i class="bi bi-ui-checks-grid"></i>
           <span>View Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed" href="../pages/orders.php">
           <i class="bi bi-card-checklist"></i>
           <span>View Orders</span>
         </a>
