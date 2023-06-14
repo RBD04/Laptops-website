@@ -140,13 +140,13 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed" href="../pages/stocks.php">
           <i class="bi bi-ui-checks-grid"></i>
           <span>View Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed" href="../pages/orders.php">
           <i class="bi bi-card-checklist"></i>
           <span>View Orders</span>
         </a>

@@ -109,52 +109,41 @@ $users = getUsers();
                 </a>
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="../pages/add-product.php">
-                    <i class="bi bi-plus-square"></i>
-                    <span>Add Products</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed " href="../pages/home.php">
-                    <i class="bi bi-plus-square"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed " href="../pages/shop.php">
-                    <i class="bi bi-plus-square"></i>
-                    <span>Shop</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="../pages/category-details.php">
-                    <i class="bi bi-ui-radios-grid"></i>
-                    <span>Manage Categories</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed text-primary" href="../pages/user-details.php">
-                    <i class="bi bi-person-fill-gear"></i>
-                    <span>Manage Users</span>
-                </a>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="view-products.php">
-                    <i class="bi bi-newspaper"></i>
-                    <span>Manage News</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="view-products.php">
-                    <i class="bi bi-ui-checks-grid"></i>
-                    <span>View Stock</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="view-products.php">
-                    <i class="bi bi-card-checklist"></i>
-                    <span>View Orders</span>
-                </a>
-            </li>
+        <a class="nav-link collapsed" href="../pages/add-product.php">
+          <i class="bi bi-plus-square"></i>
+          <span>Add Products</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/category-details.php">
+          <i class="bi bi-ui-radios-grid"></i>
+          <span>Manage Categories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed text-primary" href="../pages/user-details.php">
+          <i class="bi bi-person-fill-gear"></i>
+          <span>Manage Users</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="view-products.php">
+          <i class="bi bi-newspaper"></i>
+          <span>Manage News</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/stocks.php">
+          <i class="bi bi-ui-checks-grid"></i>
+          <span>View Stock</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../pages/orders.php">
+          <i class="bi bi-card-checklist"></i>
+          <span>View Orders</span>
+        </a>
+      </li>
             <!-- End Page Nav -->
 
         </ul>

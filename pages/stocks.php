@@ -126,19 +126,7 @@ if (isset($_POST['category']))
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed " href="../pages/home.php">
-          <i class="bi bi-plus-square"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed " href="../pages/shop.php">
-          <i class="bi bi-plus-square"></i>
-          <span>Shop</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed text-primary" href="../pages/category-details.php">
+        <a class="nav-link collapsed" href="../pages/category-details.php">
           <i class="bi bi-ui-radios-grid"></i>
           <span>Manage Categories</span>
         </a>
@@ -156,13 +144,13 @@ if (isset($_POST['category']))
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed text-primary" href="../pages/stocks.php">
           <i class="bi bi-ui-checks-grid"></i>
           <span>View Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed" href="../pages/orders.php">
           <i class="bi bi-card-checklist"></i>
           <span>View Orders</span>
         </a>
@@ -189,52 +177,7 @@ if (isset($_POST['category']))
                 </nav>
               </div><!-- End Page Title -->
 
-              <div id="form-container" class="col">
-                <form class="mb-3" id="add-product" method="post">
-                  <div class="form-group">
-                    <label for="category"><?php echo isset($category) ? $category->categoryName . ' Selected' : 'Insert new Category'; ?></label><br />
-                    <input type="text" class="form-control mb-3" id="productName" name="category" value='<?php
-                                                                                                          if (isset($category)) {
-                                                                                                            echo $category->categoryName;
-                                                                                                          } else  "" ?>' />
-                    <input name="categoryId" type="hidden" value='<?php
-                                                                  if (isset($category)) {
-                                                                    echo $category->categoryId;
-                                                                  } else  "" ?>' />
-                  </div>
-                  <?php
-                  echo $msgSuccess;
-                  ?>
-                  <button type="submit" class="btn btn-primary">Save</button>
-                  <a href="category-details.php" class="btn btn-secondary">Refresh</a>
-                </form>
-                <?php echo $categoryMessage ?>
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $categories = getCategories();
-                    if (count($categories) > 0) {
-                      foreach ($categories as $i => $category) {
-                        echo "<tr>
-                <th scope='row'>" . $i + 1, "</th>" .
-                          "<td>" . $category->categoryName . "</td>" .
-                          "<td><a class='btn btn-sm btn-primary mx-2'href='./category-details.php?categoryId=" . $category->categoryId . "'>Edit</a><a class='btn btn-secondary btn-sm mx-2' href='./category-details.php?categoryId=" . $category->categoryId . "'>Delete</a></td>
-              </tr>";
-                      }
-                    }
-                    ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
+          
   </main><!-- End #main -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <!--JS Files -->
