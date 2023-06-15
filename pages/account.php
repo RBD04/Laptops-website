@@ -211,7 +211,7 @@ if (array_key_exists('logout', $_POST)) {
             </td>
             <tr width=100% class="p-2">
               <td class="text-center" colspan="2" >
-              <button type="button" class="btn btn-primary  mx-2" id="edit" name="edit" onclick="editFields()">Edit</button>  <input type="submit" class="btn btn-primary" id="submit" name="submit" value="Save Changes" disabled />
+              <button type="button" class="btn btn-primary  mx-2" id="edit" name="edit" onclick="editFields()">Edit</button>  <input type="submit" class="btn btn-primary" id="submit" name="submit" value="Save Changes" disabled /><a href="../pages/user-orders.php" class="mx-2 btn btn-primary">Track Orders</a>
               </td>
             </tr>
           </tr>
@@ -219,6 +219,7 @@ if (array_key_exists('logout', $_POST)) {
       </div>
     </div>
   </section>
+
   <!-- footer section -->
   <footer class="footer_section bg-primary">
     <div class="container">

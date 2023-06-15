@@ -237,7 +237,6 @@ $user = getUserById($userId);
     </section>
     </div>
     <!--Invoices-->
-
     <!-- footer section -->
     <footer class="footer_section bg-primary">
         <div class="container">
