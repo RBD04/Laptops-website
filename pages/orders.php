@@ -1,4 +1,5 @@
 <?php
+include "../helpers/connection.php";
 require_once '../services/delivery.service.php';
 require_once '../services/user.service.php';
 session_start();
@@ -7,7 +8,7 @@ if (!isset($_SESSION) || !isset($_SESSION['admin']))
 
 if (array_key_exists('logout', $_POST)) {
     session_destroy();
-    header("Refresh:0");
+    header('Location:../pages/shop.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
