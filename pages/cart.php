@@ -168,15 +168,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center mb-5 text-primary">Your Cart</h1>
+                <h1 class="text-center mb-5 text-primary display-5 fw-bolder">Your Cart</h1>
             </div>
         </div>
-
-        <?php
+   <?php
         if (!empty($cartProducts) && gettype($cartProducts) == 'array') {
             $total = 0;
             echo '
-    <div class="row mb-4 container-fluid">
+    <div class="row mb-4 container">
       <div class="col-12">
       <form method="post">
         <table class="table">
@@ -190,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
           </thead>
           <tbody>';
-
+  
             foreach ($cartProducts as $cartProduct) {
                 $total += $cartProduct->price * $cartProduct->quantityAvailable;
                 echo '
@@ -209,22 +208,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
                 <td style="vertical-align: middle;">
                     <div class="input-group" id="quantityGroup">
-                        <button class="btn btn-primary" id- type="button" onclick=quantityChange("reduce") >-</button>
+                       
                             <input type="hidden" name="productIds[]"value="' . $cartProduct->productId . '" >
                             <input type="number" id="quantity" name="quantity[]" class="form-control text-center" min="1" value="' . $cartProduct->quantityAvailable . '" readonly>
-                        <button class="btn btn-primary" type="button" onclick=quantityChange("add") >+</button>
+                       
                     </div>
                 </td>
                 <td style="vertical-align: middle;">$' . ($cartProduct->price * $cartProduct->quantityAvailable) . '</td>
                 <td style="vertical-align: middle;">
                     <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="productToRemove" value="' . $cartProduct->productId . ' ">Remove</button>
                 </td>
-                <td style="vertical-align: middle;">
-                    <button class="btn btn-outline-primary" style="font-size: 1.1rem;" name="productToUpdate" value="' . $cartProduct->productId . ' ">Save</button>
-                </td>
             </tr>';
             }
-
+  
             echo '
           </tbody>
         </table>    
@@ -247,8 +243,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         ?>
     </div>
-
-
 
     <!-- end shop section -->
     <!-- footer section -->

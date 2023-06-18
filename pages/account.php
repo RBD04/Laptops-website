@@ -159,100 +159,66 @@ if (array_key_exists('logout', $_POST)) {
 
   <!-- Account section -->
 
-
   <section>
-    <div class="container">
-      <div class="row text-center text-primary mt-3 mb-3">
-        <h2 class="display-5 fw-bolder mb-2">
-          Account
-        </h2>
-      </div>
-      <form method="post" enctype="multipart/form-data">
+    <div class="conatiner m-3">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value=<?php echo $user->userId ?> />
-        <div class="row mb-4">
-          <div class="col-4">
-            <label for="profilePicture">
-              <small class="text-primary fs-6">*Click Image Below To Upload Profile Picture</small>
-              <img src=<?php echo $user->profilePicture ? $user->profilePicture : "../images/defaultProfile.jpg" ?> width="360px" height="380px " class="rounded float-left" alt="Profile Picture" id="profilePicturePreview">
+        <div class="row">
+          <div class="col-lg-12 justify-content-center text-center">
+          <label for="profilePicture">
+              <img src=<?php echo $user->profilePicture ? $user->profilePicture : "../images/defaultProfile.jpg" ?> width="200rem" height="200rem " class="rounded-pill mx-auto mt-3" alt="Profile Picture" id="profilePicturePreview">
               <input type="file" id="profilePicture" name="profilePicture" style="display: none;" onchange="handleProfilePicture(event)" disabled>
-            </label>
+              <p class="text-center lead text-muted">Change Picture</p>
+              </label>
           </div>
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="firstName" class="text-primary fs-4">First Name</label>
+      </div>
+      <div clas="row">
+        <table class="mx-auto display-sm-block">
+          <tr>
+            <td width=50% class="p-2">
+            <label for="firstName" class="text-primary fs-4">First Name</label>
                   <input type="text" class="form-control text-primary fs-5" id="firstName" name="firstName" value=<?php echo $user->firstName ?> disabled />
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="lastName" class="text-primary fs-4">Last Name</label>
+            </td>
+            <td width=50% class="p-2">
+            <label for="lastName" class="text-primary fs-4">Last Name</label>
                   <input type="text" class="form-control text-primary fs-5" id="lastName" name="lastName" value=<?php echo $user->lastName ?> disabled />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="email" class="text-primary fs-4">Email</label>
+            </td>
+          </tr>
+          <tr>
+            <td  width=50% class="p-2">
+            <label for="email" class="text-primary fs-4">Email</label>
                   <input type="text" class="form-control text-primary fs-5" id="email" name="email" value=<?php echo $user->email ?> disabled />
-                </div>
-              </div>
-
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="phoneNumber" class="text-primary fs-4">Phone Number</label>
+            </td>
+            <td  width=50% class="p-2">
+            <label for="phoneNumber" class="text-primary fs-4">Phone Number</label>
                   <input type="text" class="form-control text-primary fs-5" id="phoneNumber" name="phoneNumber" value=<?php echo $user->phoneNumber ?> disabled />
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="birthday" class="text-primary fs-4">Birthday</label>
+           </td>
+          </tr>
+          <tr>
+            <td colspan="2" width=100% class="text-center p-2">
+            <label for="birthday" class="text-primary fs-4">Birthday</label>
                   <input type="date" class="form-control text-primary fs-5" id="birthday" name="birthday" value=<?php echo $user->birthday ?> disabled />
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="currentPassword" class="text-primary fs-4">Current Password</label>
+            </td>
+          </tr>
+          <tr>
+            <td width=50% class="p-2">
+            <label for="currentPassword" class="text-primary fs-4">Current Password</label>
                   <input type="text" class="form-control text-primary fs-5" id="currentPassword" name="currentPassword" disabled />
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="newPassword" class="text-primary fs-4">New Password</label>
+            </td>
+            <td width=50% class="p-2">
+            <label for="newPassword" class="text-primary fs-4">New Password</label>
                   <input type="text" class="form-control text-primary fs-5" id="newPassword" name="newPassword" disabled />
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-
-
-        <div class="row mb-4 mt-4">
-          <div class="col">
-            <button type="button" class="btn btn-primary w-100 fs-5" id="edit" name="edit" onclick="editFields()">Edit</button>
-          </div>
-          <div class="col">
-            <input type="submit" class="btn btn-primary fs-5 w-100" id="submit" name="submit" value="Save Changes" disabled />
-            <p class="text-primary"><?php echo $successMsg   ?></p>
-          </div>
-        </div>
-    </div>
-    </form>
-    </div>
+            </td>
+            <tr width=100% class="p-2">
+              <td class="text-center" colspan="2" >
+              <button type="button" class="btn btn-primary  mx-2" id="edit" name="edit" onclick="editFields()">Edit</button>  <input type="submit" class="btn btn-primary" id="submit" name="submit" value="Save Changes" disabled /><a href="../pages/user-orders.php" class="mx-2 btn btn-primary">Track Orders</a>
+              </td>
+            </tr>
+          </tr>
+        </table>
+      </div>
     </div>
   </section>
-
-  <!-- end contact section -->
 
   <!-- footer section -->
   <footer class="footer_section bg-primary">
