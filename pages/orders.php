@@ -15,7 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['approve']) && isset($_POST['date' . $_POST['approve']])) {
         $deliveryId = $_POST['approve'];
         $date = $_POST['date' . $_POST['approve']];
-        setDeliveryApproved($deliveryId,$date);
+        setDeliveryApproved($deliveryId, $date);
+    }
+
+    if(isset($_POST['received'])){
+        $deliveryId=$_POST['received'];
+        setDeliveryReceived($deliveryId);
     }
 }
 
@@ -383,6 +388,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
                                     <div class="accordion-body">
                                         <div style="overflow: auto;">
+                                            <form method="post">
+                                                <table class="table table-striped text-nowrap">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">First Name</th>
+                                                            <th scope="col">Last Name</th>
+                                                            <th scope="col">Email</th>
+                                                            <th scope="col">Phone Number</th>
+                                                            <th scope="col">Product</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Total Price</th>
+                                                            <th scope="col">Governorate</th>
+                                                            <th scope="col">City</th>
+                                                            <th scope="col">Street</th>
+                                                            <th scope="col">Building</th>
+                                                            <th scope="col">Contact Number</th>
+                                                            <th scope="col">Payment Status</th>
+                                                            <th scope="col">Delivery Fees</th>
+                                                            <th scope="col">Total</th>
+                                                            <th scope="col">Delivery Date</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $users = getUsers();
+                                                        $counter = 0;
+                                                        foreach ($users as $obj) {
+                                                            if ($obj instanceof User) {
+                                                                $products = getAllDeliveriesApproved($obj->userId);
+
+                                                                if (!empty($products)) {
+                                                                    $continue = false;
+                                                                    foreach ($products as $product) {
+                                                                        if ($product instanceof DeliveryProduct) {
+                                                                            if ($continue) {
+                                                                                echo '
+                                                                            <tr>
+                                                                                <th></th>
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+
+                                                                                <td> ' . $product->productName . ' </td> 
+                                                                                <td> ' . $product->quantityAvailable . ' </td> 
+                                                                                <td> ' . $product->price . ' $</td> 
+                                                                                <td> ' . $product->price * $product->quantityAvailable . ' $</td>
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td> 
+                                                                                <td></td>  
+                                                                                <td></td>  
+                                                                            </tr>';
+                                                                            } else {
+                                                                                $counter++;
+                                                                                echo '
+                                                                            <tr>
+                                                                                <th>' . $counter . '</th>
+                                                                                <td> ' . $obj->firstName . ' </td> 
+                                                                                <td> ' . $obj->lastName . ' </td> 
+                                                                                <td> ' . $obj->phoneNumber . ' </td> 
+                                                                                <td> ' . $obj->email . ' </td> 
+
+                                                                                <td> ' . $product->productName . ' </td> 
+                                                                                <td> ' . $product->quantityAvailable . ' </td> 
+                                                                                <td> ' . $product->price . ' $</td> 
+                                                                                <td> ' . $product->price * $product->quantityAvailable . ' $</td> 
+                                                                                <td>' . $product->governorate . '</td> 
+                                                                                <td>' . $product->city . '</td> 
+                                                                                <td>' . $product->street . '</td> 
+                                                                                <td>' . $product->building . '</td> 
+                                                                                <td>' . $product->contactNumber . '</td> 
+                                                                                <td>' . $product->paymentStatus . '</td> 
+                                                                                <td>' . $product->deliveryFees . '</td> 
+                                                                                <td>' . $product->total . ' $</td> 
+                                                                                <td>
+                                                                                    ' . $product->deliveryDate . ' 
+                                                                                </td> 
+                                                                                <td><button type="submit" value="' . $product->deliveryId . '" name="received" class="btn btn-primary">Mark As Received</button></td> 
+                                                                            </tr>
+                                                                            ';
+                                                                            }
+                                                                        }
+                                                                        $continue = true;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--END THIRD PART -->
+
+                            <!--FOURTH PART -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button fw-bolder collapsed fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                        Payment Received
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div style="overflow: auto;">
                                             <table class="table table-striped text-nowrap">
 
                                                 <thead>
@@ -405,7 +526,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <th scope="col">Delivery Fees</th>
                                                         <th scope="col">Total</th>
                                                         <th scope="col">Delivery Date</th>
-                                                        <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -414,7 +534,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                     $counter = 0;
                                                     foreach ($users as $obj) {
                                                         if ($obj instanceof User) {
-                                                            $products = getAllDeliveriesApproved($obj->userId);
+                                                            $products = getAllDeliveriesReceived($obj->userId);
 
                                                             if (!empty($products)) {
                                                                 $continue = false;
@@ -440,7 +560,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 <td></td> 
                                                                                 <td></td> 
                                                                                 <td></td> 
-                                                                                <td></td>  
                                                                                 <td></td>  
                                                                             </tr>';
                                                                         } else {
@@ -468,7 +587,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 <td>
                                                                                     ' . $product->deliveryDate . ' 
                                                                                 </td> 
-                                                                                <td><button type="submit" value="' . $product->deliveryId . '" name="Received" class="btn btn-primary">Mark As Received</button></td> 
                                                                             </tr>
                                                                             ';
                                                                         }
@@ -484,28 +602,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                     </div>
                                 </div>
+                                <!--END FOURTH PART -->
                             </div>
-                            <!--END THIRD PART -->
-
-                            <!--FOURTH PART -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button text-primary fw-bolder collapsed fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                        Payment Received
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
-                                    <div class="accordion-body">
-                                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                    </div>
-                                </div>
-                            </div>
-                            <!--END FOURTH PART -->
-
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
     </main><!-- End #main -->

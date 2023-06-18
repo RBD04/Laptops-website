@@ -109,16 +109,77 @@ function getAllDeliveriesWaitingApproval($userId)
     }
 }
 
-function setDeliveryApproved($deliveryId,$date){
-    $wrapper=new dbWrapper();
+function setDeliveryReceived($deliveryId)
+{
+    $wrapper = new dbWrapper();
 
-    $query='UPDATE delivery 
+    $query = 'UPDATE delivery
+            SET paymentStatus="received"
+            WHERE deliveryId="' . $deliveryId . '"
+            AND paymentStatus="approved"
+            ';
+
+    $wrapper->executeUpdate($query);
+}
+
+function setDeliveryApproved($deliveryId, $date)
+{
+    $wrapper = new dbWrapper();
+
+    $query = 'UPDATE delivery 
             SET paymentStatus="approved"
-            ,deliveryDate="'.$date.'"
-            WHERE deliveryId="'.$deliveryId.'"
-            AND paymentSTATUS="waiting approval"';
+            ,deliveryDate="' . $date . '"
+            WHERE deliveryId="' . $deliveryId . '"
+            AND paymentStatus="waiting approval"';
 
-    $wrapper->executeUpdate($query);         
+    $wrapper->executeUpdate($query);
+}
+
+function getAllDeliveriesReceived($userId)
+{
+
+    $wrapper = new dbWrapper();
+
+    $query = 'SELECT * 
+            FROM delivery
+            NATURAL JOIN cart
+            NATURAL JOIN cartproduct
+            NATURAL JOIN product
+            WHERE userId="' . $userId . '"
+            AND confirmed="1" 
+            AND paymentStatus="received"
+            AND quantity>0';
+
+    $results = $wrapper->executeQuery($query);
+
+    $deliveries = [];
+
+    if (!empty($results)) {
+        foreach ($results as $result) {
+            $delivery = new DeliveryProduct();
+            $delivery->deliveryId = isset($result['deliveryId']) ? $result['deliveryId'] : null;
+            $delivery->cartId = isset($result['cartId']) ? $result['cartId'] : null;
+            $delivery->userId = isset($result['userId']) ? $result['userId'] : null;
+            $delivery->deliveryDate = isset($result['deliveryDate']) ? $result['deliveryDate'] : null;
+            $delivery->governorate = isset($result['governorate']) ? $result['governorate'] : null;
+            $delivery->city = isset($result['city']) ? $result['city'] : null;
+            $delivery->street = isset($result['street']) ? $result['street'] : null;
+            $delivery->building = isset($result['building']) ? $result['building'] : null;
+            $delivery->contactNumber = isset($result['contactNumber']) ? $result['contactNumber'] : null;
+            $delivery->paymentStatus = isset($result['paymentStatus']) ? $result['paymentStatus'] : null;
+            $delivery->deliveryFees = isset($result['deliveryFees']) ? $result['deliveryFees'] : null;
+            $delivery->total = isset($result['total']) ? $result['total'] : null;
+            $delivery->productId = $result['productId'];
+            $delivery->productName = $result['productName'];
+            $delivery->description = $result['description'];
+            $delivery->thumbnail = $result['thumbnail'];
+            $delivery->price = $result['price'];
+            $delivery->quantityAvailable = $result['quantity'];
+
+            $deliveries[] = $delivery;
+        }
+        return $deliveries;
+    }
 }
 
 function getAllDeliveriesApproved($userId)
