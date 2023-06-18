@@ -168,15 +168,47 @@ if (isset($_POST['category']))
             <div class="form-group">
 
               <div class="pagetitle">
-                <h1>Category</h1>
+                <h1>Products</h1>
                 <nav>
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Categories Section</li>
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    <li class="breadcrumb-item active">Products Section</li>
                   </ol>
                 </nav>
               </div><!-- End Page Title -->
-
+              <!--Display Products-->
+              <?php
+              $q = "SELECT * FROM product";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $n = mysqli_num_rows($res);
+                if($n == 0){
+                  echo "<p class='text-center text-danger'>No Products Yet !</p>";
+                }
+                else if($n > 0){
+                  echo'   <table class="table table-striped ms-auto me-auto container-fluid" style="vertical-align: middle;">
+                  <tr>
+                      <th class="text-primary text-center ">ID</th>
+                      <th class="text-primary text-center ">Category</th>
+                      <th class="text-primary text-center">Name</th>
+                      <th class="text-primary text-center ">Price</th>
+                      <th class="text-primary  text-center">Quantity</th>
+                      <th class="text-primary  text-center">Added On</th>
+                      <th class="text-primary" text-center">Actions</th>
+                  </tr>';
+                  for($i=0;$i<$n;$i++){
+                    $row = mysqli_fetch_assoc($res);
+                    $q2 = "SELECT categoryName FROM category WHERE categoryId='".$row['categoryId']."'";
+                    $res2 = mysqli_query($con,$q2);
+                    $row2 = mysqli_fetch_assoc($res2);
+                    $categoryName = $row2['categoryName']; 
+                    echo "<tr><td class='p-1 text-center'>".$row['productId']."</td><td class='p-1 text-center'>".$categoryName."</td><td class='p-1 text-center'>".$row['productName']."</td><td class='p-1 text-center'>".$row['price']."$</td><td class='p-1 text-center'>".$row['quantityAvailable']."</td><td class='p-1 text-center'>".$row['dateAdded']."</td><td class='p-1 text-center'><a href='product-info.php?x=".$row['productId']."' class='btn btn-primary mx-2'>Edit</td></tr>";
+                  }
+                  echo "</table>";
+                }
+              }
+               ?>
+              <!--Display Products End-->
           
   </main><!-- End #main -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -218,9 +218,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td style="vertical-align: middle;">
                     <button class="btn btn-outline-danger" style="font-size: 1.1rem;" name="productToRemove" value="' . $cartProduct->productId . ' ">Remove</button>
                 </td>
-                <td style="vertical-align: middle;">
-                    <button class="btn btn-outline-primary" style="font-size: 1.1rem;" name="productToUpdate" value="' . $cartProduct->productId . ' ">Save</button>
-                </td>
             </tr>';
             }
   
