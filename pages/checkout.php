@@ -142,15 +142,18 @@ $user = getUserById($userId);
                 </tr>
                 <?php
                 $total = 0;
-                foreach ($cartProducts as $obj) {
-                    $total += $obj->price * $obj->quantityAvailable;
-                    echo '
+                if (gettype($cartProducts) == 'string') {
+                } else {
+                    foreach ($cartProducts as $obj) {
+                        $total += $obj->price * $obj->quantityAvailable;
+                        echo '
                 <tr>
                 <td style="vertical-align: middle;"><img src="' . $obj->thumbnail . '" class="img-fluid" alt="Item Image" style="max-width: 100px; max-height: 100px;" /></td>
                 <td style="vertical-align: middle;">' . $obj->productName . '</td>
                 <td style="vertical-align: middle;">x ' . $obj->quantityAvailable . '</td>
                 <td style="vertical-align: middle;">' . $obj->price . ' $</td>
                 </tr>';
+                    }
                 }
                 echo "
                 <tr>
@@ -227,9 +230,16 @@ $user = getUserById($userId);
                         </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary font-weight-bold">
-                        Confirm Order
-                    </button>
+                    <?php if (gettype($cartProducts) == 'string') echo '                 
+                       <a href="account.php" class="btn btn-primary btn-lg bg-primary border border-primary font-weight-bold">
+                            Go to Orders    
+                       </a>
+                        ';
+                        else echo'
+                        <button type="submit" class="btn btn-primary btn-lg bg-primary border border-primary font-weight-bold">
+                         Confirm Order
+                        </button>' ?>
+                    
                 </div>
             </div>
             </div>
