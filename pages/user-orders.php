@@ -12,15 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Refresh:0");
     exit();
   }
-
-  if (array_key_exists('logout', $_POST)) {
-    session_destroy();
-    header("Refresh:0");
-  }
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -92,16 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
               </li>
             </ul>
-
-            <?php
-            if (isset($_SESSION['name']))
-              echo '
-            <form method="post">
-            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-            ?>
-
             <div class="user_option-box">
             <?php
                 if (isset($_SESSION['admin']))
