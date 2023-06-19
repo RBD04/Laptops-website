@@ -179,11 +179,11 @@ if (array_key_exists('logout', $_POST)) {
     $row = mysqli_fetch_assoc($res);
     $new = $row['dnb'];
     $yesterday = time() - 60 * 60 * 24;
-    $q1 = "SELECT COUNT(deliveryId) AS old FROM delivery WHERE deliveryDate LIKE '" . date("Y-m-d", "$yesterday") . "'";
+    $q1 = "SELECT COUNT(deliveryId) AS old FROM delivery WHERE deliveryDate LIKE '" . date("Y-m-d", $yesterday) . "'";
     $res1 = mysqli_query($con, $q1);
     $row1 = mysqli_fetch_assoc($res1);
     $old = $row1['old'];
-    $change = $old - $new;
+    $change = $new - $old;
     $msg = "";
     $i = 0;
     if ($change > 0) {
