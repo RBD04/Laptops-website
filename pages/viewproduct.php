@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
                 <div class="col-md-6">
                     <div class="img-box">
-                        <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail" alt="">
+                        <img src="<?php echo "../uploads/Thumbnails/".$product->thumbnail ?>" class="img-thumbnail" style="height: 30rem; width: 50rem;" alt="">
                     </div>
                     <div>
                         <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>

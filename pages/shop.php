@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = mysqli_fetch_assoc($res);
        echo' <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
         <div class=" box card m-2 text-center">
-          <img src="' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
+          <img src="../uploads/Thumbnails/' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
           <div class="card-body">
             <h5 class="card-title text-primary">' . $row['productName']. '</h5>
             <p class="card-text text-secondary fw-bolder">' . $row['price'] . '$</p>
