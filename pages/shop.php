@@ -151,13 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if(!(isset($_POST['search']))||$_POST['search'] == ""){
        
   echo '<div class="dropdown ms-3" style="position:fixed;">
-  <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="btn btn-primary p-2 m-0 rounded-pill dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
    Categories
     </a>
     <ul class="dropdown-menu">';
       
       foreach ($categories as $category) {
-        echo ' <li><a class="dropdown-item" href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
+        echo ' <li><a class="dropdown-item " href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
       }
       }
       ?>
