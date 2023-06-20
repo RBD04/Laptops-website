@@ -10,10 +10,9 @@ function like()
 function addReview($userId, $productId, $comment, $rating)
 {
     $wrapper = new dbWrapper();
-
     $query = 'INSERT INTO review(userId,productId,comment,rating)
             VALUES("' . $userId . '","' . $productId . '","' . $comment . '","' . $rating . '")';
-
+            
     $wrapper->executeUpdate($query);
 }
 

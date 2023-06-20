@@ -55,13 +55,7 @@ function getAvailableProducts()
 
     $products = [];
 
-    $query = 'SELECT *
-    FROM product
-    WHERE productId IN (
-        SELECT productId
-        FROM serialnumber
-        WHERE status = "available"
-    )';
+    $query = "SELECT * FROM product WHERE quantityAvailable > 0";
     $result = $wrapper->executeQuery($query);
 
     for ($i = 0; $i < count($result); $i++) {
@@ -106,10 +100,6 @@ function addProduct()
                                 VALUES("' . $categoryId . '","' . $productName . '","' . $description . '","' . $price . '","' . $quantityAvailable . '","' . $destination . '")';
             $id = '';
             $id = $wrapper->executeQueryAndReturnId($addProductQuery);
-
-            for ($i = 0; $i < $quantityAvailable; $i++) {
-                addSerialNumber($id, $_POST['serial' . ($i + 1)]);
-            }
         } else {
             $message = 'Error adding product';
         }

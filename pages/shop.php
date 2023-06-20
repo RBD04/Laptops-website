@@ -6,7 +6,7 @@ require_once '../helpers/cartItems.php';
 
 session_start();
 
-$categories = getCategories();
+$categories = getCategoriesWithProductsAvailable();
 $cartProducts = getCartProducts();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

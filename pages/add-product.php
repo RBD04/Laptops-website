@@ -176,7 +176,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
             </div>
             <div class="form-group">
               <label for="quantity">Quantity</label>
-              <input type="number" class="form-control mb-3" id="quantity" name="quantity" onchange="quantityChange()" min="1" max="10" />
+              <input type="number" class="form-control mb-3" id="quantity" name="quantity"  min="1" max="10" />
             </div>
             <div class="form-group" id="innerSerial">
             </div>
@@ -235,29 +235,6 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
   <!-- Template Main JS File -->
   <script src="../js/adminJS.js"></script>
   <script>
-    function quantityChange() {
-      let quantity = document.getElementById('quantity').value;
-      let innerSerial = document.getElementById('innerSerial');
-      let serialNumbers = document.querySelectorAll('.serialNumber');
-
-      serialNumbers.forEach((element) => {
-        element.remove();
-      })
-
-      for (let i = 0; i < quantity; i++) {
-        let label = document.createElement('label');
-        let input = document.createElement('input');
-        input.type = 'text';
-        label.className = 'serialNumber';
-        input.className = 'form-control mb-3 serialNumber';
-        input.name = 'serial' + parseInt(i + 1);
-        label.name = i;
-        label.innerText = 'Serial ' + parseInt(i + 1);
-        innerSerial.appendChild(label);
-        innerSerial.appendChild(input);
-      }
-
-    }
   </script>
 </body>
 
