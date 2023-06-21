@@ -6,7 +6,7 @@ require_once '../helpers/cartItems.php';
 
 session_start();
 
-$categories = getCategories();
+$categories = getCategoriesWithProductsAvailable();
 $cartProducts = getCartProducts();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -151,13 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if(!(isset($_POST['search']))||$_POST['search'] == ""){
        
   echo '<div class="dropdown ms-3" style="position:fixed;">
-  <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="btn btn-primary p-2 m-0 rounded-pill dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
    Categories
     </a>
     <ul class="dropdown-menu">';
       
       foreach ($categories as $category) {
-        echo ' <li><a class="dropdown-item" href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
+        echo ' <li><a class="dropdown-item " href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
       }
       }
       ?>
@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = mysqli_fetch_assoc($res);
        echo' <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
         <div class=" box card m-2 text-center">
-          <img src="' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
+          <img src="../uploads/Thumbnails/' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
           <div class="card-body">
             <h5 class="card-title text-primary">' . $row['productName']. '</h5>
             <p class="card-text text-secondary fw-bolder">' . $row['price'] . '$</p>

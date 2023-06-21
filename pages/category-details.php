@@ -213,7 +213,7 @@ if (isset($_POST['category']))
                         echo "<tr>
                 <th scope='row'>" . $i + 1, "</th>" .
                           "<td>" . $category->categoryName . "</td>" .
-                          "<td><a class='btn btn-sm btn-primary mx-2'href='./category-details.php?categoryId=" . $category->categoryId . "'>Edit</a><a class='btn btn-secondary btn-sm mx-2' href='./category-details.php?categoryId=" . $category->categoryId . "'>Delete</a></td>
+                          "<td><a class='btn btn-sm btn-primary mx-2'href='./category-details.php?categoryId=" . $category->categoryId . "'>Edit</a></td>
               </tr>";
                       }
                     }

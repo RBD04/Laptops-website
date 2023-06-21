@@ -186,11 +186,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="accordion-item">
                                 <!--FIRST PART -->
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button text-primary fw-bolder fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    <button class="accordion-button text-primary fw-bolder fs-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
                                         Reserved
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse  show">
                                     <div class="accordion-body">
                                         <table class="table table-striped table-hover">
                                             <thead>
@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         Requested Waiting Approval
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
                                         <div style="overflow: auto;">
                                             <form method="post">
@@ -385,7 +385,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         Approved Waiting Payment
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
                                         <div style="overflow: auto;">
                                             <form method="post">
@@ -501,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         Payment Received
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
                                         <div style="overflow: auto;">
                                             <table class="table table-striped text-nowrap">

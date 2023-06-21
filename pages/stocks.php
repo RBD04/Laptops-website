@@ -202,7 +202,7 @@ if (isset($_POST['category']))
                     $res2 = mysqli_query($con,$q2);
                     $row2 = mysqli_fetch_assoc($res2);
                     $categoryName = $row2['categoryName']; 
-                    echo "<tr><td class='p-1 text-center'>".$row['productId']."</td><td class='p-1 text-center'>".$categoryName."</td><td class='p-1 text-center'>".$row['productName']."</td><td class='p-1 text-center'>".$row['price']."$</td><td class='p-1 text-center'>".$row['quantityAvailable']."</td><td class='p-1 text-center'>".$row['dateAdded']."</td><td class='p-1 text-center'><a href='product-info.php?x=".$row['productId']."' class='btn btn-primary mx-2'>Edit</td></tr>";
+                    echo "<tr><td class='p-1 text-center'>".$row['productId']."</td><td class='p-1 text-center'>".$categoryName."</td><td class='p-1 text-center'>".$row['productName']."</td><td class='p-1 text-center'>".$row['price']."$</td><td class='p-1 text-center'>".$row['quantityAvailable']."</td><td class='p-1 text-center'>".$row['dateAdded']."</td><td class='p-1 text-center'><a href='product-info.php?x=".$row['productId']."&y=".$categoryName."' class='btn btn-primary mx-2'>Edit</td></tr>";
                   }
                   echo "</table>";
                 }
