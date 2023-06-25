@@ -111,13 +111,13 @@ if (array_key_exists('logout', $_POST)) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link fw-bolder text-muted" href="home.php">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link fw-bolder text-muted m-1" href="home.php">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
+              <a class="nav-link fw-bolder text-muted m-1" href="shop.php"> Shop </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
+              <a class="nav-link fw-bolder text-muted m-1" href="contact.php">Contact Us</a>
             </li>
             <?php
           if (isset($_SESSION['name']))

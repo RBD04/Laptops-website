@@ -100,10 +100,10 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link fw-bolder text-primary bg-light" href="home.php">Home </a>
+                <a class="nav-link fw-bolder text-muted bg-light" href="home.php">Home </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link fw-bolder text-muted bg-light" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder text-primary bg-light active" href="shop.php"> Shop </a>
               </li>
                 <li class="nav-item">
                   <a class="nav-link fw-bolder text-muted bg-light" href="contact.php">Contact Us</a>
@@ -203,7 +203,7 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
   <?php
   if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-6 mt-2 p-3 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
+    echo "<h1 id='" . $category->categoryId . "' class='display-6 mt-2 p-2 text-center text-primary'>" . $category->categoryName . "</h1>";
     echo '<section class="shop_section layout_padding">';
     echo "<div class='row col-12 px-5' >";
     $products = getProductsByCategory($category->categoryId);

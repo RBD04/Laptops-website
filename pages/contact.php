@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
     <!-- header section strats -->
-    <header class="header_section">
+    <header class="header_section bg-light shadow-sm">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="home.php">
@@ -82,13 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link fw-bolder text-primary" href="home.php">Home </a>
+                <a class="nav-link fw-bolder text-muted bg-light" href="home.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder text-muted bg-light" href="shop.php"> Shop </a>
               </li>
                 <li class="nav-item active">
-                  <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
+                  <a class="nav-link fw-bolder text-primary bg-light active" href="contact.php">Contact Us</a>
                 </li>
               </ul>
 
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-6">
           <div class="form_container">
             <div>
-              <h2 class="text-primary text-center display-5 fw-bolder">
+              <h2 class="text-primary text-center display-6">
                 Contact Us
               </h2>
             </div>
