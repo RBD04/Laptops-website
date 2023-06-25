@@ -193,24 +193,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php
   if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
-    echo "<div class='container-lg justify-content-center text-center'>";
-    echo "<div class='row col-12 p-5 mt-5' >";
+    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-2 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
+    echo '<section class="shop_section layout_padding">';
+    echo "<div class='row col-12  p-5' >";
     $products = getProductsByCategory($category->categoryId);
     foreach ($products as $product) {
-      echo '
-      <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
-        <div class=" box card m-2 text-center">
-          <img src="' . $product->thumbnail . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
-          <div class="card-body">
-            <h5 class="card-title text-primary">' . $product->productName . '</h5>
-            <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
-              <a href="viewproduct.php?productId=' . $product->productId . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+      function isExpired(DateTime $startDate, DateInterval $validFor)
+ {
+   $now = new DateTime();
+
+   $expiryDate = clone $startDate;
+   $expiryDate->add($validFor);
+
+   return $now > $expiryDate;
+ }
+  $startDate = new DateTime($product->dateAdded);
+  $validFor = new DateInterval('P3D'); 
+  $isExpired = isExpired($startDate, $validFor);
+      echo '<div class="col-sm-6 col-xl-3">
+      <div class="box">
+        <a href="viewproduct.php?productId='.$product->productId.'">
+          <div class="img-box">
+            <img src="'.$product->thumbnail.'" alt="img">
           </div>
-        </div>
-      </div>';
+          <div class="detail-box">
+            <h6>
+              '.$product->productName.'
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $'.$product->price.'
+              </span>
+            </h6>
+          </div>';
+
+          if(!$isExpired){
+            echo'
+          <div class="new bg-primary">
+            <span>
+              New
+            </span>
+          </div>';
+          }
+        echo'</a>
+      </div>
+    </div>';
     }
-    echo "</div>";
+    echo "</section>";
     echo "</div>";
   }
   }else{
@@ -218,24 +248,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $q = "SELECT * FROM product WHERE productName LIKE '%".$value."%'";
     $res = mysqli_query($con,$q);
     $n = mysqli_num_rows($res);
-    echo "<div class='container-lg justify-content-center text-center'>";
+    echo '<section class="shop_section layout_padding">';
     echo "<div class='row col-12 p-5 mt-5' >";
     if($n > 0){
       for($i =0;$i<$n;$i++){
         $row = mysqli_fetch_assoc($res);
-       echo' <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
-        <div class=" box card m-2 text-center">
-          <img src="../uploads/Thumbnails/' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
-          <div class="card-body">
-            <h5 class="card-title text-primary">' . $row['productName']. '</h5>
-            <p class="card-text text-secondary fw-bolder">' . $row['price'] . '$</p>
-              <a href="viewproduct.php?productId=' . $row['productId'] . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+        function isExpired(DateTime $startDate, DateInterval $validFor)
+        {
+          $now = new DateTime();
+       
+          $expiryDate = clone $startDate;
+          $expiryDate->add($validFor);
+       
+          return $now > $expiryDate;
+        }
+        $startDate1 = new DateTime($row['dateAdded']);
+        $validFor1 = new DateInterval('P3D'); 
+        $isExpired1 = isExpired($startDate1, $validFor1);
+      echo'<div class="col-sm-6 col-xl-3">
+      <div class="box">
+        <a href="">
+          <div class="img-box">
+            <img src="../images/w2.png" alt="">
           </div>
-        </div>
-      </div>';
+          <div class="detail-box">
+            <h6>
+              Smartwatch
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $125
+              </span>
+            </h6>
+          </div>';
+          if(!$isExpired1){}
+          echo'<div class="new bg-primary">
+            <span>
+              New
+            </span>
+          </div>';
+        echo'</a>
+      </div>
+    </div>';
       }
       echo "</div>";
-      echo "</div>";
+      echo "</section>";
     }
     else if($n == 0){
       echo  "<p class='text-info text-center'>No results found for “".$value."”. Check the spelling or use a different word or phrase.<a href='shop.php' class='btn btn-primary ms-5 text-light'><i class='fa fa-arrow-up mx-1'></i>Back</a></p>";

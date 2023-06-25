@@ -21,6 +21,7 @@ function getProducts()
         $product->quantityAvailable = $result[$i]['quantityAvailable'];
         $product->thumbnail = $result[$i]['thumbnail'];
         $product->price = $result[$i]['price'];
+        $product->dateAdded = $result[$i]['dateAdded'];
 
         $products[$i] = $product;
     }
@@ -44,6 +45,7 @@ function getProductById($id)
         $product->quantityAvailable = $result[0]['quantityAvailable'];
         $product->thumbnail = $result[0]['thumbnail'];
         $product->price = $result[0]['price'];
+        $product->dateAdded = $result[$i]['dateAdded'];
     } else $product = null;
 
     return $product;
@@ -67,6 +69,7 @@ function getAvailableProducts()
         $product->quantityAvailable = $result[$i]['quantityAvailable'];
         $product->thumbnail = $result[$i]['thumbnail'];
         $product->price = $result[$i]['price'];
+        $product->dateAdded = $result[$i]['dateAdded'];
 
         $products[$i] = $product;
     }
