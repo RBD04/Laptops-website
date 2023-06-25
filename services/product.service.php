@@ -45,7 +45,7 @@ function getProductById($id)
         $product->quantityAvailable = $result[0]['quantityAvailable'];
         $product->thumbnail = $result[0]['thumbnail'];
         $product->price = $result[0]['price'];
-        $product->dateAdded = $result[$i]['dateAdded'];
+        $product->dateAdded = $result[0]['dateAdded'];
     } else $product = null;
 
     return $product;

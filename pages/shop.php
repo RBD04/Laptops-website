@@ -267,18 +267,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $isExpired1 = isExpired($startDate1, $validFor1);
       echo'<div class="col-sm-6 col-xl-3">
       <div class="box">
-        <a href="">
+        <a href="viewproduct.php?productId='.$row['productId'].'">
           <div class="img-box">
-            <img src="../images/w2.png" alt="">
+            <img src="'.$row['thumbnail'].'" alt="">
           </div>
           <div class="detail-box">
             <h6>
-              Smartwatch
+             '.$row['productName'].'
             </h6>
             <h6>
               Price:
               <span>
-                $125
+                $'.$row['price'].'
               </span>
             </h6>
           </div>';
