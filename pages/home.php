@@ -1,6 +1,7 @@
 <?php
 require_once '../services/cart.service.php';
 require_once '../helpers/cartItems.php';
+require_once '../helpers/connection.php';
 session_start();
 
 $cartProducts = getCartProducts();
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Tech Zone</title>
+  <title>Tech Zone: Home Page</title>
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -103,33 +104,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
-              <?php if (isset($_SESSION['user']))
-                echo '
-              <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-              </li>' ?>
                 <li class="nav-item">
                   <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
                 </li>
               </ul>
 
-              <?php
-              if (isset($_SESSION['name']))
-                echo '
-            <form method="post">
-            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-                  ?>
+             
 
               <div class="user_option-box">
                 <?php
               if (isset($_SESSION['admin']))
                 echo 'Admin page '
                   ?>
-                <a href="login.php">
-                  <i class="fa fa-user-o" aria-hidden="true"></i>
-                </a>
+                  <?php 
+                  if(isset($_SESSION['user'])){
+                    $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                    $res = mysqli_query($con,$q);
+                    if($res){
+                    $user = mysqli_fetch_assoc($res);
+                    $picture = $user['profilePicture'];
+                    if($picture == NULL){
+                      echo'  <a href="login.php">
+                      <i class="fa fa-user-o" aria-hidden="true"></i>
+                    </a>';
+                    }
+                    else{
+                      echo ' <a href="login.php">
+                      <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                    </a>';
+                    }
+                  }
+                }
+                  else{
+                    echo' <a href="login.php">
+                     <i class="fa fa-user-o" aria-hidden="true"></i>
+                   </a>';
+                   }
+                  ?>
+               
 
                 <div class="dropstart">
                   <a class="ml-3" data-bs-toggle="dropdown">

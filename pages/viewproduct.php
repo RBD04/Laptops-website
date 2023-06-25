@@ -30,7 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['review'])&&isset($_SESSION['user'])) {
+        if(isset($_POST['rating'])){
         $rating = $_POST['rating'];
+      }
+      else{$rating = 0;}
         addReview($_SESSION['user'], $product->productId, $comment, $rating);
     }
 
@@ -229,11 +232,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span
                                         class="sr-only">(current)</span></a>
                             </li>
-                            <?php if (isset($_SESSION['user']))
-                                echo '
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-                                </li>' ?>
                                 <li class="nav-item">
                                     <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
                                 </li>
@@ -247,13 +245,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             '
                                     ?>
                             <div class="user_option-box">
-                                <a href="login.php">
-                                    <?php
+                            <?php
                             if (isset($_SESSION['admin']))
-                                echo 'admin page '
+                                echo 'Admin page '
                                     ?>
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </a>
+                                    <?php
+                                     if(isset($_SESSION['user'])){
+                                        $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                                        $res = mysqli_query($con,$q);
+                                        if($res){
+                                        $user = mysqli_fetch_assoc($res);
+                                        $picture = $user['profilePicture'];
+                                        if($picture == NULL){
+                                          echo'  <a href="login.php">
+                                          <i class="fa fa-user-o" aria-hidden="true"></i>
+                                        </a>';
+                                        }
+                                        else{
+                                          echo ' <a href="login.php">
+                                          <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                                        </a>';
+                                        }
+                                      }
+                                    }
+                                      else{
+                                        echo' <a href="login.php">
+                                         <i class="fa fa-user-o" aria-hidden="true"></i>
+                                       </a>';
+                                       } 
+                                     ?>
                                 <div class="dropstart">
                                     <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown"
                                         aria-expanded="false">
@@ -323,7 +343,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="text-white">
                             <button type="submit" name="checkout" class="btn btn-primary w-100 font-weight-bold">
-                                Buy it now
+                                Add to Whishlist
                             </button>
 
                         </div>';
@@ -335,7 +355,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="text-white">
                         <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
-                                Buy it now
+                                Add to Whishlist
                             </button>
 
                         </div>'
@@ -477,7 +497,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      
                                                                  <div class="pull-right">
      
-                                                                     <a href="register.php" class="btn btn-primary btn-sm">Register Now </a>
+                                                                     <a href="login.php" class="btn btn-primary btn-sm">Login Now </a>
                                                                  </div>
      
                                                              </div>

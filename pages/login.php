@@ -8,7 +8,7 @@ if(isset($_SESSION['admin'])){
 }
 if (isset($_SESSION)) {
   if (isset($_SESSION['user']))
-    header('Location: home.php');
+    header('Location: account.php');
   else if (isset($_SESSION['admin']))
     header('Location: admin-home.php');
 }
@@ -101,25 +101,6 @@ $errorLogin=null;
                 <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
             </ul>
-            <div class="user_option-box">
-              <a href="login.php">
-                <i class="fa fa-user text-primary" aria-hidden="true"></i>
-              </a>
-              <div class="dropstart">
-                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
-                </ul>
-              </div>
-              <a href="">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
-            </div>
           </div>
         </nav>
       </div>

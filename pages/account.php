@@ -122,20 +122,21 @@ if (array_key_exists('logout', $_POST)) {
             <li class="nav-item">
               <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
             </li>
-          </ul>
-
-          <?php
+            <?php
           if (isset($_SESSION['name']))
             echo '
-            <form method="post">
+            <li class="nav-item"><form method="post">
             <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
-            </form>
+            </form></li>
             '
           ?>
+          </ul>
+
+       
 
           <div class="user_option-box">
             <a href="login.php">
-              <i class="fa fa-user" aria-hidden="true"></i>
+              <i class="fa fa-user-o" aria-hidden="true"></i>
             </a>
             <div class="dropstart">
               <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
