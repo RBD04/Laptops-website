@@ -72,7 +72,7 @@ if (array_key_exists('logout', $_POST)) {
   <!--Bootstrap 5.2 links-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-  <title>Tech Zone</title>
+  <title>Tech Zone: Account Page</title>
 
 
   <!-- bootstrap core css -->
@@ -117,18 +117,18 @@ if (array_key_exists('logout', $_POST)) {
               <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bolder text-primary" href="account.php">Account</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
             </li>
             <?php
           if (isset($_SESSION['name']))
             echo '
             <li class="nav-item"><form method="post">
-            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
+            <button class="btn btn-primary m-1" type="submit" name="logout" value="logout">Logout</button>
             </form></li>
-            '
+            <li class="nav-item"><form method="post">
+            <a class="btn btn-danger text-light m-1" href="deleteAccount.php">Delete Account</a>
+            </form></li>
+            ';
           ?>
           </ul>
 

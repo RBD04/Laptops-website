@@ -20,6 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Refresh:0");
   }
 }
+function isExpired(DateTime $startDate, DateInterval $validFor)
+{
+  $now = new DateTime();
+
+  $expiryDate = clone $startDate;
+  $expiryDate->add($validFor);
+
+  return $now > $expiryDate;
+}
+
 
 
 
@@ -193,28 +203,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php
   if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-2 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
+    echo "<h1 id='" . $category->categoryId . "' class='display-6 mt-2 p-3 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
     echo '<section class="shop_section layout_padding">';
-    echo "<div class='row col-12  p-5' >";
+    echo "<div class='row col-12 px-5' >";
     $products = getProductsByCategory($category->categoryId);
     foreach ($products as $product) {
-      function isExpired(DateTime $startDate, DateInterval $validFor)
- {
-   $now = new DateTime();
-
-   $expiryDate = clone $startDate;
-   $expiryDate->add($validFor);
-
-   return $now > $expiryDate;
- }
-  $startDate = new DateTime($product->dateAdded);
-  $validFor = new DateInterval('P3D'); 
-  $isExpired = isExpired($startDate, $validFor);
+      $startDate = new DateTime($product->dateAdded);
+      $validFor = new DateInterval('P3D'); 
+      $isExpired = isExpired($startDate, $validFor);
+      if($product->quantityAvailable > 0){
       echo '<div class="col-sm-6 col-xl-3">
       <div class="box">
         <a href="viewproduct.php?productId='.$product->productId.'">
           <div class="img-box">
-            <img src="'.$product->thumbnail.'" alt="img">
+            <img src="'.$product->thumbnail.'" alt="img"">
           </div>
           <div class="detail-box">
             <h6>
@@ -240,6 +242,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>';
     }
+    else{
+      echo '<div class="col-sm-6 col-xl-3">
+      <div class="box">
+        <a href="viewproduct.php?productId='.$product->productId.'">
+          <div class="img-box">
+            <img src="'.$product->thumbnail.'" alt="img"">
+          </div>
+          <div class="detail-box">
+            <h6>
+              '.$product->productName.'
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $'.$product->price.'
+              </span>
+            </h6>
+          </div>
+          <div class="new bg-danger">
+            <span>
+              Out Of Stock
+            </span>
+          </div>
+          </a>
+      </div>
+    </div>';
+    }
+  }
     echo "</section>";
     echo "</div>";
   }
@@ -253,15 +283,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($n > 0){
       for($i =0;$i<$n;$i++){
         $row = mysqli_fetch_assoc($res);
-        function isExpired(DateTime $startDate, DateInterval $validFor)
-        {
-          $now = new DateTime();
-       
-          $expiryDate = clone $startDate;
-          $expiryDate->add($validFor);
-       
-          return $now > $expiryDate;
-        }
         $startDate1 = new DateTime($row['dateAdded']);
         $validFor1 = new DateInterval('P3D'); 
         $isExpired1 = isExpired($startDate1, $validFor1);

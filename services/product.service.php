@@ -112,7 +112,7 @@ function addProduct()
 
 function getProductsByCategory($id)
 {
-    $products = getAvailableProducts();
+    $products = getProducts();
     $matchingProducts = [];
 
     foreach ($products as $product) {
