@@ -14,13 +14,14 @@ else
 
 $Message = '';
 if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+    $q = "
     $msg = "";
-    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."'";
+    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."'");
     $res = mysqli_query($con,$check);
     $count = mysqli_num_rows($res);
     if($count != 0){$msg = "Product Already Exists in Your Wishlist !";}
     else{
-    $add = "INSERT INTO `wishlist`(`userId`, `productId`) VALUES ('".$_SESSION['user']."','".$_GET['productId']."')";
+    $add = "INSERT INTO `wishlist`(`wishlistId`,`userId`, `productId`) VALUES ('".$_SESSION['user']."','".$_SESSION['user']."','".$_GET['productId']."')";
     $added = mysqli_query($con,$add);
     $msg = "Product Added To Your Wishlist !";
     }
@@ -93,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- font awesome style -->
     <link href="../css/font-awesome.min.css" rel="stylesheet" />
-
     <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet" />
     <!-- responsive style -->
