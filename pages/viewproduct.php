@@ -14,9 +14,8 @@ else
 
 $Message = '';
 if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
-    $q = "
     $msg = "";
-    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."'");
+    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."')";
     $res = mysqli_query($con,$check);
     $count = mysqli_num_rows($res);
     if($count != 0){$msg = "Product Already Exists in Your Wishlist !";}

@@ -1,6 +1,7 @@
 <?php
 require_once '../services/user.service.php';
 require_once '../helpers/cartItems.php';
+require_once '../helpers/connection.php';
 
 
 session_start();
@@ -146,9 +147,32 @@ if (array_key_exists('logout', $_POST)) {
                 <?php renderCartItems($cartProducts) ?>
               </ul>
             </div>
-            <a href="">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </a>
+            <?php
+            if(isset($_SESSION)&&isset($_SESSION['user'])){
+              $q = "SELECT COUNT('productId') AS 'count' FROM wishlist GROUP BY wishlistId HAVING wishlistId ='".$_SESSION['user']."'";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $row = mysqli_fetch_assoc($res);
+                if($row['count'] != 0){
+                  echo '
+                  <a href="wishlist.php">
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
+                }
+                else{
+                  echo 'div class="dropdown-center">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Centered dropdown
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Action two</a></li>
+                    <li><a class="dropdown-item" href="#">Action three</a></li>
+                  </ul>
+                </div>';
+                }
+              } 
+            }
+             ?>
           </div>
         </div>
       </nav>
