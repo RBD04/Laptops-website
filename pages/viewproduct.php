@@ -1,4 +1,5 @@
 <?php
+require_once '../helpers/connection.php';
 require_once '../services/product.service.php';
 require_once '../services/cart.service.php';
 require_once '../helpers/cartItems.php';
@@ -12,7 +13,18 @@ else
     header('Location: shop.php');
 
 $Message = '';
-
+if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+    $msg = "";
+    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."'";
+    $res = mysqli_query($con,$check);
+    $count = mysqli_num_rows($res);
+    if($count != 0){$msg = "Product Already Exists in Your Wishlist !";}
+    else{
+    $add = "INSERT INTO `wishlist`(`userId`, `productId`) VALUES ('".$_SESSION['user']."','".$_GET['productId']."')";
+    $added = mysqli_query($con,$add);
+    $msg = "Product Added To Your Wishlist !";
+    }
+}
 $reviews = getReviews($product->productId);
 if (isset($_SESSION['user']))
     $user = getUserById($_SESSION['user']);
@@ -333,30 +345,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     class="btn btn-primary">+</button>
                             </div>
                             <?php
-                            if (isset($_SESSION['user']))
-                                echo '<p class="text-primary fs-5">' . $Message . '</p><div class="text-white mb-5">
+                            //
+                            //
+                            //
+                            //
+                            if (isset($_SESSION['user'])) 
+                            
+                                echo '<p class="text-primary fs-5">' . $Message . '</p>
+                               
+                        <table class="container-fluid">
+                                <tr>
+                                <td width="50%" class="p-2">
                             <button type="submit" name="add_to_cart" class="btn btn-primary w-100  font-weight-bold ">
                                 Add to Cart
                             </button>
-                        </div>
-                        <div class="text-white">
-                            <button type="submit" name="checkout" class="btn btn-primary w-100 font-weight-bold">
-                                Add to Whishlist
+                            </td>
+                            <td width="50%" class="p-2">
+                            <button type="submit" name="wishlist" class="btn btn-primary  w-100  font-weight-bold">
+                            Add to Wishlist
                             </button>
-
-                        </div>';
+                            </td>
+                            <tr>
+                        <td colspan="2" class="p-2">
+                        <button type="submit" name="checkout" class="btn btn-primary  w-100 font-weight-bold">
+                        Checkout Now
+                    </button>
+                    </td></tr></table>
+                       ';
                             else
-                                echo '<div class="text-white mb-5">
+                            echo '<p class="text-primary fs-5">' . $Message . '</p>
+                               
+                            <table class="container-fluid">
+                                    <tr>
+                                    <td width="50%" class="p-2">
+                                    <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                    Add to Cart
+                                    </button>
+                                </td>
+                                <td width="50%" class="p-2">
+                                <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                Add to Wishlist
+                                </button>
+                                </td>
+                                <tr>
+                            <td colspan="2" class="p-2">
                             <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
-                                Add to Cart
+                            Checkout Now
                             </button>
-                        </div>
-                        <div class="text-white">
-                        <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
-                                Add to Whishlist
-                            </button>
+                        </td></tr>';
+                        if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+                           
+                                echo "<tr><td><p class='text-center'>$msg</p></td></tr>";
+                        }
+                        echo '</table>';
+                           
 
-                        </div>'
                                     ?>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

@@ -163,7 +163,7 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
     </header>
     <!-- end header section -->
     <!--Options Offcanvas Start-->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-start bg-light" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -197,13 +197,13 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
   <!-- shop section -->
              
 
-     <a style="position: fixed; border-radius: 0;" class="btn btn-primary border border-0  my-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="fa fa-arrow-left mx-2"></i>More</a>
+     <a style="position: fixed; border-radius: 0;" class="btn btn-primary border border-0  my-3 shadow-lg" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="fa fa-arrow-left mx-2"></i>More</a>
     </ul>
   </div>
   <?php
   if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-6 mt-2 p-2 text-center text-primary'>" . $category->categoryName . "</h1>";
+    echo "<h1 id='" . $category->categoryId . "' class='display-6  p-2 text-center text-primary border border-primary bg-light shadow'>" . $category->categoryName . "</h1>";
     echo '<section class="shop_section layout_padding">';
     echo "<div class='row col-12 px-5' >";
     $products = getProductsByCategory($category->categoryId);
@@ -213,7 +213,7 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
       $isExpired = isExpired($startDate, $validFor);
       if($product->quantityAvailable > 0){
       echo '<div class="col-sm-6 col-xl-3">
-      <div class="box">
+      <div class="box bg-light">
         <a href="viewproduct.php?productId='.$product->productId.'">
           <div class="img-box">
             <img src="'.$product->thumbnail.'" alt="img"">
