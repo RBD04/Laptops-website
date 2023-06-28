@@ -1,9 +1,8 @@
 <?php
 require_once '../helpers/dbWrapper.php';
-require_once '../models/cart.php';
-require_once 'serialNumber.service.php';
-require_once 'cartProduct.service.php';
 require_once 'product.service.php';
+require_once '../models/cart.php';
+require_once 'cartProduct.service.php';
 require_once 'delivery.service.php';
 
 function createCart($id)

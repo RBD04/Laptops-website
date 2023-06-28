@@ -18,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
               </div>
 
-              <a href="">
+              <a href="wishlist.php">
                 <i class="fa fa-heart-o text-primary" aria-hidden="true"></i>
               </a>
             </div>
@@ -145,8 +143,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class="text-primary display-6 text-lg-s text-center mt-5">My Wishlist</p>
     <h5 class="lead text-muted text-center display-4"><i class="fa fa-heart-o text-primary"></i></h5> 
     <div class="container-fluid">
-        <div class="col-12">
-        </div>
+      <?php
+      $q = "SELECT productId FROM wishlistproduct WHERE wishlistId='".$_SESSION['user']."'";
+      $res = mysqli_query($con,$q);
+      $n = mysqli_num_rows($res);
+      if($n == 0){
+        echo "<p class='text-muted text-center m-5'>Your Wishlist is Empty !</p>";
+      }
+      else{
+        for($i=0;$i<$n;$i++){
+        $row = mysqli_fetch_assoc($res);
+        $q1 = "SELECT * FROM product  WHERE productId='".$row['productId']."'";
+        $msg = "";
+        $products = mysqli_query($con,$q1);
+        $n1 = mysqli_num_rows($products);
+        echo "<table class='container-fluid mx-1 p-3 my-3 border border-2  bg-none'>";
+          $p = mysqli_fetch_assoc($products);
+          if($p['quantityAvailable'] > 0){$msg = "<p class='text-success text-center'>in Stock</p>";}
+          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 8rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
+        }
+        echo "</table>";
+       
+      }
+       ?>
     </div>
     <!--Whishlist End-->
   <!-- jQery -->
