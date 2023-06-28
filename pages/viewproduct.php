@@ -15,16 +15,27 @@ else
 $Message = '';
 if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
     $msg = "";
-    $check = "SELECT userId, productId FROM wishlist WHERE userId='".$_SESSION['user']."'"." AND productId='".$_GET['productId']."')";
-    $res = mysqli_query($con,$check);
-    $count = mysqli_num_rows($res);
-    if($count != 0){$msg = "Product Already Exists in Your Wishlist !";}
+    $found =0;
+    $q1 = "SELECT productId FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+    $r1 = mysqli_query($con,$q1);
+    $n = mysqli_num_rows($r1);
+    for($i=0;$i<$n;$i++){
+        $row  = mysqli_fetch_assoc($r1);
+        if($row['productId'] == $_GET['productId']){
+            $found = 1;
+            break;
+        }
+    }
+    if($found){ $msg = "Product already Exists In your Wishlist !";}
     else{
-    $add = "INSERT INTO `wishlist`(`wishlistId`,`userId`, `productId`) VALUES ('".$_SESSION['user']."','".$_SESSION['user']."','".$_GET['productId']."')";
+    $add = "INSERT INTO `wishlistproduct`(`wishlistId`, `productId`) VALUES ('".$_SESSION['user']."','".$_GET['productId']."')";
     $added = mysqli_query($con,$add);
     $msg = "Product Added To Your Wishlist !";
     }
-}
+    }
+        
+
+
 $reviews = getReviews($product->productId);
 if (isset($_SESSION['user']))
     $user = getUserById($_SESSION['user']);

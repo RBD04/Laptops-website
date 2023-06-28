@@ -17,6 +17,17 @@ function createCart($id)
         echo '<script>alert("Error inserting Cart")</script>';
     }
 }
+function createWishlist($id)
+{
+    $wrapper = new dbWrapper();
+
+    if (isset($id)) {
+        $query = "INSERT INTO `wishlist`(`wishlistId`, `userId`) VALUES ('".$id."','".$id."')";
+        $wrapper->executeUpdate($query);
+    } else {
+        echo '<script>alert("Error inserting Cart")</script>';
+    }
+}
 
 function getCurrentCartId($userId)
 {
