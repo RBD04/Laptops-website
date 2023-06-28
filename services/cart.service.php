@@ -1,9 +1,8 @@
 <?php
 require_once '../helpers/dbWrapper.php';
-require_once '../models/cart.php';
-require_once 'serialNumber.service.php';
-require_once 'cartProduct.service.php';
 require_once 'product.service.php';
+require_once '../models/cart.php';
+require_once 'cartProduct.service.php';
 require_once 'delivery.service.php';
 
 function createCart($id)
@@ -12,6 +11,17 @@ function createCart($id)
 
     if (isset($id)) {
         $query = 'INSERT INTO cart(userId,confirmed) VALUES(' . $id . ',0)';
+        $wrapper->executeUpdate($query);
+    } else {
+        echo '<script>alert("Error inserting Cart")</script>';
+    }
+}
+function createWishlist($id)
+{
+    $wrapper = new dbWrapper();
+
+    if (isset($id)) {
+        $query = "INSERT INTO `wishlist`(`wishlistId`, `userId`) VALUES ('".$id."','".$id."')";
         $wrapper->executeUpdate($query);
     } else {
         echo '<script>alert("Error inserting Cart")</script>';

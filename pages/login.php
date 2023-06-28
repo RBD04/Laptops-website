@@ -8,7 +8,7 @@ if(isset($_SESSION['admin'])){
 }
 if (isset($_SESSION)) {
   if (isset($_SESSION['user']))
-    header('Location: home.php');
+    header('Location: account.php');
   else if (isset($_SESSION['admin']))
     header('Location: admin-home.php');
 }
@@ -16,23 +16,6 @@ $errorLogin=null;
 
  if (isset($_POST['email']) && isset($_POST['password']))
           $errorLogin= validateLogin(); 
-
-// if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
-//   $query = 'SELECT UserId,firstName,lastName FROM user Where email="' . $_POST["email"] . '" and password="' . $_POST["password"] . '"';
-//   $result = mysqli_query($con, $query);
-//   $num_rows = mysqli_num_rows($result);
-//   if ($num_rows === 0) {
-//     $error_message = 'Authentication failed';
-//   } else if ($num_rows > 1) {
-//     $error_message = 'Please contact your administrator';
-//   } else if ($num_rows === 1) {
-//     $user = mysqli_fetch_assoc($result);
-//     $_SESSION['user'] = $user['UserId'];
-//     $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
-//     mysqli_close($con);
-//     header('Location: home.php');
-//   }
-// }
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +33,7 @@ $errorLogin=null;
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Laptops Website</title>
+  <title>Tech Zone: Login Page</title>
 
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -81,7 +64,7 @@ $errorLogin=null;
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="home.php">
             <span>
-              Laptops website
+             Tech Zone
             </span>
           </a>
 
@@ -101,25 +84,6 @@ $errorLogin=null;
                 <a class="nav-link fw-bolder" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
               </li>
             </ul>
-            <div class="user_option-box">
-              <a href="login.php">
-                <i class="fa fa-user text-primary" aria-hidden="true"></i>
-              </a>
-              <div class="dropstart">
-                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><span class="dropdown-item-text">No Items Available</span></li>
-                  <li><a class="dropdown-item" href="#">First Item</a></li>
-                  <li><a class="dropdown-item" href="#">Second Item</a></li>
-                  <li><a class="dropdown-item" href="#">Third Item</a></li>
-                </ul>
-              </div>
-              <a href="">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
-            </div>
           </div>
         </nav>
       </div>

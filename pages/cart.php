@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Laptops website</title>
+    <title>Tech Zone: Cart</title>
 
     <!--Bootstrap 5.2 style link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
                     <a class="navbar-brand" href="home.php">
                         <span>
-                            Laptops website
+                            Tech Zone
                         </span>
                     </a>
                     <?php
@@ -141,20 +141,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             '
                         ?>
                         <div class="user_option-box">
-                            <a href="login.php">
-                                <?php
-                                if (isset($_SESSION['admin']))
-                                    echo 'admin page '
-                                ?>
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </a>
+                            <?php
+                             if(isset($_SESSION['user'])){
+                                $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                                $res = mysqli_query($con,$q);
+                                if($res){
+                                $user = mysqli_fetch_assoc($res);
+                                $picture = $user['profilePicture'];
+                                if($picture == NULL){
+                                  echo'  <a href="login.php">
+                                  <i class="fa fa-user-o" aria-hidden="true"></i>
+                                </a>';
+                                }
+                                else{
+                                  echo ' <a href="login.php">
+                                  <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                                </a>';
+                                }
+                              }
+                            }
+                              else{
+                                echo' <a href="login.php">
+                                 <i class="fa fa-user-o" aria-hidden="true"></i>
+                               </a>';
+                               }
+                             ?>
                             <div class="dropstart">
                                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false" disabled>
-                                    <i class="fa fa-cart-plus text-primary" aria-hidden="true"> MY CART</i>
+                                    <i class="fa fa-cart-plus text-primary fw-bolder" aria-hidden="true"> MY CART</i>
                                 </button>
                             </div>
                             <a href="">
-                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>

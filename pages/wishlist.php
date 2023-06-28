@@ -1,7 +1,7 @@
 <?php
 require_once '../helpers/cartItems.php';
 require_once '../services/cart.service.php';
-
+require_once "../helpers/connection.php";
 session_start();
 
 $cartProducts = getCartProducts();
@@ -18,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Tech Zone: Contact Us Page</title>
+  <title>Tech Zone: Wishlist</title>
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -85,15 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a class="nav-link fw-bolder text-muted bg-light" href="home.php">Home </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted bg-light" href="shop.php"> Shop </a>
+                <a class="nav-link fw-bolder text-muted bg-light" href="shop.php">Shop</a>
               </li>
                 <li class="nav-item active">
                   <a class="nav-link fw-bolder text-primary bg-light active" href="contact.php">Contact Us</a>
                 </li>
-              </ul>
-
-             
-
+</ul>
               <div class="user_option-box">
                 <?php
               if (isset($_SESSION['admin']))
@@ -135,153 +130,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
               </div>
 
-              <?php
-            if(isset($_SESSION)&&isset($_SESSION['user'])){
-              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
-              $res = mysqli_query($con,$q);
-              if($res){
-                $row = mysqli_fetch_assoc($res);
-                if($row['count'] != 0){
-                  echo '
-                  <a href="wishlist.php">
-                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
-                }
-                else{
-                  echo '
-                  <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
-                  }
-              }
-            }
-                else{
-                  echo '<div class="btn-group dropstart bg-none">
-                  <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   <i class="fa fa-heart-o"></i>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li class="p-2 text-center text-primary">No Account</li>
-                  </ul>
-                </div>';
-                }
-              
-           
-             ?>
+              <a href="wishlist.php">
+                <i class="fa fa-heart-o text-primary" aria-hidden="true"></i>
+              </a>
             </div>
           </div>
         </nav>
       </div>
     </header>
     <!-- end header section -->
-
-
-  <!-- contact section -->
-
-  <section class="contact_section p-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form_container">
-            <div>
-              <h2 class="text-primary text-center display-6">
-                Contact Us
-              </h2>
-            </div>
-            <form action="">
-              <div>
-                <input type="text" placeholder="Full Name " />
-              </div>
-              <div>
-                <input type="email" placeholder="Email" />
-              </div>
-              <div>
-                <input type="text" placeholder="Phone number" />
-              </div>
-              <div>
-                <input type="text" class="message-box" placeholder="Message" />
-              </div>
-              <div class="text-center">
-                <a class="btn btn-outline-primary">
-                  SEND
-                </a>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="img-box ms-5">
-            <img src="../images/mail.png" alt="">
-          </div>
-        </div>
-      </div>
+    <!--Whishlist Start-->
+    <p class="text-primary display-6 text-lg-s text-center mt-5">My Wishlist</p>
+    <h5 class="lead text-muted text-center display-4"><i class="fa fa-heart-o text-primary"></i></h5> 
+    <div class="container-fluid">
+      <?php
+      $q = "SELECT productId FROM wishlistproduct WHERE wishlistId='".$_SESSION['user']."'";
+      $res = mysqli_query($con,$q);
+      $n = mysqli_num_rows($res);
+      if($n == 0){
+        echo "<p class='text-muted text-center m-5'>Your Wishlist is Empty !</p>";
+      }
+      else{
+        for($i=0;$i<$n;$i++){
+        $row = mysqli_fetch_assoc($res);
+        $q1 = "SELECT * FROM product  WHERE productId='".$row['productId']."'";
+        $msg = "";
+        $products = mysqli_query($con,$q1);
+        $n1 = mysqli_num_rows($products);
+        echo "<table class='container-fluid mx-1 p-3 my-3 border border-2  bg-none'>";
+          $p = mysqli_fetch_assoc($products);
+          if($p['quantityAvailable'] > 0){$msg = "<p class='text-success text-center'>in Stock</p>";}
+          else{$msg = "<p class='text-danger text-center'>out of Stock</p>";}
+          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 5rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>$".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
+        }
+        echo "</table>";
+       
+      }
+       ?>
     </div>
-  </section>
-  <!-- end contact section -->
-  <br>
-  <!-- footer section -->
-  <footer class="footer_section bg-primary">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-lg-6 footer-col text-center">
-          <div class="footer_detail">
-            <h4>
-              About
-            </h4>
-            <p>
-              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-            </p>
-            <div class="footer_social justify-content-center">
-              <a href="">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-6 footer-col text-center">
-          <div class="footer_contact">
-            <h4>
-              Reach at..
-            </h4>
-            <div class="contact_link_box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Location
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>
-                  Call +01 1234567890
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span>
-                  demo@gmail.com
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-info">
-        <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Laptops website</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-  <!-- footer section -->
-
+    <!--Whishlist End-->
   <!-- jQery -->
   <script src="../js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->

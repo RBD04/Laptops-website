@@ -1,4 +1,5 @@
 <?php
+require_once '../helpers/connection.php';
 require_once '../services/product.service.php';
 require_once '../services/cart.service.php';
 require_once '../helpers/cartItems.php';
@@ -12,6 +13,28 @@ else
     header('Location: shop.php');
 
 $Message = '';
+if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+    $msg = "";
+    $found =0;
+    $q1 = "SELECT productId FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+    $r1 = mysqli_query($con,$q1);
+    $n = mysqli_num_rows($r1);
+    for($i=0;$i<$n;$i++){
+        $row  = mysqli_fetch_assoc($r1);
+        if($row['productId'] == $_GET['productId']){
+            $found = 1;
+            break;
+        }
+    }
+    if($found){ $msg = "Product already Exists In your Wishlist !";}
+    else{
+    $add = "INSERT INTO `wishlistproduct`(`wishlistId`, `productId`) VALUES ('".$_SESSION['user']."','".$_GET['productId']."')";
+    $added = mysqli_query($con,$add);
+    $msg = "Product Added To Your Wishlist !";
+    }
+    }
+        
+
 
 $reviews = getReviews($product->productId);
 if (isset($_SESSION['user']))
@@ -30,7 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['review'])&&isset($_SESSION['user'])) {
+        if(isset($_POST['rating'])){
         $rating = $_POST['rating'];
+      }
+      else{$rating = 0;}
         addReview($_SESSION['user'], $product->productId, $comment, $rating);
     }
 
@@ -65,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Laptops website</title>
+    <title>Tech Zone: View Product Page</title>
 
     <!--Bootstrap 5.2 style link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -78,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- font awesome style -->
     <link href="../css/font-awesome.min.css" rel="stylesheet" />
-
     <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet" />
     <!-- responsive style -->
@@ -199,79 +224,113 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="sub_page">
 
-    <div class="hero_area">
+ <!-- header section strats -->
+ <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="home.php">
+            <span>
+              Tech Zone
+            </span>
+          </a>
+          <?php
+          if (isset($_SESSION['name']))
+            echo 'Welcome ' . $_SESSION['name'];
+          ?>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
 
-        <!-- header section strats -->
-        <header class="header_section">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="home.php">
-                        <span>
-                            Laptops website
-                        </span>
-                    </a>
-                    <?php
-                    if (isset($_SESSION['name']))
-                        echo 'Welcome ' . $_SESSION['name'];
-                    ?>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class=""> </span>
-                    </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link fw-bolder text-primary" href="home.php">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
+              </li>
+                <li class="nav-item">
+                  <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
+                </li>
+              </ul>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span
-                                        class="sr-only">(current)</span></a>
-                            </li>
-                            <?php if (isset($_SESSION['user']))
-                                echo '
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-                                </li>' ?>
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
-                                </li>
-                            </ul>
-                            <?php
-                            if (isset($_SESSION['name']))
-                                echo '
-            <form method="post">
-            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-                                    ?>
-                            <div class="user_option-box">
-                                <a href="login.php">
-                                    <?php
-                            if (isset($_SESSION['admin']))
-                                echo 'admin page '
-                                    ?>
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </a>
-                                <div class="dropstart">
-                                    <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                    <?php renderCartItems($cartProducts) ?>
-                                </ul>
-                            </div>
-                            <a href="">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </nav>
+             
+
+              <div class="user_option-box">
+                <?php
+              if (isset($_SESSION['admin']))
+                echo 'Admin page '
+                  ?>
+                  <?php 
+                  if(isset($_SESSION['user'])){
+                    $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                    $res = mysqli_query($con,$q);
+                    if($res){
+                    $user = mysqli_fetch_assoc($res);
+                    $picture = $user['profilePicture'];
+                    if($picture == NULL){
+                      echo'  <a href="login.php">
+                      <i class="fa fa-user-o" aria-hidden="true"></i>
+                    </a>';
+                    }
+                    else{
+                      echo ' <a href="login.php">
+                      <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                    </a>';
+                    }
+                  }
+                }
+                  else{
+                    echo' <a href="login.php">
+                     <i class="fa fa-user-o" aria-hidden="true"></i>
+                   </a>';
+                   }
+                  ?>
+               
+
+                <div class="dropstart">
+                  <a class="ml-3" data-bs-toggle="dropdown">
+                    <i class="fa fa-cart-plus text-muted" aria-hidden="true"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                  <?php renderCartItems($cartProducts) ?>
+                </ul>
+              </div>
+              <?php
+            if(isset($_SESSION)&&isset($_SESSION['user'])){
+              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $row = mysqli_fetch_assoc($res);
+                if($row['count'] != 0){
+                  echo '
+                  <a href="wishlist.php">
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
+                }
+                else{
+                echo '
+                <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
+                }
+              }
+            }
+                else{
+                  echo '<div class="btn-group dropstart bg-none">
+                  <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   <i class="fa fa-heart-o"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="p-2 text-center text-primary">No Account</li>
+                  </ul>
+                </div>';
+                }
+             ?>
             </div>
-        </header>
-        <!-- end header section -->
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
     </div>
 
 
@@ -281,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-6">
                     <div class="img-box">
                         <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail"
-                            style="height: 30rem; width: 50rem;" alt="">
+                            style="height: 50rem; width: auto;" alt="">
                     </div>
                         <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
                         <iframe src="reviewsIframe.php?x=<?php echo $product->productId?>"style="border: 2em;" height="300" width="500"></iframe>
@@ -289,9 +348,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-6">
                     <div class="form_container">
                         <div>
-                            <h2 class="text-primary mb-5 text-center display-5 fw-bolder">
-                                <?php echo $product->productName; ?>
-                            </h2>
+                        <?php 
+                        if($product->quantityAvailable>0){
+                        echo'    <h2 class="text-primary mb-5 text-center display-5 fw-bolder">'.$product->productName.'</h2>';}
+                            else{
+                                echo'<h2 class="text-primary mb-1 text-center display-5 fw-bolder">'.$product->productName.'</h2>';
+                                echo'<p class="text-center fw-bolder lead text-danger">Out Of Stock</p>';
+                            }
+                            ?>
                         </div>
                         <form method="post">
                             <div>
@@ -315,30 +379,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     class="btn btn-primary">+</button>
                             </div>
                             <?php
-                            if (isset($_SESSION['user']))
-                                echo '<p class="text-primary fs-5">' . $Message . '</p><div class="text-white mb-5">
+                            //
+                            //
+                            //
+                            //
+                            if (isset($_SESSION['user'])) 
+                            
+                                echo '<p class="text-primary fs-5">' . $Message . '</p>
+                               
+                        <table class="container-fluid">
+                                <tr>
+                                <td width="50%" class="p-2">
                             <button type="submit" name="add_to_cart" class="btn btn-primary w-100  font-weight-bold ">
                                 Add to Cart
                             </button>
-                        </div>
-                        <div class="text-white">
-                            <button type="submit" name="checkout" class="btn btn-primary w-100 font-weight-bold">
-                                Buy it now
+                            </td>
+                            <td width="50%" class="p-2">
+                            <button type="submit" name="wishlist" class="btn btn-primary  w-100  font-weight-bold">
+                            Add to Wishlist
                             </button>
-
-                        </div>';
+                            </td>
+                            <tr>
+                        <td colspan="2" class="p-2">
+                        <button type="submit" name="checkout" class="btn btn-primary  w-100 font-weight-bold">
+                        Checkout Now
+                    </button>
+                    </td></tr></table>
+                       ';
                             else
-                                echo '<div class="text-white mb-5">
+                            echo '<p class="text-primary fs-5">' . $Message . '</p>
+                               
+                            <table class="container-fluid">
+                                    <tr>
+                                    <td width="50%" class="p-2">
+                                    <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                    Add to Cart
+                                    </button>
+                                </td>
+                                <td width="50%" class="p-2">
+                                <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                                Add to Wishlist
+                                </button>
+                                </td>
+                                <tr>
+                            <td colspan="2" class="p-2">
                             <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
-                                Add to Cart
+                            Checkout Now
                             </button>
-                        </div>
-                        <div class="text-white">
-                        <button type="button" class="btn btn-primary w-100 font-weight-bold" data-toggle="modal" data-target="#exampleModal">
-                                Buy it now
-                            </button>
+                        </td></tr>';
+                        if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+                           
+                                echo "<tr><td><p class='text-center'>$msg</p></td></tr>";
+                        }
+                        echo '</table>';
+                           
 
-                        </div>'
                                     ?>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -477,7 +572,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      
                                                                  <div class="pull-right">
      
-                                                                     <a href="register.php" class="btn btn-primary btn-sm">Register Now </a>
+                                                                     <a href="login.php" class="btn btn-primary btn-sm">Login Now </a>
                                                                  </div>
      
                                                              </div>

@@ -20,6 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Refresh:0");
   }
 }
+function isExpired(DateTime $startDate, DateInterval $validFor)
+{
+  $now = new DateTime();
+
+  $expiryDate = clone $startDate;
+  $expiryDate->add($validFor);
+
+  return $now > $expiryDate;
+}
+
 
 
 
@@ -40,14 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Laptops website</title>
+  <title>Tech Zone: Shopping Page</title>
 
   <!--Bootstrap 5.2 style link-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
   <!--owl slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
   <!-- font awesome style -->
   <link href="../css/font-awesome.min.css" rel="stylesheet" />
@@ -61,130 +73,230 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="sub_page">
   <!--Bootstrap 5.2 script section-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
 
-  <div class="hero_area">
+  
 
-    <!-- header section strats -->
-    <header class="header_section mb-4">
+    <!-- header section start -->
+    <header class="header_section bg-light">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="home.php">
             <span>
-              Laptops website
+              Tech Zone
             </span>
           </a>
           <?php
           if (isset($_SESSION['name']))
-            if (isset($_SESSION['admin']))
-              echo 'Welcome admin ' . $_SESSION['name'];
-            else echo 'Welcome ' . $_SESSION['name'];
+            echo 'Welcome ' . $_SESSION['name'];
           ?>
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="home.php">Home </a>
+                <a class="nav-link fw-bolder text-muted bg-light" href="home.php">Home </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link fw-bolder text-primary" href="shop.php"> Shop <span class="sr-only">(current)</span></a>
+                <a class="nav-link fw-bolder text-primary bg-light active" href="shop.php"> Shop </a>
               </li>
-              <?php if (isset($_SESSION['user'])) echo '
-              <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-              </li>' ?>
-              <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
-              </li>
-            </ul>
-            <?php
-            if (isset($_SESSION['name']))
-              echo '
-            <form method="post">
-            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-            ?>
-            <div class="user_option-box">
-            <?php
-                if (isset($_SESSION['admin']))
-                  echo 'Admin page '
-                ?>
-              <a href="login.php">
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </a>
-              <div class="dropstart">
-                <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
+                <li class="nav-item">
+                  <a class="nav-link fw-bolder text-muted bg-light" href="contact.php">Contact Us</a>
+                </li>
+              </ul>
+
+             
+
+              <div class="user_option-box">
+                <?php
+              if (isset($_SESSION['admin']))
+                echo 'Admin page '
+                  ?>
+                  <?php 
+                  if(isset($_SESSION['user'])){
+                    $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                    $res = mysqli_query($con,$q);
+                    if($res){
+                    $user = mysqli_fetch_assoc($res);
+                    $picture = $user['profilePicture'];
+                    if($picture == NULL){
+                      echo'  <a href="login.php">
+                      <i class="fa fa-user-o" aria-hidden="true"></i>
+                    </a>';
+                    }
+                    else{
+                      echo ' <a href="login.php">
+                      <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                    </a>';
+                    }
+                  }
+                }
+                  else{
+                    echo' <a href="login.php">
+                     <i class="fa fa-user-o" aria-hidden="true"></i>
+                   </a>';
+                   }
+                  ?>
+               
+
+                <div class="dropstart">
+                  <a class="ml-3" data-bs-toggle="dropdown">
+                    <i class="fa fa-cart-plus text-muted" aria-hidden="true"></i>
+                  </a>
+                  <ul class="dropdown-menu">
                   <?php renderCartItems($cartProducts) ?>
                 </ul>
               </div>
-              <a href="">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
+              <?php
+            if(isset($_SESSION)&&isset($_SESSION['user'])){
+              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $row = mysqli_fetch_assoc($res);
+                if($row['count'] != 0){
+                  echo '
+                  <a href="wishlist.php">
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
+                }
+                else{
+                  echo '
+                  <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
+                  }
+              }
+            }
+                else{
+                  echo '<div class="btn-group dropstart bg-none">
+                  <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   <i class="fa fa-heart-o"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="p-2 text-center text-primary">No Account</li>
+                  </ul>
+                </div>';
+                }
+              
+           
+             ?>
             </div>
           </div>
         </nav>
       </div>
     </header>
     <!-- end header section -->
+    <!--Options Offcanvas Start-->
+<div class="offcanvas offcanvas-start bg-light" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-
-  <!-- shop section -->
-              <!--Search-->
-              <div class="mx-auto text-center">
-  <form class="search-form align-items-center" method="POST" action="#">
-        <input type="text" name="search" placeholder="Search (Empty to refresh)" title="Enter search keyword">
+  <div class="offcanvas-body">
+     <div class="mx-auto text-center">
+  <form class="search-form" method="POST" action="#">
+        <input type="text" name="search" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search" class="btn-primary"><i class="fa fa-search"></i></button>
       </form>
       </div>
-        <!--Search End-->
-                   <!--Categories Dropdown With Links-->
-        <?php
-
-      if(!(isset($_POST['search']))||$_POST['search'] == ""){
-       
-  echo '<div class="dropdown ms-3" style="position:fixed;">
-  <a class="btn btn-primary p-2 m-0 rounded-pill dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-   Categories
-    </a>
-    <ul class="dropdown-menu">';
+    <?php
+             if(!(isset($_POST['search']))||$_POST['search'] == ""){
+    echo '<div class="dropdown mt-3 mx-auto text-center">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Categories
+      </button>
+      <ul class="dropdown-menu">';
       
-      foreach ($categories as $category) {
-        echo ' <li><a class="dropdown-item " href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
-      }
-      }
-      ?>
+              foreach ($categories as $category) {
+                echo ' <li><a class="dropdown-item " href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
+              }
+              }
+       ?>
+      </ul>
+    </div>
+  </div>
+</div>
+    <!--Options Offcanvas End-->
+
+  <!-- shop section -->
+             
+
+     <a style="position: fixed; border-radius: 0;" class="btn btn-primary border border-0  my-3 shadow-lg" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="fa fa-arrow-left mx-2"></i>More</a>
     </ul>
   </div>
-  <!--End Categories Dropdown-->
   <?php
   if(!(isset($_POST['search']))||$_POST['search'] == ""){
   foreach ($categories as $category) {
-    echo "<h1 id='" . $category->categoryId . "' class='display-4 m-5 text-center text-primary fw-bolder'>" . $category->categoryName . "</h1>";
-    echo "<div class='container-lg justify-content-center text-center'>";
-    echo "<div class='row col-12 p-5 mt-5' >";
+    echo "<h1 id='" . $category->categoryId . "' class='display-6  p-2 text-center text-primary border border-primary bg-light shadow'>" . $category->categoryName . "</h1>";
+    echo '<section class="shop_section layout_padding">';
+    echo "<div class='row col-12 px-5' >";
     $products = getProductsByCategory($category->categoryId);
     foreach ($products as $product) {
-      echo '
-      <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
-        <div class=" box card m-2 text-center">
-          <img src="' . $product->thumbnail . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
-          <div class="card-body">
-            <h5 class="card-title text-primary">' . $product->productName . '</h5>
-            <p class="card-text text-secondary fw-bolder">' . $product->price . '$</p>
-              <a href="viewproduct.php?productId=' . $product->productId . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+      $startDate = new DateTime($product->dateAdded);
+      $validFor = new DateInterval('P3D'); 
+      $isExpired = isExpired($startDate, $validFor);
+      if($product->quantityAvailable > 0){
+      echo '<div class="col-sm-6 col-xl-3">
+      <div class="box bg-light">
+        <a href="viewproduct.php?productId='.$product->productId.'">
+          <div class="img-box">
+            <img src="'.$product->thumbnail.'" alt="img"">
           </div>
-        </div>
-      </div>';
+          <div class="detail-box">
+            <h6>
+              '.$product->productName.'
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $'.$product->price.'
+              </span>
+            </h6>
+          </div>';
+
+          if(!$isExpired){
+            echo'
+          <div class="new bg-primary">
+            <span>
+              New
+            </span>
+          </div>';
+          }
+        echo'</a>
+      </div>
+    </div>';
     }
-    echo "</div>";
+    else{
+      echo '<div class="col-sm-6 col-xl-3">
+      <div class="box">
+        <a href="viewproduct.php?productId='.$product->productId.'">
+          <div class="img-box">
+            <img src="'.$product->thumbnail.'" alt="img"">
+          </div>
+          <div class="detail-box">
+            <h6>
+              '.$product->productName.'
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $'.$product->price.'
+              </span>
+            </h6>
+          </div>
+          <div class="new bg-danger">
+            <span>
+              Out Of Stock
+            </span>
+          </div>
+          </a>
+      </div>
+    </div>';
+    }
+  }
+    echo "</section>";
     echo "</div>";
   }
   }else{
@@ -192,27 +304,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $q = "SELECT * FROM product WHERE productName LIKE '%".$value."%'";
     $res = mysqli_query($con,$q);
     $n = mysqli_num_rows($res);
-    echo "<div class='container-lg justify-content-center text-center'>";
+    echo "<p class='text-center display-6 text-primary mt-2'>Results for \"".$value."\"</p>";
+    echo '<section class="shop_section layout_padding">';
     echo "<div class='row col-12 p-5 mt-5' >";
     if($n > 0){
       for($i =0;$i<$n;$i++){
         $row = mysqli_fetch_assoc($res);
-       echo' <div class="col-lg-3 col-12 text-center" style="width: 20rem;">
-        <div class=" box card m-2 text-center">
-          <img src="../uploads/Thumbnails/' . $row['thumbnail'] . '" class="card-img-top d-sm-fluid" alt="..." style="height: 15rem; width: 100%">
-          <div class="card-body">
-            <h5 class="card-title text-primary">' . $row['productName']. '</h5>
-            <p class="card-text text-secondary fw-bolder">' . $row['price'] . '$</p>
-              <a href="viewproduct.php?productId=' . $row['productId'] . '" class="btn btn-primary w-100 font-weight-bold">View</a>
+        $startDate1 = new DateTime($row['dateAdded']);
+        $validFor1 = new DateInterval('P3D'); 
+        $isExpired1 = isExpired($startDate1, $validFor1);
+      echo'<div class="col-sm-6 col-xl-3">
+      <div class="box">
+        <a href="viewproduct.php?productId='.$row['productId'].'">
+          <div class="img-box">
+            <img src="'.$row['thumbnail'].'" alt="">
           </div>
-        </div>
-      </div>';
+          <div class="detail-box">
+            <h6>
+             '.$row['productName'].'
+            </h6>
+            <h6>
+              Price:
+              <span>
+                $'.$row['price'].'
+              </span>
+            </h6>
+          </div>';
+          if(!$isExpired1){}
+          echo'<div class="new bg-primary">
+            <span>
+              New
+            </span>
+          </div>';
+        echo'</a>
+      </div>
+    </div>';
       }
       echo "</div>";
-      echo "</div>";
+      echo "</section>";
     }
     else if($n == 0){
-      echo  "<p class='text-info text-center'>No results found for “".$value."”. Check the spelling or use a different word or phrase.</p>";
+      echo  "<p class='text-info text-center'>No results found for “".$value."”. Check the spelling or use a different word or phrase.<a href='shop.php' class='btn btn-primary ms-5 text-light'><i class='fa fa-arrow-up mx-1'></i>Back</a></p>";
     }
    
   }
@@ -305,11 +437,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 
-  <!-- jQery -->
-  <script src="../js/jquery-3.4.1.min.js"></script>
+ <!-- jQery -->
+ <script src="../js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
   <!-- bootstrap js -->
   <script src="../js/bootstrap.js"></script>
   <!-- owl slider -->

@@ -1,6 +1,7 @@
 <?php
 require_once '../services/cart.service.php';
 require_once '../helpers/cartItems.php';
+require_once '../helpers/connection.php';
 session_start();
 
 $cartProducts = getCartProducts();
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Tech Zone</title>
+  <title>Tech Zone: Home Page</title>
   <!--Bootstrap 5.2 style link-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -103,33 +104,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <li class="nav-item">
                 <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
               </li>
-              <?php if (isset($_SESSION['user']))
-                echo '
-              <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-              </li>' ?>
                 <li class="nav-item">
                   <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
                 </li>
               </ul>
 
-              <?php
-              if (isset($_SESSION['name']))
-                echo '
-            <form method="post">
-            <button class="btn btn-primary mx-2" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-                  ?>
+             
 
               <div class="user_option-box">
                 <?php
               if (isset($_SESSION['admin']))
                 echo 'Admin page '
                   ?>
-                <a href="login.php">
-                  <i class="fa fa-user-o" aria-hidden="true"></i>
-                </a>
+                  <?php 
+                  if(isset($_SESSION['user'])){
+                    $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
+                    $res = mysqli_query($con,$q);
+                    if($res){
+                    $user = mysqli_fetch_assoc($res);
+                    $picture = $user['profilePicture'];
+                    if($picture == NULL){
+                      echo'  <a href="login.php">
+                      <i class="fa fa-user-o" aria-hidden="true"></i>
+                    </a>';
+                    }
+                    else{
+                      echo ' <a href="login.php">
+                      <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                    </a>';
+                    }
+                  }
+                }
+                  else{
+                    echo' <a href="login.php">
+                     <i class="fa fa-user-o" aria-hidden="true"></i>
+                   </a>';
+                   }
+                  ?>
+               
 
                 <div class="dropstart">
                   <a class="ml-3" data-bs-toggle="dropdown">
@@ -139,10 +151,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <?php renderCartItems($cartProducts) ?>
                 </ul>
               </div>
-
-              <a href="">
-                <i class="fa fa-heart-o" aria-hidden="true"></i>
-              </a>
+              <?php
+            if(isset($_SESSION)&&isset($_SESSION['user'])){
+              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $row = mysqli_fetch_assoc($res);
+                if($row['count'] != 0){
+                  echo '
+                  <a href="wishlist.php">
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
+                }
+                else{
+                echo '
+                <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
+                }
+              }
+            }
+                else{
+                  echo '<div class="btn-group dropstart bg-none">
+                  <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   <i class="fa fa-heart-o"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="p-2 text-center text-primary">No Account</li>
+                  </ul>
+                </div>';
+                }
+             ?>
             </div>
           </div>
         </nav>

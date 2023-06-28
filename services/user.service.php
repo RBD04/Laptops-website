@@ -93,6 +93,7 @@ function signup()
             echo $query;
             $id = $wrapper->executeQueryAndReturnId($query);
             createCart($id);
+            createWishlist($id);
 
             echo '
                 <script>
