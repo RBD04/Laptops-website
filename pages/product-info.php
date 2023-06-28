@@ -117,7 +117,7 @@ if (array_key_exists('logout', $_POST)) {
                                     <div class="col-lg-4 col-12">
                                         <div class="justify-content-center text-center">
                                             <label for="thumbnail">
-                                                <img src="../uploads/Thumbnails/'.$row['thumbnail'].'"width="300rem" height="300rem "
+                                                <img src="'.$row['thumbnail'].'"width="300rem" height="300rem "
                                                     class="mx-auto mt-3" alt="Profile Picture"
                                                     id="ThumbnailPreview">
                                                 <input type="file" id="thumbnail" name="thumbnail"
@@ -206,6 +206,8 @@ if (array_key_exists('logout', $_POST)) {
                                 if($res){
                                     echo "<p class='text-center text-success'>changes made successfully !</p>";
                             }
+                            $log = "INSERT INTO adminlog(adminId,productId) VALUES ('".$_SESSION['admin']."','".$_GET['x']."')";
+                            $logDone = mysqli_query($con,$log);
                         }
                               ?>
                     

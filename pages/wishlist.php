@@ -160,7 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<table class='container-fluid mx-1 p-3 my-3 border border-2  bg-none'>";
           $p = mysqli_fetch_assoc($products);
           if($p['quantityAvailable'] > 0){$msg = "<p class='text-success text-center'>in Stock</p>";}
-          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 8rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
+          else{$msg = "<p class='text-danger text-center'>out of Stock</p>";}
+          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 5rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>$".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
         }
         echo "</table>";
        

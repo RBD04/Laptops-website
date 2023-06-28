@@ -304,6 +304,7 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
     $q = "SELECT * FROM product WHERE productName LIKE '%".$value."%'";
     $res = mysqli_query($con,$q);
     $n = mysqli_num_rows($res);
+    echo "<p class='text-center display-6 text-primary mt-2'>Results for \"".$value."\"</p>";
     echo '<section class="shop_section layout_padding">';
     echo "<div class='row col-12 p-5 mt-5' >";
     if($n > 0){

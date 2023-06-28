@@ -340,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-6">
                     <div class="img-box">
                         <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail"
-                            style="height: 30rem; width: 50rem;" alt="">
+                            style="height: 50rem; width: auto;" alt="">
                     </div>
                         <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
                         <iframe src="reviewsIframe.php?x=<?php echo $product->productId?>"style="border: 2em;" height="300" width="500"></iframe>

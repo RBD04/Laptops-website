@@ -112,18 +112,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
     <!-- end header section -->
     <!--Orders Section-->
-    <h1 class="text-center m-5 text-primary display-4 fw-bolder">My Orders</h1>
+    <h1 class="text-center m-5 text-primary display-6">My Orders</h1>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-            <h2 class="text-center">Approved</h2>
+            <h2 class="text-center ">Approved</h2>
             
                 <?php
                 $q = "SELECT * FROM delivery WHERE userId='".$_SESSION['user']."' AND paymentStatus='approved'";
                 $res = mysqli_query($con,$q);
                 $n = mysqli_num_rows($res);
                 if($n > 0){
-                    echo '<table class="text-muted mx-auto">
+                    echo '<table class="text-muted">
                     <tr>
                         <th class="p-3">Number</th><th class="p-3">Governorate</th><th class="p-3">City</th><th class="p-3">Street</th><th class="p-3">Building</th><th class="p-3">Fees</th><th class="p-3">Total</th><th>Date</th>
                     </tr>';

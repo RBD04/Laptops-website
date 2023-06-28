@@ -167,7 +167,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
                 <nav>
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">products Section</li>
+                    <li class="breadcrumb-item active">Products Section</li>
                   </ol>
                 </nav>
               </div><!-- End Page Title -->
