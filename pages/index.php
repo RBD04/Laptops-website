@@ -12,7 +12,7 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>TechZone:Index Page</title>
+  <title>TechZone</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -331,25 +331,25 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">';
-  if($row1['img'] != "" && ($_row1['text'] != "" || $_row1['title'] != "")){
+  if($row1['img'] != "" && ($row1['text'] != "" || $row1['title'] != "")){
     echo '<div class="carousel-item active">
-      <img src="'.$row1['img'].'" class="d-block w-100" alt="...">
+      <img src="../uploads/news/'.$row1['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
+        <h5>'.$row1['title'].'</h5>
+        <p>'.$row1['text'].'</p>
       </div>
     </div>';
   }
-  if($row2['img'] != "" && ($_row2['text'] != "" || $_row2['title'] != "")){
-    '<div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
+  if($row2['img'] != "" && ($row2['text'] != "" || $row2['title'] != "")){
+    echo '<div class="carousel-item active">
+      <img src="../uploads/news/'.$row2['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
         <p>Some representative placeholder content for the second slide.</p>
       </div>
     </div>';
   }
-  if($row3['img'] != "" && ($_row3['text'] != "" || $_row3['title'] != "")){
+ if($row3['img'] != "" && ($row3['text'] != "" || $row3['title'] != "")){
     echo'<div class="carousel-item">
       <img src="..." class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">

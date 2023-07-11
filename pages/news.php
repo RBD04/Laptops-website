@@ -241,7 +241,7 @@ if (array_key_exists('logout', $_POST)) {
         else{
             echo "<p>Poster 1 still intact !</p>";
         }
-        if (isset($_POST['title2'])&&$_POST['title2'] != "" && isset($_POST['text2'])){
+        if (isset($_POST['title2'])&& $_POST['title2'] != "" && isset($_POST['text2'])){
             if(!empty($_FILES['poster2'])){
             $dest = $_FILES['poster2']['name'];
             move_uploaded_file($_FILES['poster2']['tmp_name'],"../uploads/news/".$dest);
@@ -249,8 +249,8 @@ if (array_key_exists('logout', $_POST)) {
             $q = "SELECT * FROM news WHERE posterId =2";
             $res = mysqli_query($con, $q);
             $n = mysqli_num_rows($res);
-            if ($n != 2) {
-                $subq = "INSERT INTO news(posterId,adminId,img,title,text) VALUES(2,".$_SESSION['admin'].",'".$dest."','".$_POST['title1']."','".$_POST['text1']."')";
+            if ($n != 1) {
+                $subq = "INSERT INTO news(posterId,adminId,img,title,text) VALUES(2,".$_SESSION['admin'].",'".$dest."','".$_POST['title2']."','".$_POST['text2']."')";
                 $res2 = mysqli_query($con,$subq);
                 if($res2){
                     echo "<p class='text-success'>Poster 2 Updated !</p>";
@@ -261,7 +261,7 @@ if (array_key_exists('logout', $_POST)) {
                 
             }
             else{
-                $altq = "UPDATE news SET adminId='".$_SESSION['admin']."', img='".$dest."', title='".$_POST['title1']."', text='".$_POST['text1']."' WHERE posterId= 2";
+                $altq = "UPDATE news SET adminId='".$_SESSION['admin']."', img='".$dest."', title='".$_POST['title2']."', text='".$_POST['text2']."' WHERE posterId= 2";
                 $res2 = mysqli_query($con,$altq);
                 if($res2){
                     echo "<p class='text-success'>Poster 2 Updated !</p>";
@@ -282,8 +282,8 @@ if (array_key_exists('logout', $_POST)) {
             $q = "SELECT * FROM news WHERE posterId =3";
             $res = mysqli_query($con, $q);
             $n = mysqli_num_rows($res);
-            if ($n != 3) {
-                $subq = "INSERT INTO news(posterId,adminId,img,title,text) VALUES(3,".$_SESSION['admin'].",'".$dest."','".$_POST['title1']."','".$_POST['text1']."')";
+            if ($n != 1) {
+                $subq = "INSERT INTO news(posterId,adminId,img,title,text) VALUES(3,".$_SESSION['admin'].",'".$dest."','".$_POST['title3']."','".$_POST['text3']."')";
                 $res2 = mysqli_query($con,$subq);
                 if($res2){
                     echo "<p class='text-success'>Poster 3 Updated !</p>";
@@ -294,7 +294,7 @@ if (array_key_exists('logout', $_POST)) {
                 
             }
             else{
-                $altq = "UPDATE news SET adminId='".$_SESSION['admin']."', img='".$dest."', title='".$_POST['title1']."', text='".$_POST['text1']."' WHERE posterId= 3";
+                $altq = "UPDATE news SET adminId='".$_SESSION['admin']."', img='".$dest."', title='".$_POST['title3']."', text='".$_POST['text3']."' WHERE posterId= 3";
                 $res2 = mysqli_query($con,$altq);
                 if($res2){
                     echo "<p class='text-success'>Poster 3 Updated !</p>";
