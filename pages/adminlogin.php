@@ -2,8 +2,6 @@
 require_once '../helpers/connection.php';
 require_once '../services/admin.service.php';
 session_start();
-// session_destroy(); //(logout)
-
 if (isset($_SESSION)) {
     if (isset($_SESSION['user']))
         header('Location: home.php');
