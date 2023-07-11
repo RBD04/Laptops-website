@@ -132,7 +132,7 @@ if (array_key_exists('logout', $_POST)) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="view-products.php">
+        <a class="nav-link collapsed" href="../pages/news.php">
             <i class="bi bi-newspaper"></i>
             <span>Manage News</span>
           </a>

@@ -16,7 +16,7 @@ $users = getUsers();
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scal.0" name="viewport">
 
-    <title>Add Products</title>
+    <title>User Details</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -127,10 +127,10 @@ $users = getUsers();
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
-          <i class="bi bi-newspaper"></i>
-          <span>Manage News</span>
-        </a>
+      <a class="nav-link collapsed" href="../pages/news.php">
+            <i class="bi bi-newspaper"></i>
+            <span>Manage News</span>
+          </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="../pages/stocks.php">

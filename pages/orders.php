@@ -144,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="view-products.php">
-          <i class="bi bi-newspaper"></i>
-          <span>Manage News</span>
-        </a>
+      <a class="nav-link collapsed" href="../pages/news.php">
+            <i class="bi bi-newspaper"></i>
+            <span>Manage News</span>
+          </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="../pages/stocks.php">
