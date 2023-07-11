@@ -334,13 +334,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 
-    <section class="p-4">
+    <section class="p-5 m-2">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="img-box">
+                    <div class="container-fluid">
                         <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail"
-                            style="height: 50rem; width: auto;" alt="">
+                            style="height: auto; width: auto; max-height: 50em;" alt="">
                     </div>
                         <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
                         <iframe src="reviewsIframe.php?x=<?php echo $product->productId?>"style="border: 2em;" height="300" width="500"></iframe>
@@ -350,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div>
                         <?php 
                         if($product->quantityAvailable>0){
-                        echo'    <h2 class="text-primary mb-5 text-center display-5 fw-bolder">'.$product->productName.'</h2>';}
+                        echo'    <h2 class="text-primary mb-5 text-center display-5">'.$product->productName.'</h2>';}
                             else{
                                 echo'<h2 class="text-primary mb-1 text-center display-5 fw-bolder">'.$product->productName.'</h2>';
                                 echo'<p class="text-center fw-bolder lead text-danger">Out Of Stock</p>';

@@ -1,7 +1,6 @@
 <?php
 require_once '../helpers/dbWrapper.php';
 require_once '../models/product.php';
-require_once 'serialNumber.service.php';
 
 function getProducts()
 {
@@ -133,3 +132,4 @@ function updateProductQuantity($productId, $quantity)
 
     $wrapper->executeUpdate($query);
 }
+?>

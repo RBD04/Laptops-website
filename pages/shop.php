@@ -242,7 +242,7 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
       <div class="box bg-light">
         <a href="viewproduct.php?productId='.$product->productId.'">
           <div class="img-box">
-            <img src="'.$product->thumbnail.'" alt="img"">
+            <img src="'.$product->thumbnail.'" alt="img";">
           </div>
           <div class="detail-box">
             <h6>

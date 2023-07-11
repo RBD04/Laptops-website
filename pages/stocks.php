@@ -193,7 +193,7 @@ if (isset($_POST['category']))
                       <th class="text-primary text-center">Name</th>
                       <th class="text-primary text-center ">Price</th>
                       <th class="text-primary  text-center">Quantity</th>
-                      <th class="text-primary  text-center">Added On</th>
+                      <th class="text-primary  text-center">Added/Updated On</th>
                       <th class="text-primary" text-center">Actions</th>
                   </tr>';
                   for($i=0;$i<$n;$i++){

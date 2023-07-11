@@ -201,7 +201,8 @@ if (array_key_exists('logout', $_POST)) {
                                 }
                              }
                              if(isset($_POST['name'])&&isset($_POST['price'])&&isset($_POST['description'])&&isset($_POST['newquantity'])&&$_POST['name']!=""&&$_POST['price']!=""&&$_POST['description']!=""&&$_POST['newquantity']!=""){
-                                $q = "UPDATE `product` SET `productName`='".$_POST['name']."',`description`='".$_POST['description']."',`price`='".$_POST['price']."',`quantityAvailable`='".$_POST['newquantity']."',`thumbnail`='".$destination."',dateAdded='".date("Y-m-d h:i:s")."' WHERE productId='".$_GET['x']."'";
+                                $now = date("Y-m-d H:i:s",time()+60*60*3);
+                                $q = "UPDATE `product` SET `productName`='".$_POST['name']."',`description`='".$_POST['description']."',`price`='".$_POST['price']."',`quantityAvailable`='".$_POST['newquantity']."',`thumbnail`='".$destination."',dateAdded='".$now."' WHERE productId='".$_GET['x']."'";
                                 $res = mysqli_query($con,$q);
                                 if($res){
                                     echo "<p class='text-center text-success'>changes made successfully !</p>";

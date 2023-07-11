@@ -18,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
+if(!isset($_SESSION['user'])){
+  header("Location:../pages/home.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $p = mysqli_fetch_assoc($products);
           if($p['quantityAvailable'] > 0){$msg = "<p class='text-success text-center'>in Stock</p>";}
           else{$msg = "<p class='text-danger text-center'>out of Stock</p>";}
-          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 5rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>$".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
+          echo "<tr><td class='text-muted text-center  col-3'><a href='viewproduct.php?productId=".$p['productId']."'><img src='".$p['thumbnail']."' style='height:8rem; width: 10rem;'></a></td><td class='text-muted text-center mx-1  col-3'><a href='viewproduct.php?productId=".$p['productId']."'>".$p['productName']."</a></td><td class='text-muted text-center mx-1  col-3'>$".$p['price']."</td><td class='text-muted text-center mx-1  col-3'>".$msg."</td><td class='text-muted text-center mx-1  col-3'><form method='post'><a href='../services/wishlist.service.php?x=".$p['productId']."' class='bg-none border-0'><i class='fa fa-trash'></i></a></td></tr>";
         }
         echo "</table>";
        
