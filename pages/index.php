@@ -302,38 +302,62 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
         </div>
       </div>
     </section><!-- End Cta Section -->
-
+ 
     <!-- ======= News Section ======= -->
+    <section id="faq" class="faq section-bg">
+    <div class="container" data-aos="fade-up">
+    <div class="section-title">
+          <h2>Whats New ?</h2>
+          <p>.</p>
+        </div>
     <?php
-   echo' <section id="news" class="m-5">
-    <div id="carouselExampleCaptions" class="carousel slide">
+    $q1 = "SELECT * FROM news WHERE posterId= 1";
+    $q2 = "SELECT * FROM news WHERE posterId= 2";
+    $q3 = "SELECT * FROM news WHERE posterId= 3";
+    $r1 = mysqli_query($con, $q1);
+    $r2 = mysqli_query($con, $q2);
+    $r3 = mysqli_query($con, $q3);
+    $n1 = mysqli_num_rows($r1);
+    $n2 = mysqli_num_rows($r2);
+    $n3 = mysqli_num_rows($r3);
+    $row1 = mysqli_fetch_assoc($r1);
+    $row2 = mysqli_fetch_assoc($r2);
+    $row3 = mysqli_fetch_assoc($r3);
+    if($n1 == 1 ||$n3 == 1 || $n2 == 1){
+   echo' <div id="carouselExampleCaptions" class="carousel slide">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="...">
+  <div class="carousel-inner">';
+  if($row1['img'] != "" && ($_row1['text'] != "" || $_row1['title'] != "")){
+    echo '<div class="carousel-item active">
+      <img src="'.$row1['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Some representative placeholder content for the first slide.</p>
       </div>
-    </div>
-    <div class="carousel-item">
+    </div>';
+  }
+  if($row2['img'] != "" && ($_row2['text'] != "" || $_row2['title'] != "")){
+    '<div class="carousel-item">
       <img src="..." class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
         <p>Some representative placeholder content for the second slide.</p>
       </div>
-    </div>
-    <div class="carousel-item">
+    </div>';
+  }
+  if($row3['img'] != "" && ($_row3['text'] != "" || $_row3['title'] != "")){
+    echo'<div class="carousel-item">
       <img src="..." class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
         <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
+      </div>';
+    }
+   echo' </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -343,9 +367,14 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
-    </section>';
+</div>';
+}else{
+  echo "<h1 class='text-center text-primary'>Nothing New Here...Stay Tuned !</h1>";
+}
     ?>
+    </div>
+    </section>
+    
     <!-- End News Section -->
 
     <!-- ======= Frequently Asked Questions Section ======= -->

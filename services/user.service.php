@@ -169,3 +169,4 @@ function alreadyExists($email)
 
     return ($count > 0);
 }
+?>
