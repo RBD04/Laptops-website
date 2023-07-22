@@ -331,7 +331,7 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">';
-  if($row1['img'] != "" && ($row1['text'] != "" || $row1['title'] != "")){
+  if($n1 == 1){
     echo '<div class="carousel-item active">
       <img src="../uploads/news/'.$row1['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
@@ -340,21 +340,21 @@ if (isset($_SESSION) && isset($_SESSION['user'])) {
       </div>
     </div>';
   }
-  if($row2['img'] != "" && ($row2['text'] != "" || $row2['title'] != "")){
+  if($n2 == 1){
     echo '<div class="carousel-item active">
       <img src="../uploads/news/'.$row2['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+        <h5>'.$row2['title'].'</h5>
+        <p>'.$row2["text"].'</p>
       </div>
     </div>';
   }
- if($row3['img'] != "" && ($row3['text'] != "" || $row3['title'] != "")){
+ if($n3 == 1){
     echo'<div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
+      <img src="../uploads/news/'.$row3['img'].'" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+        <h5>'.$row3['title'].'</h5>
+        <p>'.$row3["text"].'</p>
       </div>';
     }
    echo' </div>

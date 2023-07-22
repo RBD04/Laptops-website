@@ -277,7 +277,7 @@ if (array_key_exists('logout', $_POST)) {
         if (isset($_POST['title3'])&&$_POST['title3'] != "" && isset($_POST['text3'])){
             if(!empty($_FILES['poster3'])){
             $dest = $_FILES['poster3']['name'];
-            move_uploaded_file($_FILES['poster1']['tmp_name'],"../uploads/news/".$dest);
+            move_uploaded_file($_FILES['poster3']['tmp_name'],"../uploads/news/".$dest);
             }
             $q = "SELECT * FROM news WHERE posterId =3";
             $res = mysqli_query($con, $q);

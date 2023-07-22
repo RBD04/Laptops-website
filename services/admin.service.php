@@ -17,7 +17,7 @@ function validateLogin()
     } else if ($count === 1) {
         $_SESSION['admin'] = $result[0]['adminId'];
         $_SESSION['name'] = $result[0]['username'];
-        header('Location: ../pages/add-product.php');
+        header('Location: ../pages/admin-home.php');
         exit();
     }
 }

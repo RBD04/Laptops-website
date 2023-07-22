@@ -16,23 +16,6 @@ $error_message = '';
 if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
     $error_message = validateLogin();
 }
-
-// if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
-//     $query = 'SELECT * FROM admin Where username="' . $_POST["username"] . '" and password="' . $_POST["password"] . '"';
-//     $result = mysqli_query($con, $query);
-//     $num_rows = mysqli_num_rows($result);
-//     if ($num_rows === 0) {
-//         $error_message = 'Authentication failed';
-//     } else if ($num_rows > 1) {
-//         $error_message = 'Please contact your administrator';
-//     } else if ($num_rows === 1) {
-//         $admin = mysqli_fetch_assoc($result);
-//         $_SESSION['admin'] = $admin['adminId'];
-//         $_SESSION['name'] = $admin['username'];
-//         mysqli_close($con);
-//         header('Location: add-product.php');
-//     }
-// }
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +33,7 @@ if (isset($_POST) && isset($_POST['username']) && isset($_POST['password'])) {
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>admin login</title>
+    <title>Admin Login</title>
 
     <!--Bootstrap 5.2 style link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
