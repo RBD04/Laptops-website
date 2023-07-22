@@ -2,7 +2,6 @@
 require_once '../services/user.service.php';
 
 session_start();
-
 $msgError = '';
 
 if (
@@ -88,7 +87,7 @@ if (
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="home.php">
             <span>
-             Tech Zone
+              Tech Zone
             </span>
           </a>
 
@@ -144,7 +143,7 @@ if (
             Register
           </h2>
         </div>
-        <form method="post">
+        <form method="post" onsubmit="return checkPass()">
           <div class="row">
             <div class="col">
               <input name="firstName" type="text" placeholder="*First Name" />
@@ -165,11 +164,12 @@ if (
             </div>
           </div>
           <div>
-            <input name="password" type="password" placeholder="*Password" />
+            <input name="password" id="pass1" type="password" placeholder="*Password" />
           </div>
           <div>
-            <input name="confPassword" type="password" placeholder="*Confirm Password" />
+            <input name="confPassword" id="pass2" onblur="showMsg()" type="password" placeholder="*Confirm Password" />
           </div>
+          <p class="text-danger fw-bolder" id="error"></p>
           <?php
           if (isset($_POST))
             echo $msgError;
@@ -264,6 +264,27 @@ if (
   </script>
   <!-- custom js -->
   <script src="../js/custom.js"></script>
+  <script>
+    function checkPass() {
+      let x = document.getElementById("pass1").value;
+      let y = document.getElementById("pass2").value;
+      if (x != y) {
+        return false;
+      }
+      return true;
+    }
+
+    function showMsg() {
+      let x = document.getElementById("pass1").value;
+      let y = document.getElementById("pass2").value;
+      let z = document.getElementById("error");
+      if (x != y && y != "") {
+        z.innerHTML = "Passwords Dont Match !";
+      } else {
+        z.innerHTML = "";
+      }
+    }
+  </script>
 
 </body>
 

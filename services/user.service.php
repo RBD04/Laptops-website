@@ -82,25 +82,21 @@ function signup()
 {
     $wrapper = new dbWrapper();
     if (alreadyExists($_POST['email'])) {
-        return 'Email not valid! Please use another one';
-    } else {
-        extract($_POST);
-
-        if (isset($firstName) && isset($lastName) && isset($email) && isset($phoneNumber) && isset($password)) {
+        return 'Email Already Used ! Please Enter another one';
+    }
+    else {
+        if (isset($_POST['firstName']) && $_POST['firstName'] != "" && isset($_POST['lastName']) && $_POST['lastName'] != "" && isset($_POST['email']) && $_POST['email'] != "" && isset($_POST['phoneNumber']) && $_POST['phoneNumber'] != "" && isset($_POST['password']) && $_POST['password'] != "") {
             $query = 'INSERT INTO user(firstName,lastName,email,phoneNumber,password,birthday) 
-                VALUES("' . $firstName . '","' . $lastName . '","' . $email . '","' . $phoneNumber . '","' . $password . '",
-                "' . $birthday . '")';
-            echo $query;
+                VALUES("' . $_POST['firstName'] . '","' . $_POST['lastName'] . '","' . $_POST['email'] . '","' . $_POST['phoneNumber'] . '","' . $_POST['password'] . '",
+                "' . $_POST['birthday'] . '")';
             $id = $wrapper->executeQueryAndReturnId($query);
             createCart($id);
             createWishlist($id);
-
-            echo '
-                <script>
-                    alert("You have successfully registred, login now!");
-                    window.location="../pages/login.php";
-                </script>                        ';
-        } else return 'Error creating account';
+            header("Location:../pages/login.php");
+        } else {
+            header("Location: ../pages/register.php");
+            return 'Error creating account';
+        }
     }
 }
 
@@ -169,4 +165,3 @@ function alreadyExists($email)
 
     return ($count > 0);
 }
-?>

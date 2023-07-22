@@ -43,10 +43,7 @@ function getCategoriesWithProductsAvailable()
 
             $categories[] = $category;
         }
-    } else {
-        die('Error retrieving categories.');
-    }
-
+    } 
     return $categories;
 }
 
