@@ -12,7 +12,18 @@ if (array_key_exists('logout', $_POST)) {
   header("Refresh:0");
 }
 
-if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
+if (isset($_POST) && isset($_POST['quantity']) && !empty($_FILES['image1']['name']) && !empty($_FILES['image1']['name'])) {
+  $image1 = $_FILES['image1']['name'];
+  $image2 = $_FILES['image2']['name'];
+  $dest = "../uploads/images/";
+  move_uploaded_file($image1, $dest . "" . $image1);
+  move_uploaded_file($image2, $dest . "" . $image2);
+  $add1 = 'INSERT INTO image(productId,imageUrl) VALUES ("' .  . '","' . $image1 . '")';
+  $res1 = mysqli_query($con,$add1);
+  $add2 = 'INSERT INTO image(productId,imageUrl) VALUES ("' .  . '","' . $image2 . '")';
+  $res2 = mysqli_query($con,$add2);
+  $msgSuccess = addProduct();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,10 +144,10 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
         </a>
       </li>
       <li class="nav-item">
-      <a class="nav-link collapsed" href="../pages/news.php">
-            <i class="bi bi-newspaper"></i>
-            <span>Manage News</span>
-          </a>
+        <a class="nav-link collapsed" href="../pages/news.php">
+          <i class="bi bi-newspaper"></i>
+          <span>Manage News</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="../pages/stocks.php">
@@ -176,7 +187,7 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
             </div>
             <div class="form-group">
               <label for="quantity">Quantity</label>
-              <input type="number" class="form-control mb-3" id="quantity" name="quantity"  min="1" max="10" />
+              <input type="number" class="form-control mb-3" id="quantity" name="quantity" min="1" max="10" />
             </div>
             <div class="form-group" id="innerSerial">
             </div>
@@ -207,11 +218,8 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
             </div>
             <div class="form-group">
               <label for="images" class="form-label">Images</label>
-              <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-            </div>
-            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
-            </div>
-            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
+              <input type="file" class="form-control mb-3" id="images" name="image1" />
+              <input type="file" class="form-control mb-3" id="images" name="image2" />
             </div>
             <?php
             if (isset($_POST['productName'])) {
