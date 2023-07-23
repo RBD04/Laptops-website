@@ -339,8 +339,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
                 <div class="col-md-6">
                     <div class="container-fluid">
-                        <img src="<?php echo $product->thumbnail ?>" class="img-thumbnail"
-                            style="height: auto; width: auto; max-height: 50em;" alt="">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="<?php echo $product->thumbnail;?>" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+</div>
                     </div>
                         <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
                         <iframe src="reviewsIframe.php?x=<?php echo $product->productId?>"style="border: 2em;" height="300" width="500"></iframe>
@@ -350,21 +372,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div>
                         <?php 
                         if($product->quantityAvailable>0){
-                        echo'    <h2 class="text-primary mb-5 text-center display-5">'.$product->productName.'</h2>';}
+                        echo'    <h2 class="text-primary mb-5 text-center display-6">'.$product->productName.'</h2>';}
                             else{
-                                echo'<h2 class="text-primary mb-1 text-center display-5 fw-bolder">'.$product->productName.'</h2>';
+                                echo'<h2 class="text-primary mb-1 text-center display-6">'.$product->productName.'</h2>';
                                 echo'<p class="text-center fw-bolder lead text-danger">Out Of Stock</p>';
                             }
                             ?>
                         </div>
                         <form method="post">
-                            <div>
-                                <h3 class="mb-5 text-muted fw-light">
-                                    <?php echo $product->description; ?>
-                                </h3>
+                            <div class="my-3 p-2">
+                               <?php 
+                               $lst =  explode("-",$product->description);
+                               echo "<ul class='text-muted fw-bolder m-2'>";
+                               foreach($lst as $item){
+                                echo "<li>".$item."</li>";
+                               }
+                               echo "</ul>";
+                                ?>
                             </div>
                             <div>
-                                <h4 class="mb-5 text-muted fw-light">
+                                <h4 class="mb-5 text-dark fw-bolder">
                                     Price:
                                     <?php echo $product->price . '$'; ?>
                                 </h4>
@@ -562,7 +589,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      
                                                                  <div class="pull-left">
      
-                                                                    <p class="text-danger ">Requires Membership</p>
+                                                                    <p class="text-danger ">Login to Add Reviews</p>
      
                                                                  </div>
      

@@ -209,6 +209,10 @@ if (isset($_POST) && isset($_POST['quantity'])) $msgSuccess = addProduct();
               <label for="images" class="form-label">Images</label>
               <input type="file" class="form-control mb-3" id="images" name="images" multiple />
             </div>
+            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
+            </div>
+            <input type="file" class="form-control mb-3" id="images" name="images" multiple />
+            </div>
             <?php
             if (isset($_POST['productName'])) {
               echo $msgSuccess . '<br/><br/>';

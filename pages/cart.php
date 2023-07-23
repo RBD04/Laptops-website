@@ -123,23 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
-                            </li>
-                            <?php if (isset($_SESSION['user'])) echo '
-                                    <li class="nav-item">
-                                     <a class="nav-link fw-bolder text-muted" href="account.php">Account</a>
-                                    </li>' ?>
                             <li class="nav-item active">
                                 <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us <span class="sr-only">(current)</span> </a>
                             </li>
                         </ul>
-                        <?php
-                        if (isset($_SESSION['name']))
-                            echo '
-            <form method="post">
-            <button class="btn btn-primary" type="submit" name="logout" value="logout">Logout</button>
-            </form>
-            '
-                        ?>
                         <div class="user_option-box">
                             <?php
                              if(isset($_SESSION['user'])){
@@ -168,12 +155,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                              ?>
                             <div class="dropstart">
                                 <button type="button" class="bg-transparent border-0 ml-3" data-bs-toggle="dropdown" aria-expanded="false" disabled>
-                                    <i class="fa fa-cart-plus text-primary fw-bolder" aria-hidden="true"> MY CART</i>
+                                    <i class="fa fa-cart-plus text-primary fw-bolder" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <a href="">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>
-                            </a>
+                            <?php
+            if(isset($_SESSION)&&isset($_SESSION['user'])){
+              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
+              $res = mysqli_query($con,$q);
+              if($res){
+                $row = mysqli_fetch_assoc($res);
+                if($row['count'] != 0){
+                  echo '
+                  <a href="wishlist.php">
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
+                }
+                else{
+                echo '
+                <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
+                }
+              }
+            }
+                else{
+                  echo '<div class="btn-group dropstart bg-none">
+                  <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   <i class="fa fa-heart-o"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="p-2 text-center text-primary">No Account</li>
+                  </ul>
+                </div>';
+                }
+             ?>
                         </div>
                     </div>
                 </nav>
@@ -186,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center mb-5 text-primary display-5 fw-bolder">Your Cart</h1>
+                <h1 class="text-center mb-5 text-primary display-6">My Cart</h1>
             </div>
         </div>
    <?php

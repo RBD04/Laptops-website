@@ -26,10 +26,7 @@ function renderCartItems($cartProducts) {
                         <div class="d-flex align-items-center">
                             <h6 class="mb-0 mr-auto text-primary">' . $cartProduct->productName . '</h6>
                         </div>
-                        <p class="text-muted">' . $cartProduct->description . '</p>
                         <p class="text-muted">Price: $' . $price . '</p>
-                        <p class="text-muted">Quantity: ' . $quantity . '</p>
-                        <p class="text-muted">Total: $' . $total . '</p>
                     </div>
                     <button class="btn btn-sm btn-danger m-2" style="position: absolute; bottom: 0; right: 0;" name="removeProduct">Remove</button>
                 </div>
