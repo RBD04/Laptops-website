@@ -7,33 +7,41 @@ require_once '../services/review.service.php';
 
 session_start();
 $cartProducts = getCartProducts();
+$getPictures  = "SELECT * FROM image WHERE productId='" . $_GET['productId'] . "'";
+$res = mysqli_query($con, $getPictures);
+$pics = array();
+for ($i = 0; $i < 2; $i++) {
+    $row = mysqli_fetch_assoc($res);
+    $pics[] = $row['imageUrl'];
+}
 if (isset($_GET['productId']))
     $product = getProductById($_GET['productId']);
 else
     header('Location: shop.php');
 
 $Message = '';
-if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
+if (isset($_SESSION['user']) && isset($_POST['wishlist'])) {
     $msg = "";
-    $found =0;
-    $q1 = "SELECT productId FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
-    $r1 = mysqli_query($con,$q1);
+    $found = 0;
+    $q1 = "SELECT productId FROM wishlistproduct WHERE wishlistId ='" . $_SESSION['user'] . "'";
+    $r1 = mysqli_query($con, $q1);
     $n = mysqli_num_rows($r1);
-    for($i=0;$i<$n;$i++){
+    for ($i = 0; $i < $n; $i++) {
         $row  = mysqli_fetch_assoc($r1);
-        if($row['productId'] == $_GET['productId']){
+        if ($row['productId'] == $_GET['productId']) {
             $found = 1;
             break;
         }
     }
-    if($found){ $msg = "Product already Exists In your Wishlist !";}
-    else{
-    $add = "INSERT INTO `wishlistproduct`(`wishlistId`, `productId`) VALUES ('".$_SESSION['user']."','".$_GET['productId']."')";
-    $added = mysqli_query($con,$add);
-    $msg = "Product Added To Your Wishlist !";
+    if ($found) {
+        $msg = "Product already Exists In your Wishlist !";
+    } else {
+        $add = "INSERT INTO `wishlistproduct`(`wishlistId`, `productId`) VALUES ('" . $_SESSION['user'] . "','" . $_GET['productId'] . "')";
+        $added = mysqli_query($con, $add);
+        $msg = "Product Added To Your Wishlist !";
     }
-    }
-        
+}
+
 
 
 $reviews = getReviews($product->productId);
@@ -52,11 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (isset($_POST['review'])&&isset($_SESSION['user'])) {
-        if(isset($_POST['rating'])){
-        $rating = $_POST['rating'];
-      }
-      else{$rating = 0;}
+    if (isset($_POST['review']) && isset($_SESSION['user'])) {
+        if (isset($_POST['rating'])) {
+            $rating = $_POST['rating'];
+        } else {
+            $rating = 0;
+        }
         addReview($_SESSION['user'], $product->productId, $comment, $rating);
     }
 
@@ -94,13 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Tech Zone: View Product Page</title>
 
     <!--Bootstrap 5.2 style link-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
     <!--owl slider stylesheet -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
     <!-- font awesome style -->
     <link href="../css/font-awesome.min.css" rel="stylesheet" />
@@ -224,98 +231,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="sub_page">
 
- <!-- header section strats -->
- <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="home.php">
-            <span>
-              Tech Zone
-            </span>
-          </a>
-          <?php
-          if (isset($_SESSION['name']))
-            echo 'Welcome ' . $_SESSION['name'];
-          ?>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link fw-bolder text-primary" href="home.php">Home </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
-              </li>
-                <li class="nav-item">
-                  <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
-                </li>
-              </ul>
-
-             
-
-              <div class="user_option-box">
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="home.php">
+                    <span>
+                        Tech Zone
+                    </span>
+                </a>
                 <?php
-              if (isset($_SESSION['admin']))
-                echo 'Admin page '
-                  ?>
-                  <?php 
-                  if(isset($_SESSION['user'])){
-                    $q = "SELECT profilePicture FROM user WHERE userId='".$_SESSION['user']."'";
-                    $res = mysqli_query($con,$q);
-                    if($res){
-                    $user = mysqli_fetch_assoc($res);
-                    $picture = $user['profilePicture'];
-                    if($picture == NULL){
-                      echo'  <a href="login.php">
+                if (isset($_SESSION['name']))
+                    echo 'Welcome ' . $_SESSION['name'];
+                ?>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class=""> </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link fw-bolder text-primary" href="home.php">Home </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bolder text-muted" href="shop.php"> Shop </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bolder text-muted" href="contact.php">Contact Us</a>
+                        </li>
+                    </ul>
+
+
+
+                    <div class="user_option-box">
+                        <?php
+                        if (isset($_SESSION['admin']))
+                            echo 'Admin page '
+                        ?>
+                        <?php
+                        if (isset($_SESSION['user'])) {
+                            $q = "SELECT profilePicture FROM user WHERE userId='" . $_SESSION['user'] . "'";
+                            $res = mysqli_query($con, $q);
+                            if ($res) {
+                                $user = mysqli_fetch_assoc($res);
+                                $picture = $user['profilePicture'];
+                                if ($picture == NULL) {
+                                    echo '  <a href="login.php">
                       <i class="fa fa-user-o" aria-hidden="true"></i>
                     </a>';
-                    }
-                    else{
-                      echo ' <a href="login.php">
-                      <img src='.$picture.' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
+                                } else {
+                                    echo ' <a href="login.php">
+                      <img src=' . $picture . ' alt="user" style="height: 1.5rem; width: 1.5rem; border-radius: 5rem; margin: 0.5rem 0 0.5rem 0;"/>
                     </a>';
-                    }
-                  }
-                }
-                  else{
-                    echo' <a href="login.php">
+                                }
+                            }
+                        } else {
+                            echo ' <a href="login.php">
                      <i class="fa fa-user-o" aria-hidden="true"></i>
                    </a>';
-                   }
-                  ?>
-               
+                        }
+                        ?>
 
-                <div class="dropstart">
-                  <a class="ml-3" data-bs-toggle="dropdown">
-                    <i class="fa fa-cart-plus text-muted" aria-hidden="true"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                  <?php renderCartItems($cartProducts) ?>
-                </ul>
-              </div>
-              <?php
-            if(isset($_SESSION)&&isset($_SESSION['user'])){
-              $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='".$_SESSION['user']."'";
-              $res = mysqli_query($con,$q);
-              if($res){
-                $row = mysqli_fetch_assoc($res);
-                if($row['count'] != 0){
-                  echo '
+
+                        <div class="dropstart">
+                            <a class="ml-3" data-bs-toggle="dropdown">
+                                <i class="fa fa-cart-plus text-muted" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php renderCartItems($cartProducts) ?>
+                            </ul>
+                        </div>
+                        <?php
+                        if (isset($_SESSION) && isset($_SESSION['user'])) {
+                            $q = "SELECT COUNT(wpId) AS count FROM wishlistproduct WHERE wishlistId ='" . $_SESSION['user'] . "'";
+                            $res = mysqli_query($con, $q);
+                            if ($res) {
+                                $row = mysqli_fetch_assoc($res);
+                                if ($row['count'] != 0) {
+                                    echo '
                   <a href="wishlist.php">
-                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">'.$row['count'].'</span></i></a>';
-                }
-                else{
-                echo '
+                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">' . $row['count'] . '</span></i></a>';
+                                } else {
+                                    echo '
                 <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
-                }
-              }
-            }
-                else{
-                  echo '<div class="btn-group dropstart bg-none">
+                                }
+                            }
+                        } else {
+                            echo '<div class="btn-group dropstart bg-none">
                   <button class="btn border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                    <i class="fa fa-heart-o"></i>
                   </button>
@@ -323,72 +325,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li class="p-2 text-center text-primary">No Account</li>
                   </ul>
                 </div>';
-                }
-             ?>
-            </div>
-          </div>
-        </nav>
-      </div>
+                        }
+                        ?>
+                    </div>
+                </div>
+            </nav>
+        </div>
     </header>
     <!-- end header section -->
     </div>
 
 
-    <section class="p-5 m-2">
+    <section class="p-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="container-fluid">
-                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="<?php echo $product->thumbnail;?>" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  </button>
-</div>
+                        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-bs-interval="10000">
+                                    <img src="<?php echo $product->thumbnail; ?>" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item" data-bs-interval="2000">
+                                    <img style='height:500px; width: 500px;' src="../uploads/images/<?php echo $pics[0]; ?>" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="../uploads/images/<?php echo $pics[1]; ?>" class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
-                        <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
-                        <iframe src="reviewsIframe.php?x=<?php echo $product->productId?>"style="border: 2em;" height="300" width="500"></iframe>
                 </div>
                 <div class="col-md-6">
                     <div class="form_container">
                         <div>
-                        <?php 
-                        if($product->quantityAvailable>0){
-                        echo'    <h2 class="text-primary mb-5 text-center display-6">'.$product->productName.'</h2>';}
-                            else{
-                                echo'<h2 class="text-primary mb-1 text-center display-6">'.$product->productName.'</h2>';
-                                echo'<p class="text-center fw-bolder lead text-danger">Out Of Stock</p>';
+                            <?php
+                            if ($product->quantityAvailable > 0) {
+                                echo '    <h2 class="text-primary mb-5 text-center display-6">' . $product->productName . '</h2>';
+                            } else {
+                                echo '<h2 class="text-primary mb-1 text-center display-6">' . $product->productName . '</h2>';
+                                echo '<p class="text-center fw-bolder lead text-danger">Out Of Stock</p>';
                             }
                             ?>
                         </div>
                         <form method="post">
-                            <div class="my-3 p-2">
-                               <?php 
-                               $lst =  explode("-",$product->description);
-                               echo "<ul class='text-muted fw-bolder m-2'>";
-                               foreach($lst as $item){
-                                echo "<li>".$item."</li>";
-                               }
-                               echo "</ul>";
+                            <div class="my-3 mx-2">
+                                <p class="text-muted text-start">Specifications:</p>
+                                <hr style="border: 1px solid gray;">
+                                <?php
+                                $lst =  explode("-", $product->description);
+                                echo "<ul class='text-muted fw-bolder m-2'>";
+                                foreach ($lst as $item) {
+                                    echo "<li>" . $item . "</li>";
+                                }
+                                echo "</ul>";
                                 ?>
+                                <hr style="border: 1px solid gray;">
                             </div>
                             <div>
                                 <h4 class="mb-5 text-dark fw-bolder">
@@ -396,22 +399,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <?php echo $product->price . '$'; ?>
                                 </h4>
                             </div>
-                            <label for="quantityGroup" class="text-muted fw-light">Quantity</label><br />
-                            <div id="quantityGroup" class="btn-group mb-5" role="group" aria-label="Basic example">
-                                <button type="button" id="reduce" onclick="quantityChange('reduce')"
-                                    class="btn btn-primary">-</button>
-                                <input type="number" name="quantity" id="quantity" style="width: 50px;"
-                                    class="form-control text-center w-50" min="1" value="1" readonly />
-                                <button type="button" id="add" onclick="quantityChange('add')"
-                                    class="btn btn-primary">+</button>
+                            <label for="quantityGroup" class="text-muted text-center fw-light">Quantity</label><br />
+                            <div id="quantityGroup" class="btn-group d-flex justify-content-center mx-5 mb-5" role="group" aria-label="Basic example">
+                                <button type="button" id="reduce" onclick="quantityChange('reduce')" class="btn btn-primary mx-auto">-</button>
+                                <input type="number" name="quantity" id="quantity" class="form-control mx-auto text-center w-50" min="1" value="1" readonly />
+                                <button type="button" id="add" onclick="quantityChange('add')" class="btn mx-auto btn-primary">+</button>
                             </div>
                             <?php
                             //
                             //
                             //
                             //
-                            if (isset($_SESSION['user'])) 
-                            
+                            if (isset($_SESSION['user']))
+
                                 echo '<p class="text-primary fs-5">' . $Message . '</p>
                                
                         <table class="container-fluid">
@@ -434,7 +434,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </td></tr></table>
                        ';
                             else
-                            echo '<p class="text-primary fs-5">' . $Message . '</p>
+                                echo '<p class="text-primary fs-5">' . $Message . '</p>
                                
                             <table class="container-fluid">
                                     <tr>
@@ -454,50 +454,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             Checkout Now
                             </button>
                         </td></tr>';
-                        if(isset($_SESSION['user'])&&isset($_POST['wishlist'])){
-                           
+                            if (isset($_SESSION['user']) && isset($_POST['wishlist'])) {
+
                                 echo "<tr><td><p class='text-center'>$msg</p></td></tr>";
-                        }
-                        echo '</table>';
-                           
-
-                                    ?>
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title text-primary font-weight-bolder"
-                                                    id="exampleModalLabel">Please Login First</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p href="login.php" class="text-muted font-weight-bold" data-toggle="modal"
-                                                    data-target="#exampleModal">
-                                                    Logging in is an essential step to ensure a seamless and secure online
-                                                    shopping experience on our website.
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary font-weight-bold"
-                                                    data-dismiss="modal">Close</button>
-                                                <a href="login.php" class="btn btn-primary font-weight-bold">Login</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-                            <?php 
-                                    if(isset($_SESSION)&&isset($_SESSION['user'])){
-                                       echo' 
-                            <div class="card">
+                            }
+                            echo '</table>';
+                            ?>
+                        </form>
+                    </div>
+                </div>
+                <?php
+                if (isset($_SESSION) && isset($_SESSION['user'])) {
+                    echo ' 
+                            <div class="card d-flex">
 
                                 <div class="row">                                      
-                                    <div class="col-10">
+                                    <div class="col-12">
                                         <form method="post">
                                             <div class="comment-box ml-2">
 
@@ -556,9 +528,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                             </div>
                                         </form>
-                                    </div>';}
-                                    else{
-                                            echo' 
+                                    </div>';
+                } else {
+                    echo ' 
                                  <div class="card">
      
                                      <div class="row">
@@ -566,7 +538,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         
                                    
                                            
-                                         <div class="col-10">
+                                         <div class="col-12">
                                              <form method="post">
                                                  <div class="comment-box ml-2">
      
@@ -612,132 +584,155 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                  </div>
                                              </form>
                                          </div>';
-                                    }
-                                    ?>
+                }
+                ?>
 
 
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
 
-        <!-- end contact section -->
-        <br>
-        <!-- footer section -->
-        <footer class="footer_section bg-primary">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-6 footer-col text-center">
-                        <div class="footer_detail">
-                            <h4>
-                                About
-                            </h4>
-                            <p>
-                                Necessary, making this the first true generator on the Internet. It uses a dictionary of
-                                over 200 Latin words, combined with
-                            </p>
-                            <div class="footer_social justify-content-center">
-                                <a href="">
-                                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 footer-col text-center">
-                        <div class="footer_contact">
-                            <h4>
-                                Reach at..
-                            </h4>
-                            <div class="contact_link_box">
-                                <a href="">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                    <span>
-                                        Location
-                                    </span>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-phone" aria-hidden="true"></i>
-                                    <span>
-                                        Call +01 1234567890
-                                    </span>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-envelope" aria-hidden="true"></i>
-                                    <span>
-                                        demo@gmail.com
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <div>
+                <h3 class="mt-5 mb-3 text-muted">Product Reviews</h3>
+                <iframe src="reviewsIframe.php?x=<?php echo $product->productId ?>" style="border: 2em;" height="300" width="500"></iframe>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary font-weight-bolder" id="exampleModalLabel">Please Login First</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="footer-info">
-                    <p>
-                        &copy; <span id="displayYear"></span> All Rights Reserved By
-                        <a href="https://html.design/">Laptops website</a>
+                <div class="modal-body">
+                    <p href="login.php" class="text-muted font-weight-bold" data-toggle="modal" data-target="#exampleModal">
+                        Logging in is an essential step to ensure a seamless and secure online
+                        shopping experience on our website.
                     </p>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary font-weight-bold" data-dismiss="modal">Close</button>
+                    <a href="login.php" class="btn btn-primary font-weight-bold">Login</a>
+                </div>
             </div>
-        </footer>
-        <!-- footer section -->
+        </div>
+    </div>
+    <!-- end contact section -->
+    <br>
+    <!-- footer section -->
+    <footer class="footer_section bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 footer-col text-center">
+                    <div class="footer_detail">
+                        <h4>
+                            About
+                        </h4>
+                        <p>
+                            Necessary, making this the first true generator on the Internet. It uses a dictionary of
+                            over 200 Latin words, combined with
+                        </p>
+                        <div class="footer_social justify-content-center">
+                            <a href="">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 footer-col text-center">
+                    <div class="footer_contact">
+                        <h4>
+                            Reach at..
+                        </h4>
+                        <div class="contact_link_box">
+                            <a href="">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span>
+                                    Location
+                                </span>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <span>
+                                    Call +01 1234567890
+                                </span>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <span>
+                                    demo@gmail.com
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-info">
+                <p>
+                    &copy; <span id="displayYear"></span> All Rights Reserved By
+                    <a href="https://html.design/">Laptops website</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section -->
 
 
-        <!-- jQery -->
-        <script src="../js/jquery-3.4.1.min.js"></script>
-        <!-- popper js -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-            </script>
-        <!-- bootstrap js -->
-        <script src="../js/bootstrap.js"></script>
-        <!-- owl slider -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-        </script>
-        <!-- custom js -->
-        <script src="../js/custom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <!-- jQery -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <!-- bootstrap js -->
+    <script src="../js/bootstrap.js"></script>
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+    <!-- custom js -->
+    <script src="../js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-            const quantityChange = (action) => {
-                let quantityInput = document.getElementById('quantity');
-                let currentValue = parseInt(quantityInput.value);
+    <script>
+        const quantityChange = (action) => {
+            let quantityInput = document.getElementById('quantity');
+            let currentValue = parseInt(quantityInput.value);
 
-                switch (action) {
-                    case 'add':
-                        quantityInput.value = currentValue + 1;
-                        break;
-                    case 'reduce':
-                        if (currentValue > 1) {
-                            quantityInput.value = currentValue - 1;
-                        } else console.log('You can\'t add 0 items');
-                        break;
-                }
+            switch (action) {
+                case 'add':
+                    quantityInput.value = currentValue + 1;
+                    break;
+                case 'reduce':
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    } else console.log('You can\'t add 0 items');
+                    break;
             }
+        }
 
 
-            function disableInputsByClass(className) {
-                var inputs = document.querySelectorAll('.' + className);
-                for (var i = 0; i < inputs.length; i++) {
-                    inputs[i].disabled = true;
-                }
+        function disableInputsByClass(className) {
+            var inputs = document.querySelectorAll('.' + className);
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = true;
             }
+        }
 
-            // Call the function to disable the inputs with the "disabled" class
-            disableInputsByClass('disabled');
-        </script>
-    </body>
+        // Call the function to disable the inputs with the "disabled" class
+        disableInputsByClass('disabled');
+    </script>
+</body>
 
-    </html>
+</html>

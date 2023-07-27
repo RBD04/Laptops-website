@@ -12,16 +12,7 @@ if (array_key_exists('logout', $_POST)) {
   header("Refresh:0");
 }
 
-if (isset($_POST) && isset($_POST['quantity']) && !empty($_FILES['image1']['name']) && !empty($_FILES['image1']['name'])) {
-  $image1 = $_FILES['image1']['name'];
-  $image2 = $_FILES['image2']['name'];
-  $dest = "../uploads/images/";
-  move_uploaded_file($image1, $dest . "" . $image1);
-  move_uploaded_file($image2, $dest . "" . $image2);
-  $add1 = 'INSERT INTO image(productId,imageUrl) VALUES ("' .  . '","' . $image1 . '")';
-  $res1 = mysqli_query($con,$add1);
-  $add2 = 'INSERT INTO image(productId,imageUrl) VALUES ("' .  . '","' . $image2 . '")';
-  $res2 = mysqli_query($con,$add2);
+if (isset($_POST) && isset($_POST['quantity']) && !empty($_FILES['image1']['name']) && !empty($_FILES['image2']['name'])) {
   $msgSuccess = addProduct();
 }
 ?>

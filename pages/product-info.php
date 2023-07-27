@@ -98,11 +98,6 @@ if (array_key_exists('logout', $_POST)) {
                     <div class="col-lg-12">
                         <div class="pagetitle">
                             <h1>Product Info</h1>
-                            <nav>
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="">Home</a></li>
-                                </ol>
-                            </nav>
                         </div><!-- End Page Title -->
                         <!--Product Info-->
                         <section>
@@ -115,9 +110,9 @@ if (array_key_exists('logout', $_POST)) {
                                 echo'        <div class="conatiner-fluid">
                                 <form method="post" enctype="multipart/form-data" class="row">
                                     <div class="col-lg-4 col-12">
-                                        <div class="justify-content-center text-center">
+                                        <div class="justify-content-center text-center container-fluid">
                                             <label for="thumbnail">
-                                                <img src="'.$row['thumbnail'].'"width="300rem" height="300rem "
+                                                <img src="'.$row['thumbnail'].'"width="400rem" height="300rem "
                                                     class="mx-auto mt-3" alt="Profile Picture"
                                                     id="ThumbnailPreview">
                                                 <input type="file" id="thumbnail" name="thumbnail"
@@ -205,7 +200,7 @@ if (array_key_exists('logout', $_POST)) {
                                 $q = "UPDATE `product` SET `productName`='".$_POST['name']."',`description`='".$_POST['description']."',`price`='".$_POST['price']."',`quantityAvailable`='".$_POST['newquantity']."',`thumbnail`='".$destination."',dateAdded='".$now."' WHERE productId='".$_GET['x']."'";
                                 $res = mysqli_query($con,$q);
                                 if($res){
-                                    echo "<p class='text-center text-success'>changes made successfully !</p>";
+                                    echo "<p class='text-center text-success mt-3'>changes made successfully !</p>";
                             }
                             $log = "INSERT INTO adminlog(adminId,productId) VALUES ('".$_SESSION['admin']."','".$_GET['x']."')";
                             $logDone = mysqli_query($con,$log);

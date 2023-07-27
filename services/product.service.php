@@ -1,7 +1,7 @@
 <?php
 require_once '../helpers/dbWrapper.php';
 require_once '../models/product.php';
-
+require_once '../helpers/connection.php';
 function getProducts()
 {
     $wrapper = new dbWrapper();
@@ -89,7 +89,6 @@ function addProduct()
     $description = $_POST['description'];
     $price = $_POST['price'];
     $quantityAvailable = $_POST['quantity'];
-
     if (isset($quantityAvailable)) {
         if (!empty($_FILES['thumbnail']['name'])) {
             $destination = '../uploads/Thumbnails/' . $_FILES['thumbnail']['name'];
@@ -100,8 +99,18 @@ function addProduct()
             }
             $addProductQuery = 'INSERT INTO product(categoryId,productName,description,price,quantityAvailable,thumbnail)
                                 VALUES("' . $categoryId . '","' . $productName . '","' . $description . '","' . $price . '","' . $quantityAvailable . '","' . $destination . '")';
+                                            
             $id = '';
             $id = $wrapper->executeQueryAndReturnId($addProductQuery);
+                $image1 = $_FILES['image1']['name'];
+                $image2 = $_FILES['image2']['name'];
+                $dest = "../uploads/images/";
+                move_uploaded_file($_FILES['image1']['tmp_name'], $dest . "" . $image1);
+                move_uploaded_file($_FILES['image2']['tmp_name'], $dest . "" . $image2);
+            $q1  = "INSERT INTO image(productId,imageUrl) VALUES ('".$id."','".$image1."')";
+            $wrapper->executeUpdate($q1);
+            $q2  = "INSERT INTO image(productId,imageUrl) VALUES ('".$id."','".$image2."')";
+            $wrapper->executeUpdate($q2);
         } else {
             $message = 'Error adding product';
         }

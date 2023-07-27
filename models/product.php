@@ -8,6 +8,7 @@ class Product{
     public $price;
     public $quantityAvailable;
     public $thumbnail;
+    public $dateAdded;
 }
 
 
