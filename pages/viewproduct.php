@@ -309,11 +309,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $row = mysqli_fetch_assoc($res);
                                 if ($row['count'] != 0) {
                                     echo '
-                  <a href="wishlist.php">
-                  <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">' . $row['count'] . '</span></i></a>';
+                          <a href="wishlist.php">
+                             <i class="fa fa-heart-o" aria-hidden="true"><span class="position-absolute start-101 translate-middle badge rounded-pill bg-primary">' . $row['count'] . '</span></i></a>';
                                 } else {
                                     echo '
-                <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
+                              <a href ="wishlist.php"><i class="fa fa-heart-o "></i></a>';
                                 }
                             }
                         } else {

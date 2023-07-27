@@ -216,7 +216,11 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
        ?>
       </ul>
     </div>
+    <br>
+    <p class="m-2">Filter By Price:</p>
+    <input type="range" class="form-control" min="1" max="5000" id="price" onchange="update()">
   </div>
+  
 </div>
     <!--Options Offcanvas End-->
 
