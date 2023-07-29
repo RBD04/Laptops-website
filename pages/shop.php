@@ -66,7 +66,88 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
   <link href="../css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="../css/responsive.css" rel="stylesheet" />
+  <!-- additional style-->
+  <style>
+    .range_container {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      margin: 2em;
+    }
 
+    .sliders_control {
+      position: relative;
+      min-height: 2em;
+    }
+
+    .form_control {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1em;
+      color: #635a5a;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 1em;
+      height: 1em;
+      background-color: #0D6EFD;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #C6C6C6;
+      cursor: pointer;
+    }
+
+    input[type=range]::-moz-range-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #C6C6C6;
+      cursor: pointer;
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      background: #f7f7f7;
+    }
+
+    input[type=range]::-webkit-slider-thumb:active {
+      box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+      -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    }
+
+    input[type="number"] {
+      color: #0D6EFD;
+      width: 4em;
+      height: 2em;
+      font-size: 1em;
+      border: none;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      opacity: 1;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 2px;
+      width: 100%;
+      position: absolute;
+      background-color: #C6C6C6;
+      pointer-events: none;
+    }
+
+    #fromSlider {
+      height: 0;
+      z-index: 1;
+      color: black;
+    }
+  </style>
 </head>
 
 <body class="sub_page">
@@ -192,32 +273,46 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
           <button type="submit" title="Search" class="btn-primary border-0" style="border-radius: 0 10px 10px 0px;"><i class="fa fa-search"></i></button>
       </div>
       <?php
-      if (!(isset($_POST['search'])) || $_POST['search'] == "" && !isset($_POST['price'])) {
-        echo '<div class="dropdown mt-3 mx-auto text-center">
+      echo '<div class="dropdown mt-3 mx-auto text-center">
       <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
         Categories
       </button>
       <ul class="dropdown-menu">';
 
-        foreach ($categories as $category) {
+      foreach ($categories as $category) {
+        if (isset($_POST['search'])  && $_POST['search'] != "") {
+          echo ' <li><a class="dropdown-item " href="shop.php">' . $category->categoryName . '</a></li>';
+        } else {
           echo ' <li><a class="dropdown-item " href="#' . $category->categoryId . '">' . $category->categoryName . '</a></li>';
         }
       }
+
       ?>
       </ul>
     </div>
     <br>
-    <?php
-    if (!(isset($_POST['search'])) || $_POST['search'] == "") {
-      echo '<p class="m-2">Filter By Price:</p>
-  <div>
-    <input id="rangeInput" class="form-control" type="range" min="1" max="5000" oninput="amount.value=rangeInput.value" />
-    <input id="amount" class="text-primary bg-light border-0 mt-1" type="number" value="100" name="price" min="1" max="5000" oninput="rangeInput.value=amount.value" />
+    <p class="m-2">Filter By Price:</p>
+    <div class="range_container">
+      <div class="sliders_control">
+        <input id="fromSlider" type="range" value="" min="1" max="2000" oninput="fromInput.value=fromSlider.value" />
+        <input id="toSlider" type="range" value="" min="1" max="2000" oninput="toInput.value=toSlider.value" />
+      </div>
+      <div class="form_control">
+        <div class="form_control_container">
+          <div class="form_control_container__time">Min</div>
+          <input class="form_control_container__time__input" type="number" name='minPrice' value="0" id="fromInput" min="1" max="2000" oninput="fromSlider.value=fromInput.value" />
+        </div>
+        <div class="form_control_container">
+          <div class="form_control_container__time">Max</div>
+          <input class="form_control_container__time__input" type="number" name='maxPrice' value="0" id="toInput" min="1" max="2000" oninput="toSlider.value=toInput.value" />
+        </div>
+      </div>
+    </div>
+    </form>
   </div>
-</form>
-  </div>';
-    } ?>
   </div>
+  <!-- oninput="amount.value=rangeInput.value" />
+    <input id="amount" type="number" value="100" min="0" max="200" oninput="rangeInput.value=amount.value" /> -->
   <!--Options Offcanvas End-->
 
   <!-- shop section -->
@@ -227,31 +322,55 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
   </ul>
   </div>
   <?php
-  if (!(isset($_POST['search'])) || $_POST['search'] == "") {
-    foreach ($categories as $category) {
+  $q = "";
+  foreach ($categories as $category) {
+    if ((!isset($_POST['search']) || $_POST['search'] == "") && !isset($_POST['minPrice'])) {
       echo "<h1 id='" . $category->categoryId . "' class='display-6  p-2 text-center text-primary border border-primary bg-light shadow'>" . $category->categoryName . "</h1>";
-      echo '<section class="shop_section layout_padding">';
-      echo "<div class='row col-12 px-5' >";
-      $products = getProductsByCategory($category->categoryId);
-      foreach ($products as $product) {
-        $startDate = new DateTime($product->dateAdded);
+    }
+    echo '<section class="shop_section layout_padding">';
+    echo "<div class='row col-12 px-5' >";
+    $q .= "SELECT * FROM product WHERE categoryId='" . $category->categoryId . "'";
+    if (isset($_POST['search']) && $_POST['search'] != "") {
+      $q .= " AND productName LIKE '%" . $_POST['search'] . "%'";
+    }
+    if (isset($_POST['minPrice']) && isset($_POST['maxPrice']) && $_POST['minPrice'] <= $_POST['maxPrice']) {
+      $p1 = $_POST['minPrice'];
+      $p2 = $_POST['maxPrice'];
+      $q .= " AND price >= '" . $p1 . "' AND price <'" . $p2 . "'";
+    } else {
+      $q .= "";
+    }
+    $res = mysqli_query($con, $q);
+    $n = mysqli_num_rows($res);
+    if ($n == 0) {
+      $m = "";
+      if ($_POST['minPrice'] != 0) {
+        $m = "these specifications";
+      } else {
+        $m = "“" . $_POST['search'] . "”";
+      }
+      echo  "<p class='text-info text-center'>No results found for " . $m . ". Check the spelling or use a different word or phrase.<a href='shop.php' class='btn btn-primary ms-5 text-light'><i class='fa fa-arrow-up mx-1'></i>Back</a></p>";
+    } else {
+      for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($res);
+        $startDate = new DateTime($row['dateAdded']);
         $validFor = new DateInterval('P3D');
         $isExpired = isExpired($startDate, $validFor);
-        if ($product->quantityAvailable > 0) {
+        if ($row['quantityAvailable'] > 0) {
           echo '<div class="col-sm-6 col-xl-3">
       <div class="box bg-light">
-        <a href="viewproduct.php?productId=' . $product->productId . '">
+        <a href="viewproduct.php?productId=' . $row['productId'] . '">
           <div class="img-box">
-            <img src="' . $product->thumbnail . '" alt="img";">
+            <img src="' . $row['thumbnail'] . '" alt="img";">
           </div>
           <div class="detail-box">
             <h6>
-              ' . $product->productName . '
+              ' . $row['productName'] . '
             </h6>
             <h6>
               Price:
               <span>
-                $' . $product->price . '
+                $' . $row['price'] . '
               </span>
             </h6>
           </div>';
@@ -266,87 +385,13 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
           }
           echo '</a>
       </div>
-    </div>';
-        } else {
-          echo '<div class="col-sm-6 col-xl-3">
-      <div class="box">
-        <a href="viewproduct.php?productId=' . $product->productId . '">
-          <div class="img-box">
-            <img src="' . $product->thumbnail . '" alt="img"">
-          </div>
-          <div class="detail-box">
-            <h6>
-              ' . $product->productName . '
-            </h6>
-            <h6>
-              Price:
-              <span>
-                $' . $product->price . '
-              </span>
-            </h6>
-          </div>
-          <div class="new bg-danger">
-            <span>
-              Out Of Stock
-            </span>
-          </div>
-          </a>
-      </div>
-    </div>';
+    </div>
+    </div>
+    </section>';
         }
       }
-      echo "</section>";
-      echo "</div>";
-    }
-  } else {
-    $value = $_POST['search'];
-    $q = "SELECT * FROM product WHERE productName LIKE '%" . $value . "%'";
-    $res = mysqli_query($con, $q);
-    $n = mysqli_num_rows($res);
-    echo "<p class='text-center display-6 text-primary mt-2'>Results for \"" . $value . "\"</p>";
-    echo '<section class="shop_section layout_padding">';
-    echo "<div class='row col-12 p-5 mt-5' >";
-    if ($n > 0) {
-      for ($i = 0; $i < $n; $i++) {
-        $row = mysqli_fetch_assoc($res);
-        $startDate1 = new DateTime($row['dateAdded']);
-        $validFor1 = new DateInterval('P3D');
-        $isExpired1 = isExpired($startDate1, $validFor1);
-        echo '<div class="col-sm-6 col-xl-3">
-      <div class="box">
-        <a href="viewproduct.php?productId=' . $row['productId'] . '">
-          <div class="img-box">
-            <img src="' . $row['thumbnail'] . '" alt="">
-          </div>
-          <div class="detail-box">
-            <h6>
-             ' . $row['productName'] . '
-            </h6>
-            <h6>
-              Price:
-              <span>
-                $' . $row['price'] . '
-              </span>
-            </h6>
-          </div>';
-        if (!$isExpired1) {
-        }
-        echo '<div class="new bg-primary">
-            <span>
-              New
-            </span>
-          </div>';
-        echo '</a>
-      </div>
-    </div>';
-      }
-      echo "</div>";
-      echo "</section>";
-    } else if ($n == 0) {
-      echo  "<p class='text-info text-center'>No results found for “" . $value . "”. Check the spelling or use a different word or phrase.<a href='shop.php' class='btn btn-primary ms-5 text-light'><i class='fa fa-arrow-up mx-1'></i>Back</a></p>";
     }
   }
-
   ?>
   <!-- end shop section -->
   <!-- footer section -->
@@ -448,9 +493,9 @@ function isExpired(DateTime $startDate, DateInterval $validFor)
   <!-- custom js -->
   <script src="../js/custom.js"></script>
   <script>
-    let p = document.getElementById("price");
-    let v = x.document.getElementById("priceFilter");
-    p.innerHTML = v;
+    function activate() {
+      document.getElementById("toInput").disabled = false;
+    }
   </script>
 </body>
 
